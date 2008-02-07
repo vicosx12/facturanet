@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<stetic-interface>
+  <configuration>
+    <images-root-path>../</images-root-path>
+    <target-gtk-version>2.10.2</target-gtk-version>
+  </configuration>
+  <widget class="Gtk.Window" id="FacturaNet.FnGtk.FrmPrincipal" design-size="400 300">
+    <property name="MemberName" />
+    <property name="Title" translatable="yes">FrmPrincipal</property>
+    <property name="WindowPosition">CenterOnParent</property>
+    <property name="BorderWidth">6</property>
+    <signal name="DeleteEvent" handler="OnDeleteEvent" />
+    <child>
+      <placeholder />
+    </child>
+  </widget>
+</stetic-interface>

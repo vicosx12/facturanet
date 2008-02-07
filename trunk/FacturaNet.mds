@@ -1,0 +1,37 @@
+<Combine name="FacturaNet" fileversion="2.0" outputpath="./build/bin/">
+  <Configurations active="Debug">
+    <Configuration name="Debug" ctype="CombineConfiguration">
+      <Entry build="True" name="FacturaNet" configuration="Debug" />
+      <Entry build="True" name="FacturaNet.FnGtk" configuration="Debug" />
+      <Entry build="True" name="FacturaNet.FnGtkTranslation" configuration="" />
+      <Entry build="True" name="Packages" configuration="" />
+      <Entry build="True" name="FacturaNet.FnNegocio" configuration="Debug" />
+      <Entry build="True" name="AmUtil" configuration="Debug" />
+    </Configuration>
+    <Configuration name="Release" ctype="CombineConfiguration">
+      <Entry build="True" name="FacturaNet" configuration="Release" />
+      <Entry build="True" name="FacturaNet.FnGtk" configuration="Release" />
+      <Entry build="True" name="FacturaNet.FnGtkTranslation" configuration="" />
+      <Entry build="True" name="Packages" configuration="" />
+      <Entry build="True" name="FacturaNet.FnNegocio" configuration="Release" />
+      <Entry build="True" name="AmUtil" configuration="Release" />
+    </Configuration>
+  </Configurations>
+  <StartMode startupentry="FacturaNet.FnGtk" single="True">
+    <Execute type="None" entry="FacturaNet" />
+    <Execute type="None" entry="FacturaNet.FnGtk" />
+    <Execute type="None" entry="FacturaNet.FnGtkTranslation" />
+    <Execute type="None" entry="Packages" />
+    <Execute type="None" entry="FacturaNet.FnNegocio" />
+    <Execute type="None" entry="FacturaNet.Utiles" />
+    <Execute type="None" entry="AmUtil" />
+  </StartMode>
+  <Entries>
+    <Entry filename="./FacturaNet/FacturaNet.mdp" />
+    <Entry filename="./FacturaNet.FnGtk/FacturaNet.FnGtk.mdp" />
+    <Entry filename="./FacturaNet.FnGtkTranslation/FacturaNet.FnGtkTranslation.mdse" />
+    <Entry filename="./Packages.mdse" />
+    <Entry filename="./FacturaNet.FnNegocio/FacturaNet.FnNegocio.mdp" />
+    <Entry filename="./AmUtil/AmUtil.mdp" />
+  </Entries>
+</Combine>

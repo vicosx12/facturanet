@@ -1,0 +1,25 @@
+﻿<UserCombinePreferences version="1.0" filename="/archivos/Proyectos/facturanet/FacturaNet.mds">
+  <Files>
+    <File name="./FacturaNet.FnGtk/FrmPrincipal.cs" line="41" column="23" />
+    <File name="./FacturaNet.FnGtk/FrmLogin.cs" line="22" column="1" />
+    <File name="Bienvenido" />
+  </Files>
+  <Views>
+    <ViewMemento id="ProjectPad">
+      <Node expanded="True">
+        <Node name="FacturaNet.FnGtk" expanded="True">
+          <Node name="FrmPrincipal.cs" selected="True" />
+        </Node>
+      </Node>
+    </ViewMemento>
+    <ViewMemento id="ClassPad">
+      <Node expanded="True">
+        <Node name="FacturaNet" expanded="True" />
+      </Node>
+    </ViewMemento>
+  </Views>
+  <Properties>
+    <Property key="ActiveWindow" value="Bienvenido" />
+    <Property key="ActiveConfiguration" value="Debug" />
+  </Properties>
+</UserCombinePreferences>

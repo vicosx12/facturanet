@@ -1,0 +1,18 @@
+<CombineEntry name="Packages" fileversion="2.0" ctype="PackagingProject">
+  <Packages>
+    <Package name="Linux binarios">
+      <Builder rootEntry="./FacturaNet.mds" targetFile="./FacturaNet-linux.tar.gz" platform="Linux" ctype="BinariesZipPackageBuilder">
+        <ChildEntries>
+          <Entry>./FacturaNet.FnGtk/FacturaNet.FnGtk.mdp</Entry>
+        </ChildEntries>
+      </Builder>
+    </Package>
+    <Package name="Windows binarios">
+      <Builder rootEntry="./FacturaNet.mds" targetFile="./FacturaNet-windows.zip" platform="Windows" ctype="BinariesZipPackageBuilder">
+        <ChildEntries>
+          <Entry>./FacturaNet.FnGtk/FacturaNet.FnGtk.mdp</Entry>
+        </ChildEntries>
+      </Builder>
+    </Package>
+  </Packages>
+</CombineEntry>
