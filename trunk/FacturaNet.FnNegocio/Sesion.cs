@@ -28,7 +28,7 @@ namespace FacturaNet.FnNegocio
 				case "Server" :
 					return "ubandres";
 				case "DataBase" :
-					return "prbgtk";
+					return "facturanet";
 				default :
 					throw new Exception("Parámetro de configuración no encontrado."); 
 			}
@@ -119,7 +119,7 @@ FROM
 			cmd.Connection = GetFbConnection();
 			cmd.CommandType = CommandType.StoredProcedure;
 			cmd.Parameters.Add("@NB_USUARIO",user);
-			cmd.Parameters.Add("@CLAVE",password);			
+			cmd.Parameters.Add("@CLAVE",Util.CalcularSHA1(password));
 			cmd.CommandText = "SPS_VRF_USUARIO";
 			cmd.Connection.Open();
 			rolDb = (RolDb)(int)cmd.ExecuteScalar();
@@ -143,6 +143,20 @@ FROM
 			this.user = user;
 			this.password = password;
 			return ReConectar(); 			
+		}
+
+		public void CrearUsuario(string user, string password)
+		{
+			FbCommand cmd = new FbCommand();
+			cmd.Connection = GetFbConnection();
+			cmd.CommandType = CommandType.StoredProcedure;
+			cmd.CommandText = "SPS_NEW_USUARIO";
+			cmd.Parameters.Add("@NB_USUARIO",user);
+			cmd.Parameters.Add("@DES_USUARIO",user);
+			cmd.Parameters.Add("@CLAVE",Util.CalcularSHA1(password));
+			cmd.Connection.Open();
+			cmd.ExecuteNonQuery();
+			cmd.Connection.Close();
 		}
 	}
 }

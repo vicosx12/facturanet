@@ -19,16 +19,31 @@
 //
 
 using System;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace AmUtil
 {
 	public class Util
 	{
+		public static string BytesToStr(byte[] bytes)
+		{
+			StringBuilder builder = new StringBuilder(bytes.Length);
+			foreach (byte b in bytes)
+				builder.Append(b.ToString("X2"));
+			return builder.ToString();
+		}
+		public static string CalcularSHA1(string original)
+		{
+			SHA1CryptoServiceProvider hasher = new SHA1CryptoServiceProvider();
+			UTF8Encoding encoder = new UTF8Encoding();
+			return BytesToStr(hasher.ComputeHash(encoder.GetBytes(original)));
+		}
 		public static void Log(string texto)
 		{
 			Console.WriteLine(texto);
 		}
-		
+
 		private Util()
 		{
 		}

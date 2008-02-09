@@ -13,6 +13,8 @@ namespace FacturaNet.FnGtk {
     
     public partial class FrmPrincipal {
         
+        private Gtk.VBox vbox1;
+        
         protected virtual void Build() {
             Stetic.Gui.Initialize(this);
             // Widget FacturaNet.FnGtk.FrmPrincipal
@@ -20,6 +22,11 @@ namespace FacturaNet.FnGtk {
             this.Title = Mono.Unix.Catalog.GetString("FrmPrincipal");
             this.WindowPosition = ((Gtk.WindowPosition)(4));
             this.BorderWidth = ((uint)(6));
+            // Container child FacturaNet.FnGtk.FrmPrincipal.Gtk.Container+ContainerChild
+            this.vbox1 = new Gtk.VBox();
+            this.vbox1.Name = "vbox1";
+            this.vbox1.Spacing = 6;
+            this.Add(this.vbox1);
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }

@@ -54,7 +54,6 @@ namespace FacturaNet.FnGtk
 			boxPrincipal.Homogeneous = false;
 			this.Add(boxPrincipal);
 			boxPrincipal.Show();
-
 			
 			//boxDatos
 			boxDatos = new VBox();
