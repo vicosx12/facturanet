@@ -55,6 +55,10 @@ namespace FacturaNet.FnGtk
 			this.Add(boxPrincipal);
 			boxPrincipal.Show();
 			
+			//cal = new Calendar();
+			//cal.Show();
+			//boxPrincipal.PackStart(cal,true,true,2);
+			
 			//boxDatos
 			boxDatos = new VBox();
 			boxPrincipal.PackStart(boxDatos,true,true,2);

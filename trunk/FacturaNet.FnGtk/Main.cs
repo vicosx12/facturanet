@@ -37,7 +37,8 @@ namespace FacturaNet.FnGtk
 			{
 				Application.Init ();
 			
-				FrmLogin loginWindow = new FrmLogin();
+				//FrmLogin loginWindow = new FrmLogin();
+				FrmLogin2 loginWindow = new FrmLogin2();
 				loginWindow.Show();
 				
 				Application.Run();			

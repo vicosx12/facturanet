@@ -5,6 +5,7 @@
 using System;
 using System.Data;
 using FirebirdSql.Data.FirebirdClient;
+//using MySql.Data.MySqlClient;
 using AmUtil;
 
 namespace FacturaNet.FnNegocio
