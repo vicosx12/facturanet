@@ -26,7 +26,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Window" id="FacturaNet.FnGtk.FrmLogin2" design-size="400 427">
+  <widget class="Gtk.Window" id="FacturaNet.FnGtk.FrmLogin" design-size="400 427">
     <property name="MemberName" />
     <property name="Title" translatable="yes">FrmLogin2</property>
     <property name="TypeHint">Dialog</property>

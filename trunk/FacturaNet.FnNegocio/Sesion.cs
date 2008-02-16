@@ -3,36 +3,45 @@
 //
 //
 using System;
+using System.Configuration;
 using System.Data;
+using System.Data.Common;
 using FirebirdSql.Data.FirebirdClient;
-//using MySql.Data.MySqlClient;
+using MySql.Data.MySqlClient;
 using AmUtil;
 
 namespace FacturaNet.FnNegocio
 {
 	public class Sesion
 	{
-		static private string realUser = GetSesionCfg("RealUser");
-		static private string realPassword = GetSesionCfg("RealPassword");	
-		static private string server = GetSesionCfg("Server");
-		static private string dataBase = GetSesionCfg("DataBase");
+		static private string providerName {get{return GetSesionCfg("ProviderName");}}
 		
+		static private string realUser {get{return GetSesionCfg("RealUser");}}
+		static private string realPassword {get{return GetSesionCfg("RealPassword");}}
+		static private string server {get{return GetSesionCfg("Server");}}
+		static private string dataBase {get{return GetSesionCfg("DataBase");}}
+		static private string cnnString {get{return GetSesionCfg("CnnString");}} 
+		static private DbProviderFactory _dbpFactory 
+		{
+			get
+			{
+				Console.WriteLine();Console.WriteLine();
+				foreach (DataRow row in DbProviderFactories.GetFactoryClasses().Rows)
+					Console.WriteLine("{0}\t{1}\t{2}\t{3}\n",row[0], row[1], row[2], row[3]);
+				Console.WriteLine();Console.WriteLine();
+				
+				return DbProviderFactories.GetFactory(providerName);
+			}
+		}
+
 		static private string GetSesionCfg(string configuracion)
 		{
-			//TODO: Sacar estos datos de un archivo de configuracion
-			switch (configuracion)
-			{
-				case "RealUser" : 
-					return "SYSDBA";
-				case "RealPassword" :
-					return "masterkey";
-				case "Server" :
-					return "ubandres";
-				case "DataBase" :
-					return "facturanet";
-				default :
-					throw new Exception("Parámetro de configuración no encontrado."); 
-			}
+			System.Configuration.Configuration config =
+				ConfigurationManager.OpenExeConfiguration(
+				      ConfigurationUserLevel.None);
+			//config.AppSettings.Settings.Add("a", DateTime.Now.ToLongDateString() + " " + DateTime.Now.ToLongTimeString());
+			//config.Save(ConfigurationSaveMode.Modified);
+			return config.AppSettings.Settings[configuracion].Value;			
 		}
 
 		static private Sesion sesion = null;
@@ -63,12 +72,14 @@ FROM
 		
 		private string user = "";
 		private string password = "";
-		private RolDb rolDb = RolDb.NoAsignado;
+		//private RolDb rolDb = RolDb.NoAsignado;
+		private bool conectado = false;
 
 		private Sesion()
 		{
 		}
 		
+		/*
 		private string StrRol
 		{
 			get 
@@ -87,8 +98,8 @@ FROM
 				}
 			}
 		}
-		
-			
+		*/
+		/*	
 		static private FbConnection _GetFbConnection(string strRol)
 		{
 			return new FbConnection(
@@ -98,24 +109,36 @@ FROM
 				                        "DataSource=" + server + ";" +
 				                        strRol);
 		}
-			
+		*/
+		
 		static private FbConnection _GetFbConnection()
 		{
-			return _GetFbConnection("");				                       
+			return new FbConnection(
+			                        string.Format(
+			                                      cnnString,
+			                                      server,
+			                                      dataBase,
+			                                      realUser,
+			                                      realPassword));				                       
 		}
-		public RolDb RolDb
+
+/*		public RolDb RolDb
 		{
 			get { return this.rolDb; }				
 		}
-
+*/
+		public bool Conectado
+		{
+			get {return conectado;}
+		}
 		public FbConnection GetFbConnection()
 		{
-			return Sesion._GetFbConnection(StrRol);
+			return _GetFbConnection();
 		}
 
 		public bool ReConectar()
 		{
-			rolDb = RolDb.NoAsignado;
+			conectado = false;
 			FbCommand cmd = new FbCommand();
 			cmd.Connection = GetFbConnection();
 			cmd.CommandType = CommandType.StoredProcedure;
@@ -123,20 +146,21 @@ FROM
 			cmd.Parameters.Add("@CLAVE",Util.CalcularSHA1(password));
 			cmd.CommandText = "SPS_VRF_USUARIO";
 			cmd.Connection.Open();
-			rolDb = (RolDb)(int)cmd.ExecuteScalar();
+			conectado = (int)cmd.ExecuteScalar() == 1;
+			//rolDb = (RolDb)(int)cmd.ExecuteScalar();
 			cmd.Connection.Close();
-			if (rolDb == RolDb.NoEsUsuario) 
-				Util.Log("Falló autentificando usuario"); 
+			if (conectado) 
+				Util.Log("Usuario autentificado"); 
 			else
-				Util.Log("Usuario autentificado");
-			return rolDb != RolDb.NoEsUsuario;
+				Util.Log("Falló autentificando usuario");
+			return conectado;
 		}
 
 		public void Desconectar()
 		{
 			user = "";
 			password = "";
-			rolDb = RolDb.NoAsignado;
+			conectado = false;
 		}
 		
 		public bool Conectar(string user, string password)

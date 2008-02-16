@@ -1,4 +1,4 @@
-// FrmLogin.cs
+// FrmLogin2.cs
 //
 //  Copyright (C) 2008 [name of author]
 //
@@ -18,113 +18,62 @@
 //
 //
 
+/* PENDIENTE:
+ * tengo que hacer que use el provider independent para las consultas.
+ * tengo que ver como hacer para no necesitar gacutil y modificar
+ * /etc/mono/2.0/machine.config, donde puse las siguientes lineas (dentro de DbProviderFactories):
+    <add name="Firebird Data Provider" invariant="FirebirdSql.Data.FirebirdClient" 
+		 description="Firebird"
+		 type="FirebirdSql.Data.FirebirdClient.FirebirdClientFactory, FirebirdSql.Data.FirebirdClient, Version=2.0.1.0, Culture=neutral, PublicKeyToken=3750abcc3150b00c" />
+
+    <add name="MySql Data Provider" invariant="MySql.Data.MySqlClient" 
+		 description="MySql"
+		 type="MySql.Data.MySqlClient.MySqlClientFactory, MySql.Data.MySqlClient, Version=5.2.0.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d" />  
+ * Me gustaría generar la base de datos desde el ejecutable
+ * Tengo que mostrar el listado de usuarios en las tablas y los combos para probar gtk
+ * Probar en windows. 
+ * */ 
+  
+
 using System;
 using Gtk;
 using FacturaNet.FnNegocio;
 
 namespace FacturaNet.FnGtk
 {
-	public class FrmLogin : Gtk.Window
+	public partial class FrmLogin : Gtk.Window
 	{
-		private VBox boxPrincipal;
-		private HButtonBox boxButtons;
-		private VBox boxDatos;
-		private Button btnCancelar;
-		private Button btnAceptar;
-		private Table tblDatos;
-		private Entry txtNombre;
-		private Entry txtClave;
-		private Label laNombre;
-		private Label laClave;
 		private int intentos;
 		
-		public FrmLogin() : base(Gtk.WindowType.Toplevel)		                         
+		public FrmLogin() : 
+				base(Gtk.WindowType.Toplevel)
 		{
+			this.Build();
+			
 			intentos = 0;
-			
-			//frmLogin
-			this.DeleteEvent += new Gtk.DeleteEventHandler(this_DeleteEvent);	
-			this.BorderWidth = 5;
-			//this.DefaultHeight = 100;
-			this.DefaultWidth = 300;
-
-			//boxPrincipal
-			boxPrincipal = new VBox(false, 0);
-			boxPrincipal.Spacing = 2;
-			boxPrincipal.Homogeneous = false;
-			this.Add(boxPrincipal);
-			boxPrincipal.Show();
-			
-			//cal = new Calendar();
-			//cal.Show();
-			//boxPrincipal.PackStart(cal,true,true,2);
-			
-			//boxDatos
-			boxDatos = new VBox();
-			boxPrincipal.PackStart(boxDatos,true,true,2);
-			boxDatos.Show();
-
-			tblDatos = new Table(2,2,false);
-			boxDatos.Add(tblDatos);
-			tblDatos.Show();			
-			tblDatos.RowSpacing = 4;
-			tblDatos.ColumnSpacing = 4;
-			tblDatos.BorderWidth = 4;
-					
-			laNombre = new Label("Usuario");
-			laNombre.Show();
-			tblDatos.Attach(laNombre,0,1,0,1,AttachOptions.Fill, AttachOptions.Fill, 0, 0);
-			txtNombre = new Entry();
-			txtNombre.Show();
-			tblDatos.Attach(txtNombre,1,2,0,1,AttachOptions.Fill, AttachOptions.Fill, 0, 0);
-			
-			
-
-			laClave = new Label("Contraseña");
-			laClave.Show();
-			tblDatos.Attach(laClave,0,1,1,2);//,AttachOptions.Expand, AttachOptions.Fill, 0, 0);
-			txtClave = new Entry();
-			txtClave.Show();
-			tblDatos.Attach(txtClave,1,2,1,2);//,AttachOptions.Expand, AttachOptions.Fill, 0, 0);
-					
-			//boxButtons
-			boxButtons = new HButtonBox();
-			boxButtons.Spacing = 4;
-			boxButtons.BorderWidth = 2;
-			boxButtons.LayoutStyle = ButtonBoxStyle.End; 
-			boxButtons.Homogeneous = false;	
-			boxPrincipal.PackStart (boxButtons, false, true, 0);
-			boxButtons.Show();			
-			
-			//btnCancelar
-			btnCancelar = new Button(Stock.Cancel);
-			btnCancelar.Clicked += new EventHandler(btnCancelar_Clicked);
-			btnCancelar.CanDefault = true; 
-			boxButtons.PackStart(btnCancelar, true, true, 0);
-			btnCancelar.Show();
-
-			//btnAceptar
-			btnAceptar = new Button(Stock.Ok);
-			btnAceptar.Clicked += new EventHandler(btnAceptar_Clicked);
-			btnAceptar.CanDefault = true; 
-			boxButtons.PackStart(btnAceptar, true, true, 0);
-			btnAceptar.Show();
-			this.Default = btnAceptar;
 		}
-		
-		static void this_DeleteEvent(object sender,  DeleteEventArgs e)
+
+		protected virtual void OnDeleteEvent (object o, Gtk.DeleteEventArgs args)
 		{
 			Application.Quit();
-		}		
-		static void btnCancelar_Clicked(object sender,  EventArgs e)
+		}
+
+		protected virtual void OnBtnCancelarClicked (object sender, System.EventArgs e)
 		{
-			Sesion.SesionSingleton.Desconectar();
 			Application.Quit();
-		}		
-		private void btnAceptar_Clicked(object sender,  EventArgs e)
+		}
+
+		protected virtual void OnBtnAceptarClicked (object sender, System.EventArgs e)
 		{
-			if ((Sesion.SesionSingleton.Conectar(txtNombre.Text,txtClave.Text)) || (++intentos == 3))
+			if (Sesion.SesionSingleton.Conectar(txtNombre.Text,txtClave.Text)) 
 				Application.Quit();
-		}		
+			else if (++intentos < 3)
+				Console.WriteLine("Usuario o contraseñas no válidos.");
+			else
+			{
+				Console.WriteLine("Usuario y contraseña correcto.");
+				Application.Quit();
+			}
+		}
 	}
 }

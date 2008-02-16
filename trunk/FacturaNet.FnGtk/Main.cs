@@ -37,21 +37,18 @@ namespace FacturaNet.FnGtk
 			{
 				Application.Init ();
 			
-				//FrmLogin loginWindow = new FrmLogin();
-				FrmLogin2 loginWindow = new FrmLogin2();
+				FrmLogin loginWindow = new FrmLogin();
 				loginWindow.Show();
 				
 				Application.Run();			
 				loginWindow.Destroy();
 				
-				if (Sesion.SesionSingleton.RolDb == RolDb.UsuarioStandard)
+				if (Sesion.SesionSingleton.Conectado)
 				{
 					FrmPrincipal frmPrincipal = new FrmPrincipal();
 					frmPrincipal.Show ();
 					Application.Run ();
 				}
-				else if (Sesion.SesionSingleton.RolDb == RolDb.NoEsUsuario)
-					Util.Log("El par usuario,clave no es válido."); 
 			}
 			Util.Log("SALE");
 		}
