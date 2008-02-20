@@ -1,4 +1,4 @@
-<Combine name="FacturaNet" fileversion="2.0" outputpath="./build/bin/">
+<Combine name="FacturaNet" fileversion="2.0" outputpath="build/bin/">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="CombineConfiguration">
       <Entry build="True" name="FacturaNet" configuration="Debug" />
@@ -22,9 +22,9 @@
     <Execute type="None" entry="AmUtil" />
   </StartMode>
   <Entries>
-    <Entry filename="./FacturaNet/FacturaNet.mdp" />
-    <Entry filename="./FacturaNet.FnGtk/FacturaNet.FnGtk.mdp" />
-    <Entry filename="./FacturaNet.FnNegocio/FacturaNet.FnNegocio.mdp" />
-    <Entry filename="./AmUtil/AmUtil.mdp" />
+    <Entry filename="FacturaNet/FacturaNet.mdp" />
+    <Entry filename="FacturaNet.FnGtk/FacturaNet.FnGtk.mdp" />
+    <Entry filename="FacturaNet.FnNegocio/FacturaNet.FnNegocio.mdp" />
+    <Entry filename="AmUtil/AmUtil.mdp" />
   </Entries>
 </Combine>

@@ -12,7 +12,7 @@ namespace FacturaNet.FnNegocio
 {
 	public class Sesion
 	{
-        #region configuracion
+#region Configuración estatica
 		static private Configuration config = null;
 		static private string GetSesionCfg(string configuracion)
 		{
@@ -46,9 +46,9 @@ namespace FacturaNet.FnNegocio
 		{
 			get { return GetSesionCfg("CnnString"); }
 		} 
-        #endregion
+#endregion
 		
-		
+#region estaticos (los que no varían si está conectado o no o cual es el usuario)  
 		static private DbProviderFactory _dbpFactory = null;
 		static private DbProviderFactory dbpFactory 
 		{
@@ -65,43 +65,7 @@ namespace FacturaNet.FnNegocio
 				return _dbpFactory;
 			}
 		}
-		
-		static private Sesion sesion = null;		
-		static public Sesion SesionSingleton
-		{	
-			get
-			{
-				if (sesion == null)
-					sesion = new Sesion();
-				return sesion;
-			}
-		}
-
-		public int FillUsuarios(DataTable tablaUsuarios)
-		{
-			DbDataAdapter da = CreateDataAdapter(
-@"
-SELECT  
-	NB_USUARIO,
-	DES_USUARIO
-FROM
-	SPS_LST_USUARIOS");
-			return da.Fill(tablaUsuarios);
-		}
-		
-		
-		private string user = "";
-		private string password = "";
-		private bool conectado = false;
-
-		private Sesion()
-		{
-		}
-		public bool Conectado
-		{
-			get {return conectado;}
-		}
-		public DbConnection CreateConnection()
+		static private DbConnection createConnection()
 		{
 			DbConnection cnn = dbpFactory.CreateConnection();
 			cnn.ConnectionString = string.Format(
@@ -112,56 +76,128 @@ FROM
 			                                      realPassword);
 			return cnn;
 		}
-		public DbDataAdapter CreateDataAdapter()
+		static private DbDataAdapter createDataAdapter()
 		{
 			return dbpFactory.CreateDataAdapter();
 		}
-		public DbDataAdapter CreateDataAdapter(string selectCommand)
+		static private DbDataAdapter createDataAdapter(string selectCommand)
 		{
-			DbDataAdapter da = CreateDataAdapter();
-			DbCommand cmd = CreateCommand(selectCommand);
+			DbDataAdapter da = createDataAdapter();
+			DbCommand cmd = createCommand(selectCommand);
 			da.SelectCommand = cmd;
 			return da;
 		}
-		public DbCommand CreateCommand()
+		static private DbCommand createCommand()
 		{
 			DbCommand cmd = dbpFactory.CreateCommand();
-			cmd.Connection = CreateConnection();
+			cmd.Connection = createConnection();
 			return cmd;
 		}
-		public DbCommand CreateCommand(string commandText)
+		static private DbCommand createCommand(string commandText)
 		{
-			DbCommand cmd = CreateCommand();
+			DbCommand cmd = createCommand();
 			cmd.CommandText = commandText;
 			return cmd;
 		}
-		public DbParameter CreateParameter()
+		static private DbParameter createParameter()
 		{
 			return dbpFactory.CreateParameter();
 		}
-		public DbParameter CreateParameter(string parameterName, DbType dbType)
+		static private DbParameter createParameter(string parameterName, DbType dbType)
 		{
-			DbParameter par = CreateParameter();
+			DbParameter par = createParameter();
 			par.ParameterName = parameterName;
 			par.DbType = dbType;
 			return par;
 		}
-		public DbParameter CreateParameter(string parameterName, DbType dbType, object value)
+		static private DbParameter createParameter(string parameterName, DbType dbType, object value)
 		{
-			DbParameter par = CreateParameter(parameterName, dbType);
+			DbParameter par = createParameter(parameterName, dbType);
 			par.Value = value;
 			return par;
 		}
+		static public int FillUsuarios(DataTable tablaUsuarios)
+		{
+			DbDataAdapter da = createDataAdapter(
+@"
+SELECT  
+	NB_USUARIO,
+	DES_USUARIO
+FROM
+	SPS_LST_USUARIOS");
+			return da.Fill(tablaUsuarios);
+		}
+#endregion
+		
+#region singleton		
+		static private Sesion sesion = null;		
+		static public Sesion SesionSingleton
+		{	
+			get
+			{
+				if (sesion == null)
+					sesion = new Sesion();
+				return sesion;
+			}
+		}
+		private Sesion()
+		{
+		}
+#endregion		
+		
+#region sesion propiamente dicha
+		private string user = "";
+		private string password = "";
+		
+		private bool conectado = false;
+		public bool Conectado
+		{
+			get {return conectado;}
+		}
+		
+		public DbConnection CreateConnection()
+		{
+			return Conectado? createConnection() : null;
+		}
+		public DbDataAdapter CreateDataAdapter()
+		{
+			return Conectado? createDataAdapter() : null;
+		}
+		public DbDataAdapter CreateDataAdapter(string selectCommand)
+		{
+			return Conectado? createDataAdapter(selectCommand) : null;
+		}
+		public DbCommand CreateCommand()
+		{
+			return Conectado? createCommand() : null;
+		}
+		public DbCommand CreateCommand(string commandText)
+		{
+			return Conectado? createCommand(commandText) : null;
+		}
+		public DbParameter CreateParameter()
+		{
+			return Conectado? createParameter() : null;
+		}
+		public DbParameter CreateParameter(string parameterName, DbType dbType)
+		{
+			return Conectado? createParameter(parameterName, dbType) : null;
+		}
+		public DbParameter CreateParameter(string parameterName, DbType dbType, object value)
+		{
+			return Conectado? createParameter(parameterName, dbType, value) : null;
+		}
+		
 		public bool ReConectar()
 		{
 			conectado = false;
-			DbCommand cmd = CreateCommand("SPS_VRF_USUARIO"); 
+			DbCommand cmd = createCommand("SPS_VRF_USUARIO"); 
 			cmd.CommandType = CommandType.StoredProcedure;
-			cmd.Parameters.Add(CreateParameter(
+			cmd.Parameters.Add(createParameter(
 			                                   "@NB_USUARIO",
 			                                   DbType.String,
 			                                   user));  
-			cmd.Parameters.Add(CreateParameter(
+			cmd.Parameters.Add(createParameter(
 			                                   "@CLAVE",
 			                                   DbType.String,
 			                                   Util.CalcularSHA1(password)));  
@@ -191,6 +227,8 @@ FROM
 
 		public void CrearUsuario(string user, string password)
 		{
+			//TODO: Agregar algo para verificar que el usuario actual puede hacer esto y que está conectado
+			
 			DbCommand cmd = CreateCommand("SPS_NEW_USUARIO");
 			cmd.CommandType = CommandType.StoredProcedure;
 			cmd.Parameters.Add(CreateParameter(
@@ -209,5 +247,6 @@ FROM
 			cmd.ExecuteNonQuery();
 			cmd.Connection.Close();
 		}
+#endregion		
 	}
 }
