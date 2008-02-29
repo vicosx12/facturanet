@@ -33,19 +33,17 @@ namespace FacturaNet.FnMngr
 */		
 		public static void Main(string[] args)
 		{
-			AdministradorDb administrador = new AdministradorDb();
-			
 			if (args.Length > 0)
 			{
 				switch (args[0])
 				{
 					//HACK: hay que mejorar la lectura de las opciones de linea de comandos
 					case "--actualizar_db" :
-						administrador.ActualizarDb();
+						DbMngr.Db.ActualizarDb();
 						break;
 					case "--crear_usuario" : 
 						// FIXME: Esto debería hacerse desde otro lugar
-						administrador.CrearUsuario(args[1], args[2]);
+						DbMngr.Db.CrearUsuario(args[1], args[2]);
 						break;
 					case "--help" :
 						Console.WriteLine("AYUDA");

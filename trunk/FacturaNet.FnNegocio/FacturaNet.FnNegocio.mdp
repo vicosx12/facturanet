@@ -15,8 +15,8 @@
   </Configurations>
   <Contents>
     <File name="AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
-    <File name="Sesion.cs" subtype="Code" buildaction="Compile" />
-    <File name="AdministradorDb.cs" subtype="Code" buildaction="Compile" />
+    <File name="SesionMngr.cs" subtype="Code" buildaction="Compile" />
+    <File name="DbMngr.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

@@ -34,13 +34,15 @@ namespace FacturaNet.FnGtk
 			{
 				Application.Init ();
 			
+				SesionMngr sesion = DbMngr.Db.CreateSesion();
+				
 				FrmLogin loginWindow = new FrmLogin();
 				loginWindow.Show();
 				
 				Application.Run();			
-				loginWindow.Destroy();
-				
-				if (Sesion.SesionSingleton.Conectado)
+				loginWindow.Destroy();		
+			
+				if (sesion.Conectado)
 				{
 					FrmPrincipal frmPrincipal = new FrmPrincipal();
 					frmPrincipal.Show ();
