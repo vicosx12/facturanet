@@ -12,6 +12,8 @@ namespace FacturaNet.FnNegocio
 {
 	public class Sesion
 	{
+		static public readonly int VersionDbEsperada = 1;
+		
 #region Configuración estatica
 		static private Configuration config = null;
 		static private string GetSesionCfg(string configuracion)
@@ -65,7 +67,7 @@ namespace FacturaNet.FnNegocio
 				return _dbpFactory;
 			}
 		}
-		static private DbConnection createConnection()
+		static internal DbConnection createConnection()
 		{
 			DbConnection cnn = dbpFactory.CreateConnection();
 			cnn.ConnectionString = string.Format(
@@ -76,41 +78,41 @@ namespace FacturaNet.FnNegocio
 			                                      realPassword);
 			return cnn;
 		}
-		static private DbDataAdapter createDataAdapter()
+		static internal DbDataAdapter createDataAdapter()
 		{
 			return dbpFactory.CreateDataAdapter();
 		}
-		static private DbDataAdapter createDataAdapter(string selectCommand)
+		static internal DbDataAdapter createDataAdapter(string selectCommand)
 		{
 			DbDataAdapter da = createDataAdapter();
 			DbCommand cmd = createCommand(selectCommand);
 			da.SelectCommand = cmd;
 			return da;
 		}
-		static private DbCommand createCommand()
+		static internal DbCommand createCommand()
 		{
 			DbCommand cmd = dbpFactory.CreateCommand();
 			cmd.Connection = createConnection();
 			return cmd;
 		}
-		static private DbCommand createCommand(string commandText)
+		static internal DbCommand createCommand(string commandText)
 		{
 			DbCommand cmd = createCommand();
 			cmd.CommandText = commandText;
 			return cmd;
 		}
-		static private DbParameter createParameter()
+		static internal DbParameter createParameter()
 		{
 			return dbpFactory.CreateParameter();
 		}
-		static private DbParameter createParameter(string parameterName, DbType dbType)
+		static internal DbParameter createParameter(string parameterName, DbType dbType)
 		{
 			DbParameter par = createParameter();
 			par.ParameterName = parameterName;
 			par.DbType = dbType;
 			return par;
 		}
-		static private DbParameter createParameter(string parameterName, DbType dbType, object value)
+		static internal DbParameter createParameter(string parameterName, DbType dbType, object value)
 		{
 			DbParameter par = createParameter(parameterName, dbType);
 			par.Value = value;
@@ -223,29 +225,6 @@ FROM
 			this.user = user;
 			this.password = password;
 			return ReConectar(); 			
-		}
-
-		public void CrearUsuario(string user, string password)
-		{
-			//TODO: Agregar algo para verificar que el usuario actual puede hacer esto y que está conectado
-			
-			DbCommand cmd = CreateCommand("SPS_NEW_USUARIO");
-			cmd.CommandType = CommandType.StoredProcedure;
-			cmd.Parameters.Add(CreateParameter(
-			                                   "@NB_USUARIO",
-			                                   DbType.String,
-			                                   user));
-			cmd.Parameters.Add(CreateParameter(
-			                                   "@DES_USUARIO",
-			                                   DbType.String,
-			                                   user));
-			cmd.Parameters.Add(CreateParameter(
-			                                   "@CLAVE",
-			                                   DbType.String,
-			                                   Util.CalcularSHA1(password)));  
-			cmd.Connection.Open();
-			cmd.ExecuteNonQuery();
-			cmd.Connection.Close();
 		}
 #endregion		
 	}

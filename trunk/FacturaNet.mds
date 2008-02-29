@@ -5,12 +5,14 @@
       <Entry build="True" name="FacturaNet.FnGtk" configuration="Debug" />
       <Entry build="True" name="FacturaNet.FnNegocio" configuration="Debug" />
       <Entry build="True" name="AmUtil" configuration="Debug" />
+      <Entry build="True" name="FacturaNet.FnMngr" configuration="Debug" />
     </Configuration>
     <Configuration name="Release" ctype="CombineConfiguration">
       <Entry build="True" name="FacturaNet" configuration="Release" />
       <Entry build="True" name="FacturaNet.FnGtk" configuration="Release" />
       <Entry build="True" name="FacturaNet.FnNegocio" configuration="Release" />
       <Entry build="True" name="AmUtil" configuration="Release" />
+      <Entry build="True" name="FacturaNet.FnMngr" configuration="Release" />
     </Configuration>
   </Configurations>
   <StartMode startupentry="FacturaNet.FnGtk" single="True">
@@ -18,6 +20,7 @@
     <Execute type="None" entry="FacturaNet.FnGtk" />
     <Execute type="None" entry="FacturaNet.FnNegocio" />
     <Execute type="None" entry="AmUtil" />
+    <Execute type="None" entry="FacturaNet.FnMngr" />
   </StartMode>
   <MonoDevelop.ChangeLogAddIn.ChangeLogInfo policy="OneChangeLogInEachDirectory" />
   <Entries>
@@ -25,5 +28,6 @@
     <Entry filename="FacturaNet.FnGtk/FacturaNet.FnGtk.mdp" />
     <Entry filename="FacturaNet.FnNegocio/FacturaNet.FnNegocio.mdp" />
     <Entry filename="AmUtil/AmUtil.mdp" />
+    <Entry filename="FacturaNet.FnMngr/FacturaNet.FnMngr.mdp" />
   </Entries>
 </Combine>

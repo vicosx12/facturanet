@@ -10,27 +10,24 @@ namespace FacturaNet.FnGtk
 	{
 		public static bool CmdMode(string[] args)
 		{
-			bool cmdMode = false;
+			bool detener = false;
 			if (args.Length > 0)
 			{
+				//HACK: hay que mejorar la lectura de las opciones de linea de comandos
 				switch (args[0])
 				{
-					case "--crear_usuario" : 
-						Sesion.SesionSingleton.CrearUsuario(args[1],args[2]);
-						Console.WriteLine("Usuario creado exitosamente");
-						cmdMode = true;
-						break;
 					case "--help" :
 						Console.WriteLine("AYUDA");
-						cmdMode = true;
+						detener = true;
 						break;
 					default :
 						Console.WriteLine("Parametro desconocido, se continua con el modo gráfico");
 						break;
 				}
 			}
-			return cmdMode;
+			return detener;
 		}
+		
 		public static void Main (string[] args)
 		{
 			if (!CmdMode(args))
