@@ -18,7 +18,7 @@ namespace FacturaNet.FnNegocio
 			{
 				if (sesion == null)
 					sesion = DbMngr.Db.CreateSesion();
-				return Sesion;
+				return sesion;
 			}
 		}		
 		

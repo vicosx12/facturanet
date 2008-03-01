@@ -48,8 +48,32 @@ namespace FacturaNet.FnMngr
 					case "--help" :
 						Console.WriteLine("AYUDA");
 						break;
+					case "--agregar_acceso_db" :
+						DbMngr.Db.AgregarAccesoDb(
+						                             args[1], //Nombre
+						                             args[2], //ProviderName
+						                             args[3], //CnnString
+						                             args[4], //Server
+						                             args[5], //DataBase
+						                             args[6], //RealUser
+						                             args[7]  //RealPassword
+						                          );
+						break;
+					case "--seleccionar_acceso_db" :
+						DbMngr.Db.SeleccionarAccesoDb(args[1]);
+						break;	
+					case "--prb1" :
+						string e = Util.EncriptacionPropia("andrés");
+						Console.WriteLine(e);
+						Console.WriteLine(Util.DesencriptacionPropia(e));
+						break;		
+					case "--prb2" :
+						Console.WriteLine(Util.CalcularSHA1("0"));
+						break;		
+					case "--prb3" :
+						break;		
 					default :
-						Console.WriteLine("Parametro desconocido, se continua con el modo gráfico");
+						Console.WriteLine("Parametro desconocido");
 						break;
 				}
 			}

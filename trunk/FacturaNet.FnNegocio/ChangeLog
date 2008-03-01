@@ -1,3 +1,7 @@
+2008-03-01  Andres Moschini <andresmoschini+facturanet@gmail.com> 
+
+	
+
 2008-02-29  Andres Moschini <andresmoschini+facturanet@gmail.com> 
 
 	* Sesion.cs: Cambio para controlar que esté conectado antes de crear cada

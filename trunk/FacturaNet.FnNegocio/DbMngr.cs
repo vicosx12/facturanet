@@ -57,38 +57,48 @@ namespace FacturaNet.FnNegocio
 		}
 
 
+
 		private Configuration config = null;
-		private string GetDbCfg(string configuracion)
+		private ConfiguracionAccesoSection configuracionAccesoSection = null;
+		
+		private ConfiguracionAccesoSection ConfiguracionAccesoSection
 		{
-			if (config == null) 
-				config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-			//config.AppSettings.Settings.Add("a", DateTime.Now.ToLongDateString() + " " + DateTime.Now.ToLongTimeString());
-			//config.Save(ConfigurationSaveMode.Modified);
-			return config.AppSettings.Settings[configuracion].Value;			
+			get 
+			{
+				if (configuracionAccesoSection == null) 
+				{
+					if (config == null) 
+						config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
+					string nombreAcceso = config.AppSettings.Settings["AccesoDbSeleccionado"].Value;
+					configuracionAccesoSection = (ConfiguracionAccesoSection) config.Sections.Get(nombreAcceso);
+				}
+				return configuracionAccesoSection;
+			}
 		}
 		private string providerName 
 		{
-			get { return GetDbCfg("ProviderName"); } 
+			get { return ConfiguracionAccesoSection.ProviderName; } 
 		}
 		private string realUser
 		{
-			get { return GetDbCfg("RealUser"); }
+			get { return ConfiguracionAccesoSection.RealUser; }
 		}
 		private string realPassword 
 		{
-			get { return GetDbCfg("RealPassword"); }
+			get { return ConfiguracionAccesoSection.RealPassword; }
 		}
 		private string server 
 		{
-			get { return GetDbCfg("Server"); }
+			get { return ConfiguracionAccesoSection.Server; }
 		}
 		private string dataBase 
 		{
-			get { return GetDbCfg("DataBase"); }
+			get { return ConfiguracionAccesoSection.DataBase; }
 		}
 		private string cnnString 
 		{
-			get { return GetDbCfg("CnnString"); }
+			get { return ConfiguracionAccesoSection.CnnString; }
 		} 
 
 		internal DbConnection CreateConnection()
@@ -166,6 +176,33 @@ FROM
 		
 		public void ActualizarDb()
 		{
+		}
+		
+		public void SeleccionarAccesoDb(string nombre)
+		{
+			if (config == null) 
+				config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+			
+			config.AppSettings.Settings.Add("AccesoDbSeleccionado", nombre);
+			
+			config.Save(ConfigurationSaveMode.Full, true);
+		}
+		
+		public void AgregarAccesoDb(string nombre, string providerName, string cnnString, string server, string dataBase, string realUser, string realPassword)
+		{
+			if (config == null) 
+				config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
+			ConfiguracionAccesoSection section = new ConfiguracionAccesoSection();
+			section.CnnString = cnnString; 
+			section.ProviderName = providerName;
+			section.Server = server;
+			section.DataBase = dataBase;
+			section.RealUser = realUser;
+			section.RealPassword = realPassword;
+			
+			config.Sections.Add(nombre,section);
+			config.Save(ConfigurationSaveMode.Full, true);
 		}
 		
 		public void CrearUsuario(string user, string password)
