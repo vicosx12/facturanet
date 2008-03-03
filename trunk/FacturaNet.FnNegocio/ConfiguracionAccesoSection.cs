@@ -17,6 +17,7 @@
 //
 
 using System;
+using AmUtil;
 using System.Configuration;
 
 namespace FacturaNet.FnNegocio
@@ -133,11 +134,11 @@ namespace FacturaNet.FnNegocio
 	    }
 	    public string RealPassword
 	    {
-	        get { return (string)this["RealPassword"]; }
+	        get { return Util.DesencriptacionPropia((string)this["RealPassword"]); }
 	        set
 	        {
 	            ThrowIfReadOnly("RealPassword");
-	            this["RealPassword"] = value;
+	            this["RealPassword"] = Util.EncriptacionPropia(value);
 	        }
 	    }
 	    public string RealUser

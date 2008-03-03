@@ -18,7 +18,7 @@
 using System;
 using FacturaNet.FnNegocio;
 using AmUtil;
-
+using System.Reflection;
 
 namespace FacturaNet.FnMngr
 {
@@ -71,6 +71,10 @@ namespace FacturaNet.FnMngr
 						Console.WriteLine(Util.CalcularSHA1("0"));
 						break;		
 					case "--prb3" :
+						Assembly a = Assembly.GetExecutingAssembly();
+						//string [] resNames = a.GetManifestResourceNames();
+						Console.WriteLine((a.GetManifestResourceStream("recurso.txt")).Length);
+						
 						break;		
 					default :
 						Console.WriteLine("Parametro desconocido");

@@ -1,0 +1,19 @@
+Si bien la idea es que Facturanet funcione con diferentes motores de base de
+datos, solo se mantendrá oficialmente una base de datos Firebird (por ahora).
+
+El sistema se encargará de crear y actualizar la base de datos automáticamente, 
+pero aún necesita unos pequeños ajustes manuales:
+    * Instalación del servidor Firebird 2.x
+    * Instalación del Firebird Data Provider como provider factory 
+        Por ejemplo en machine.config:
+            <add name="Firebird Data Provider" invariant="FirebirdSql.Data.FirebirdClient" 
+		    description="Firebird"
+		    type="FirebirdSql.Data.FirebirdClient.FirebirdClientFactory, 
+            FirebirdSql.Data.FirebirdClient, Version=2.0.1.0, Culture=neutral, 
+            PublicKeyToken=3750abcc3150b00c" />
+    * Configuración del alias de la base de datos (aliases.conf)
+        facturanet = {ruta de la base de datos}
+    * Configuración del acceso a la base de datos
+        FacturaNet.FnMngr.exe --agregar_acceso_db firebird FirebirdSql.Data.FirebirdClient DataSource={0};Database={1};UserID={2};Password={3} localhost facturanet SYSDBA masterkey
+        FacturaNet.FnMngr.exe --seleccionar_acceso_db firebird
+

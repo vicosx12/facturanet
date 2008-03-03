@@ -1,0 +1,27 @@
+gacutil:
+
+    gacutil -i FirebirdSql.Data.FirebirdClient.dll
+    gacutil -i MySql.Data.dll
+
+machine.config:
+
+    <system.data>
+        <DbProviderFactories>
+            <add name="Firebird Data Provider" 
+                invariant="FirebirdSql.Data.FirebirdClient" 
+                description="Firebird"
+                type="FirebirdSql.Data.FirebirdClient.FirebirdClientFactory, 
+                FirebirdSql.Data.FirebirdClient, 
+                Version=2.0.1.0, 
+                Culture=neutral, 
+                PublicKeyToken=3750abcc3150b00c" />
+            <add name="MySql Data Provider" 
+                invariant="MySql.Data.MySqlClient"
+                description="MySql"
+                type="MySql.Data.MySqlClient.MySqlClientFactory, 
+                MySql.Data.MySqlClient, 
+                Version=5.2.0.0, 
+                Culture=neutral, 
+                PublicKeyToken=c5687fc88969c44d" />
+        </DbProviderFactories>
+    </system.data>

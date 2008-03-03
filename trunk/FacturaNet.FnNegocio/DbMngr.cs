@@ -20,6 +20,8 @@ using System;
 using System.Configuration;
 using System.Data;
 using System.Data.Common;
+using FirebirdSql.Data.FirebirdClient;
+using FirebirdSql.Data.Isql;
 using AmUtil;
 
 namespace FacturaNet.FnNegocio
@@ -70,8 +72,19 @@ namespace FacturaNet.FnNegocio
 					if (config == null) 
 						config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
-					string nombreAcceso = config.AppSettings.Settings["AccesoDbSeleccionado"].Value;
+					string nombreAcceso;
+					try
+					{
+						nombreAcceso = config.AppSettings.Settings["AccesoDbSeleccionado"].Value;
+					}
+					catch 
+					{
+						PrepararFirebird();
+						nombreAcceso = config.AppSettings.Settings["AccesoDbSeleccionado"].Value;
+					}
+					
 					configuracionAccesoSection = (ConfiguracionAccesoSection) config.Sections.Get(nombreAcceso);
+
 				}
 				return configuracionAccesoSection;
 			}
@@ -173,9 +186,111 @@ FROM
 		private DbMngr()
 		{
 		}
+
+		public void PrepararFirebird()
+		{
+			AgregarAccesoDb(
+			                "firebird",
+			                "FirebirdSql.Data.FirebirdClient",
+			                "DataSource={0};Database={1};UserID={2};Password={3}",
+			                "localhost",
+			                "facturanet",
+			                "SYSDBA",
+			                "masterkey");
+			SeleccionarAccesoDb("firebird");
+		}
+		
+		public void CrearFirebirdDb()
+		{
+			//FbScript script = new FbScript("a.txt");
+			                               
+			 //((FbConnection)DbMngr.Db).Create
+			/*
+				// create a new database
+				FbConnection.CreateDatabase(csb.ToString());
+				
+				// parse the SQL script
+				FbScript script = new FbScript(pathScript);
+				script.Parse();
+		
+				// execute the SQL script
+				using(FbConnection c = new FbConnection(csb.ToString()))
+				{
+					FbBatchExecution fbe = new FbBatchExecution(c);
+					foreach (string cmd in script.Results) 
+					{
+						fbe.SqlStatements.Add(cmd);
+					}
+					fbe.Execute();
+				}
+
+[STAThread]
+static void Main(string[] args)
+{
+    FbConnectionStringBuilder cs = new FbConnectionStringBuilder();
+
+    cs.UserID   = "SYSDBA";
+    cs.Password = "masterkey";
+    cs.Database = "nunit_testdb";
+
+    FbBackup backupSvc = new FbBackup();
+                
+    backupSvc.ConnectionString = cs.ToString();
+    backupSvc.BackupFiles.Add(new FbBackupFile(@"c:\testdb.gbk", 2048));
+    backupSvc.Verbose = true;
+
+    backupSvc.Options = FbBackupFlags.IgnoreLimbo;
+
+    backupSvc.ServiceOutput += new ServiceOutputEventHandler(ServiceOutput);
+
+    backupSvc.Execute();
+}
+
+static void ServiceOutput(object sender, ServiceOutputEventArgs e)
+{
+    Console.WriteLine(e.Message);
+}
+    
+
+return to top
+
+5. Database restore [v1.7].
+
+[STAThread]
+static void Main(string[] args)
+{
+    FbConnectionStringBuilder cs = new FbConnectionStringBuilder();
+
+    cs.UserID   = "SYSDBA";
+    cs.Password = "masterkey";
+    cs.Database = "nunit_testdb";
+
+    FbRestore restoreSvc = new FbRestore();
+
+    restoreSvc.ConnectionString = cs.ToString();
+    restoreSvc.BackupFiles.Add(new FbBackupFile(@"c:\testdb.gbk", 2048));
+    restoreSvc.Verbose = true;
+    restoreSvc.PageSize = 4096;
+    restoreSvc.Options = FbRestoreFlags.Create | FbRestoreFlags.Replace;
+
+    restoreSvc.ServiceOutput += new ServiceOutputEventHandler(ServiceOutput);
+
+    restoreSvc.Execute();
+}
+
+static void ServiceOutput(object sender, ServiceOutputEventArgs e)
+{
+    Console.WriteLine(e.Message);
+}
+    
+
+
+			*/
+		}
 		
 		public void ActualizarDb()
 		{
+			
 		}
 		
 		public void SeleccionarAccesoDb(string nombre)

@@ -61,6 +61,7 @@ namespace AmUtil
 			{
 				if (_encriptador == null)
 					_encriptador = mCSP.CreateEncryptor(mCSP.Key, mCSP.IV);
+				return _encriptador;
 			}
 		}
 		private static ICryptoTransform _desencriptador = null; 
@@ -70,6 +71,7 @@ namespace AmUtil
 			{
 				if (_desencriptador == null)
 					_desencriptador = mCSP.CreateDecryptor(mCSP.Key, mCSP.IV);
+				return _desencriptador;
 			}
 		}
 		public static string EncriptacionPropia(string original)
