@@ -74,7 +74,6 @@ namespace FacturaNet.FnMngr
 						Assembly a = Assembly.GetExecutingAssembly();
 						//string [] resNames = a.GetManifestResourceNames();
 						Console.WriteLine((a.GetManifestResourceStream("recurso.txt")).Length);
-						
 						break;		
 					default :
 						Console.WriteLine("Parametro desconocido");
