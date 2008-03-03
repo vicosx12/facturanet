@@ -39,7 +39,7 @@ namespace FacturaNet.FnNegocio
 			}
 		}		
 		
-		public readonly int VersionDbEsperada = 1;
+		public readonly int VersionEsperada = 1;
 
 		private DbProviderFactory _dbpFactory = null;
 		private DbProviderFactory dbpFactory 
@@ -73,18 +73,8 @@ namespace FacturaNet.FnNegocio
 						config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
 					string nombreAcceso;
-					try
-					{
-						nombreAcceso = config.AppSettings.Settings["AccesoDbSeleccionado"].Value;
-					}
-					catch 
-					{
-						PrepararFirebird();
-						nombreAcceso = config.AppSettings.Settings["AccesoDbSeleccionado"].Value;
-					}
-					
+					nombreAcceso = config.AppSettings.Settings["AccesoDbSeleccionado"].Value;				
 					configuracionAccesoSection = (ConfiguracionAccesoSection) config.Sections.Get(nombreAcceso);
-
 				}
 				return configuracionAccesoSection;
 			}
@@ -123,6 +113,33 @@ namespace FacturaNet.FnNegocio
 			                                      dataBase,
 			                                      realUser,
 			                                      realPassword);
+
+			DbCommand cmd = dbpFactory.CreateCommand();
+			cmd.Connection = cnn;
+			cmd.CommandText = @"
+Select 
+	TS_VERSIONDB.VER
+from
+	TS_VERSIONDB
+where
+	TS_VERSIONDB.ID = 0";
+			cmd.Connection.Open();
+			int versionDb = (int)cmd.ExecuteScalar();
+			cmd.Connection.Close();
+			
+			Console.WriteLine("*** {0} ***",versionDb);
+
+			/*
+			 TODO: verificar conexion y version DB 
+			 Tengo que probar la base de datos:
+			 tendria que revisar la versión solo una vez?
+			      * Si no existe el alias de la db genera una excepción DbMngrNoAccesoDbException
+			      * Si existe el alias pero no la db genera otra excepción DbMngrNoExisteDbException
+			      * Si no corresponde la version de la db otra excepcion DbMngrVersionDbIncorrectaException
+			      * Si no hubiera permisos en algun caso genera otra excepcion DbMngrPermisosDbException
+			 despues tengo que agregar los scripts de creacion y actualizacion como recursos y ejecutarlos			 	
+			 */
+			
 			return cnn;
 		}
 		internal DbDataAdapter CreateDataAdapter()
@@ -186,7 +203,7 @@ FROM
 		private DbMngr()
 		{
 		}
-
+/*
 		public void PrepararFirebird()
 		{
 			AgregarAccesoDb(
@@ -199,13 +216,14 @@ FROM
 			                "masterkey");
 			SeleccionarAccesoDb("firebird");
 		}
-		
+*/
+/*		
 		public void CrearFirebirdDb()
 		{
 			//FbScript script = new FbScript("a.txt");
 			                               
 			 //((FbConnection)DbMngr.Db).Create
-			/*
+			/
 				// create a new database
 				FbConnection.CreateDatabase(csb.ToString());
 				
@@ -285,8 +303,8 @@ static void ServiceOutput(object sender, ServiceOutputEventArgs e)
     
 
 
-			*/
 		}
+*/
 		
 		public void ActualizarDb()
 		{

@@ -24,13 +24,6 @@ namespace FacturaNet.FnMngr
 {
 	class FnMngr
 	{
-/*		
-		public static void CrearUsuario(string user, string password)
-		{
-			Sesion.SesionSingleton.CrearUsuario(args[1],args[2]);
-			Console.WriteLine("Usuario creado exitosamente");
-		}
-*/		
 		public static void Main(string[] args)
 		{
 			if (args.Length > 0)
