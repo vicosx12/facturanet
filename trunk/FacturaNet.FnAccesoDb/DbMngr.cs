@@ -17,14 +17,13 @@
 //
 
 using System;
-using System.Configuration;
 using System.Data;
 using System.Data.Common;
 using FirebirdSql.Data.FirebirdClient;
 using FirebirdSql.Data.Isql;
 using AmUtil;
 
-namespace FacturaNet.FnNegocio
+namespace FacturaNet.FnAccesoDb
 {
 	public class DbMngr
 	{
@@ -52,94 +51,21 @@ namespace FacturaNet.FnNegocio
 					foreach (DataRow row in DbProviderFactories.GetFactoryClasses().Rows)
 						Console.WriteLine("{0}\t{1}\t{2}\t{3}\n",row[0], row[1], row[2], row[3]);
 					Console.WriteLine(); Console.WriteLine();
-					_dbpFactory = DbProviderFactories.GetFactory(providerName);
+					_dbpFactory = DbProviderFactories.GetFactory(CfgDbMngr.Cfg.ProviderName);
 				}
 				return _dbpFactory;
 			}
 		}
 
-
-
-		private Configuration config = null;
-		private ConfiguracionAccesoSection configuracionAccesoSection = null;
-		
-		private ConfiguracionAccesoSection ConfiguracionAccesoSection
-		{
-			get 
-			{
-				if (configuracionAccesoSection == null) 
-				{
-					if (config == null) 
-						config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-
-					string nombreAcceso;
-					nombreAcceso = config.AppSettings.Settings["AccesoDbSeleccionado"].Value;				
-					configuracionAccesoSection = (ConfiguracionAccesoSection) config.Sections.Get(nombreAcceso);
-				}
-				return configuracionAccesoSection;
-			}
-		}
-		private string providerName 
-		{
-			get { return ConfiguracionAccesoSection.ProviderName; } 
-		}
-		private string realUser
-		{
-			get { return ConfiguracionAccesoSection.RealUser; }
-		}
-		private string realPassword 
-		{
-			get { return ConfiguracionAccesoSection.RealPassword; }
-		}
-		private string server 
-		{
-			get { return ConfiguracionAccesoSection.Server; }
-		}
-		private string dataBase 
-		{
-			get { return ConfiguracionAccesoSection.DataBase; }
-		}
-		private string cnnString 
-		{
-			get { return ConfiguracionAccesoSection.CnnString; }
-		} 
-
 		internal DbConnection CreateConnection()
 		{
 			DbConnection cnn = dbpFactory.CreateConnection();
 			cnn.ConnectionString = string.Format(
-			                                      cnnString,
-			                                      server,
-			                                      dataBase,
-			                                      realUser,
-			                                      realPassword);
-
-			DbCommand cmd = dbpFactory.CreateCommand();
-			cmd.Connection = cnn;
-			cmd.CommandText = @"
-Select 
-	TS_VERSIONDB.VER
-from
-	TS_VERSIONDB
-where
-	TS_VERSIONDB.ID = 0";
-			cmd.Connection.Open();
-			int versionDb = (int)cmd.ExecuteScalar();
-			cmd.Connection.Close();
-			
-			Console.WriteLine("*** {0} ***",versionDb);
-
-			/*
-			 TODO: verificar conexion y version DB 
-			 Tengo que probar la base de datos:
-			 tendria que revisar la versión solo una vez?
-			      * Si no existe el alias de la db genera una excepción DbMngrNoAccesoDbException
-			      * Si existe el alias pero no la db genera otra excepción DbMngrNoExisteDbException
-			      * Si no corresponde la version de la db otra excepcion DbMngrVersionDbIncorrectaException
-			      * Si no hubiera permisos en algun caso genera otra excepcion DbMngrPermisosDbException
-			 despues tengo que agregar los scripts de creacion y actualizacion como recursos y ejecutarlos			 	
-			 */
-			
+			                                      CfgDbMngr.Cfg.CnnString,
+			                                      CfgDbMngr.Cfg.Server,
+			                                      CfgDbMngr.Cfg.DataBaseName,
+			                                      CfgDbMngr.Cfg.RealUser,
+			                                      CfgDbMngr.Cfg.RealPassword);
 			return cnn;
 		}
 		internal DbDataAdapter CreateDataAdapter()
@@ -182,7 +108,7 @@ where
 			par.Value = value;
 			return par;
 		}
-		
+
 		public int FillUsuarios(DataTable tablaUsuarios)
 		{
 			DbDataAdapter da = CreateDataAdapter(
@@ -305,42 +231,44 @@ static void ServiceOutput(object sender, ServiceOutputEventArgs e)
 
 		}
 */
-		
+
+		public void VerificarVersionDb(DbConnection cnn)
+		{
+			DbCommand cmd = dbpFactory.CreateCommand();
+			cmd.Connection = cnn;
+			cmd.CommandText = @"
+Select 
+	TS_VERSIONDB.VER
+from
+	TS_VERSIONDB
+where
+	TS_VERSIONDB.ID = 0";
+			cmd.Connection.Open();
+			int versionDb = (int)cmd.ExecuteScalar();
+			cmd.Connection.Close();
+			
+			Console.WriteLine("*** {0} ***",versionDb);
+
+/*
+			 //TODO: verificar conexion y version DB 
+			 Tengo que probar la base de datos:
+			 tendria que revisar la versión solo una vez?
+			      * Si no existe el alias de la db genera una excepción DbMngrNoAccesoDbException
+			      * Si existe el alias pero no la db genera otra excepción DbMngrNoExisteDbException
+			      * Si no corresponde la version de la db otra excepcion DbMngrVersionDbIncorrectaException
+			      * Si no hubiera permisos en algun caso genera otra excepcion DbMngrPermisosDbException
+			 despues tengo que agregar los scripts de creacion y actualizacion como recursos y ejecutarlos
+*/		
+		}
+
 		public void ActualizarDb()
 		{
 			
 		}
 		
-		public void SeleccionarAccesoDb(string nombre)
-		{
-			if (config == null) 
-				config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-			
-			config.AppSettings.Settings.Add("AccesoDbSeleccionado", nombre);
-			
-			config.Save(ConfigurationSaveMode.Full, true);
-		}
-		
-		public void AgregarAccesoDb(string nombre, string providerName, string cnnString, string server, string dataBase, string realUser, string realPassword)
-		{
-			if (config == null) 
-				config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-
-			ConfiguracionAccesoSection section = new ConfiguracionAccesoSection();
-			section.CnnString = cnnString; 
-			section.ProviderName = providerName;
-			section.Server = server;
-			section.DataBase = dataBase;
-			section.RealUser = realUser;
-			section.RealPassword = realPassword;
-			
-			config.Sections.Add(nombre,section);
-			config.Save(ConfigurationSaveMode.Full, true);
-		}
-		
 		public void CrearUsuario(string user, string password)
 		{
-			// TODO: Agregar algo para verificar que el usuario actual puede hacer esto y que está conectado		
+			//TODO: Agregar algo para verificar que el usuario actual puede hacer esto y que está conectado		
 			DbCommand cmd = CreateCommand("SPS_NEW_USUARIO");
 			cmd.CommandType = CommandType.StoredProcedure;
 			cmd.Parameters.Add(CreateParameter(

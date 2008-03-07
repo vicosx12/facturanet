@@ -1,13 +1,9 @@
-// Coneccion.cs created with MonoDevelop
-// User: andres at 20:16 29/01/2008
-//
-//
 using System;
 using System.Data;
 using System.Data.Common;
 using AmUtil;
 
-namespace FacturaNet.FnNegocio
+namespace FacturaNet.FnAccesoDb
 {
 	public class SesionMngr
 	{

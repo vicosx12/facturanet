@@ -1,12 +1,12 @@
 // project created on 06/02/2008 at 19:43
 using System;
 using Gtk;
-using FacturaNet.FnNegocio;
+using FacturaNet.FnAccesoDb;
 using AmUtil;
 
 namespace FacturaNet.FnGtk
 {
-	class MainClass
+	public class MainClass
 	{
 		public static bool CmdMode(string[] args)
 		{

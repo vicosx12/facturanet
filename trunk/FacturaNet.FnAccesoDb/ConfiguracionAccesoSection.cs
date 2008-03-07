@@ -20,7 +20,7 @@ using System;
 using AmUtil;
 using System.Configuration;
 
-namespace FacturaNet.FnNegocio
+namespace FacturaNet.FnAccesoDb
 {
 	public sealed class ConfiguracionAccesoSection : ConfigurationSection
 	{

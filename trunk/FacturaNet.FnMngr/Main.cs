@@ -16,7 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 using System;
-using FacturaNet.FnNegocio;
+using FacturaNet.FnAccesoDb;
 using AmUtil;
 using System.Reflection;
 
@@ -29,7 +29,7 @@ namespace FacturaNet.FnMngr
 			if (args.Length > 0)
 			{
 				switch (args[0])
-				{
+				{					
 					//HACK: hay que mejorar la lectura de las opciones de linea de comandos
 					case "--actualizar_db" :
 						DbMngr.Db.ActualizarDb();
@@ -42,7 +42,7 @@ namespace FacturaNet.FnMngr
 						Console.WriteLine("AYUDA");
 						break;
 					case "--agregar_acceso_db" :
-						DbMngr.Db.AgregarAccesoDb(
+						CfgDbMngr.Cfg.AgregarAccesoDb(
 						                             args[1], //Nombre
 						                             args[2], //ProviderName
 						                             args[3], //CnnString
@@ -52,8 +52,20 @@ namespace FacturaNet.FnMngr
 						                             args[7]  //RealPassword
 						                          );
 						break;
+					case "--crear_acceso_defecto" :
+						CfgDbMngr.Cfg.AgregarAccesoDb(
+						                             "firebird", 
+						                             "FirebirdSql.Data.FirebirdClient",
+						                             "a",//DataSource={0};Database={1};UserID={2};Password={3}", 
+						                             "localhost",
+						                             "facturanet",
+						                             "SYSDBA", 
+						                             "masterkey"
+						                          );
+						CfgDbMngr.Cfg.SeleccionarAccesoDb(args[1]);
+						break;	
 					case "--seleccionar_acceso_db" :
-						DbMngr.Db.SeleccionarAccesoDb(args[1]);
+						CfgDbMngr.Cfg.SeleccionarAccesoDb(args[1]);
 						break;	
 					case "--prb1" :
 						string e = Util.EncriptacionPropia("andrés");

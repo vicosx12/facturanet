@@ -37,7 +37,7 @@
 
 using System;
 using Gtk;
-using FacturaNet.FnNegocio;
+using FacturaNet.FnAccesoDb;
 
 namespace FacturaNet.FnGtk
 {
@@ -64,7 +64,7 @@ namespace FacturaNet.FnGtk
 		}
 
 		protected virtual void OnBtnAceptarClicked (object sender, System.EventArgs e)
-		{
+		{		
 			if (SesionMngr.Sesion.Conectar(txtNombre.Text,txtClave.Text)) 
 				Application.Quit();
 			else if (++intentos < 3)

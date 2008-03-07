@@ -7,7 +7,7 @@ namespace FacturaNet
 	{
 		public static void Main(string[] args)
 		{
-			Console.WriteLine("FacturaNet");
+			FacturaNet.FnGtk.MainClass.Main(args);
 		}
 	}
 }

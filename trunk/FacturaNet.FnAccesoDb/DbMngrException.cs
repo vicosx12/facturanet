@@ -18,7 +18,7 @@
 
 using System;
 
-namespace FacturaNet.FnNegocio
+namespace FacturaNet.FnAccesoDb
 {
 	public abstract class DbMngrException : ApplicationException
 	{
