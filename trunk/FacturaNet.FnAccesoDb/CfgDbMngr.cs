@@ -49,12 +49,37 @@ namespace FacturaNet.FnAccesoDb
 			{
 				if (configuracionAccesoSection == null) 
 				{
-					if (config == null) 
-						config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-
-					string nombreAcceso;
-					nombreAcceso = config.AppSettings.Settings["AccesoDbSeleccionado"].Value;				
-					configuracionAccesoSection = (ConfiguracionAccesoSection) config.Sections.Get(nombreAcceso);
+					if (config == null)
+					{
+						try 
+						{
+							config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+						}
+						catch (ConfigurationErrorsException e)
+						{
+							throw new CfgDbMngrErrorFormatoConfigException("Error en el archivo de configuración",e);
+						}
+					}
+					
+					KeyValueConfigurationElement seleccionAccesoDb = config.AppSettings.Settings["AccesoDbSeleccionado"]; 
+					
+					if (seleccionAccesoDb == null)
+						throw new CfgDbMngrNoSeleccionadaException("No se definió el acceso a base de datos"); 
+				
+					ConfiguracionAccesoSection seccionAccesoDb;
+					try
+					{
+						 seccionAccesoDb = (ConfiguracionAccesoSection) config.Sections.Get(seleccionAccesoDb.Value);
+					}
+					catch (ConfigurationException e)
+					{
+						throw new CfgDbMngrErrorFormatoConfigException("Error en el archivo de configuración",e);
+					}
+					
+					if ( seccionAccesoDb == null)
+						throw new CfgDbMngrNoSeleccionadaException("No se definió la sección con la configuración seleccionada"); 
+					
+					configuracionAccesoSection = seccionAccesoDb;
 				}
 				return configuracionAccesoSection;
 			}

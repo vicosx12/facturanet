@@ -22,9 +22,6 @@ namespace FacturaNet.FnAccesoDb
 {
 	public abstract class DbMngrException : ApplicationException
 	{
-		public DbMngrException()
-		{
-		}		
 		public DbMngrException(string message) : base(message)
 		{
 		}
@@ -34,30 +31,27 @@ namespace FacturaNet.FnAccesoDb
 		{
 		}	
 	}
-	
-	public class DbMngrNoAccesoDbException : DbMngrException
+
+	public class DbMngrConfiguracionAccesoException : DbMngrException
 	{
-		public DbMngrNoAccesoDbException()
-		{
-		}		
-		public DbMngrNoAccesoDbException(string message) : base(message)
-		{
-		}
-		public DbMngrNoAccesoDbException(
+		public DbMngrConfiguracionAccesoException(
 		                                 string message, 
 		                                 Exception inner) : base(message, inner)
 		{
 		}
 	}
-
-	public class DbMngrNoExisteDbException : DbMngrException
+	
+	public class DbMngrPermisosDbException : DbMngrException
 	{
-		public DbMngrNoExisteDbException()
-		{
-		}		
-		public DbMngrNoExisteDbException(string message) : base(message)
+		public DbMngrPermisosDbException(
+		                                 string message, 
+		                                 Exception inner) : base(message, inner)
 		{
 		}
+	}
+	
+	public class DbMngrNoExisteDbException : DbMngrException
+	{
 		public DbMngrNoExisteDbException(
 		                                 string message, 
 		                                 Exception inner) : base(message, inner)
@@ -65,6 +59,24 @@ namespace FacturaNet.FnAccesoDb
 		}
 	}
 	
+	public class DbMngrNoAccesoServidorException : DbMngrException
+	{
+		public DbMngrNoAccesoServidorException(
+		                                 string message, 
+		                                 Exception inner) : base(message, inner)
+		{
+		}
+	}
+	
+	public class DbMngrErrorDesconocidoException : DbMngrException
+	{
+		public DbMngrErrorDesconocidoException(
+		                                 string message, 
+		                                 Exception inner) : base(message, inner)
+		{
+		}
+	}
+
 	public class DbMngrVersionDbIncorrectaException : DbMngrException
 	{
 		private int versionDb;
@@ -85,41 +97,13 @@ namespace FacturaNet.FnAccesoDb
 			this.versionDb = versionDb;
 			this.versionEsperada = versionEsperada;
 		}
-		
-		public DbMngrVersionDbIncorrectaException(int versionDb, int versionEsperada)
-		{
-			SetVersiones(versionDb, versionEsperada);
-		}		
-		
+
 		public DbMngrVersionDbIncorrectaException(
 		                                          string message, 
 		                                          int versionDb, 
 		                                          int versionEsperada) : base(message)
 		{
 			SetVersiones(versionDb, versionEsperada);
-		}
-		public DbMngrVersionDbIncorrectaException(
-		                                          string message, 
-		                                          Exception inner, 
-		                                          int versionDb, 
-		                                          int versionEsperada) : base(message, inner)
-		{
-			SetVersiones(versionDb, versionEsperada);
-		}
-	}
-	
-	public class DbMngrPermisosDbException : DbMngrException
-	{
-		public DbMngrPermisosDbException()
-		{
-		}		
-		public DbMngrPermisosDbException(string message) : base(message)
-		{
-		}
-		public DbMngrPermisosDbException(
-		                                 string message, 
-		                                 Exception inner) : base(message, inner)
-		{
 		}
 	}
 }

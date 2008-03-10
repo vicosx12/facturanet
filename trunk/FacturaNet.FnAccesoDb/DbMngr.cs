@@ -123,6 +123,7 @@ FROM
 		
 		public SesionMngr CreateSesion()
 		{
+			VerificarVersionDb();
 			return new SesionMngr(this);
 		}
 		
@@ -232,33 +233,65 @@ static void ServiceOutput(object sender, ServiceOutputEventArgs e)
 		}
 */
 
-		public void VerificarVersionDb(DbConnection cnn)
+		public void VerificarVersionDb()
 		{
-			DbCommand cmd = dbpFactory.CreateCommand();
-			cmd.Connection = cnn;
-			cmd.CommandText = @"
+			int versionDb;
+			
+			DbCommand cmd;
+			try
+			{
+				cmd = CreateCommand(@"
 Select 
 	TS_VERSIONDB.VER
 from
 	TS_VERSIONDB
 where
-	TS_VERSIONDB.ID = 0";
-			cmd.Connection.Open();
-			int versionDb = (int)cmd.ExecuteScalar();
-			cmd.Connection.Close();
-			
-			Console.WriteLine("*** {0} ***",versionDb);
+	TS_VERSIONDB.ID = 0");
+			}
+			catch (CfgDbMngrException e)
+			{
+				throw new DbMngrConfiguracionAccesoException("Error con la configuración del acceso a la base de datos",e);
+			}
 
-/*
-			 //TODO: verificar conexion y version DB 
-			 Tengo que probar la base de datos:
-			 tendria que revisar la versión solo una vez?
-			      * Si no existe el alias de la db genera una excepción DbMngrNoAccesoDbException
-			      * Si existe el alias pero no la db genera otra excepción DbMngrNoExisteDbException
-			      * Si no corresponde la version de la db otra excepcion DbMngrVersionDbIncorrectaException
-			      * Si no hubiera permisos en algun caso genera otra excepcion DbMngrPermisosDbException
-			 despues tengo que agregar los scripts de creacion y actualizacion como recursos y ejecutarlos
-*/		
+			
+			try
+			{
+				cmd.Connection.Open();			
+				versionDb = (int)cmd.ExecuteScalar();
+			}
+			catch (FirebirdSql.Data.FirebirdClient.FbException e)
+			{
+				if (
+				    (e.ErrorCode == -2146233087) && (
+				                                     (e.Message.Contains("user name") && e.Message.Contains("password")) 
+				                                     || (e.Message.Contains("usuario") && e.Message.Contains("clave"))
+					))
+					throw new DbMngrPermisosDbException("Usuario y clave internos no válidos",e);
+				else if ((e.ErrorCode == -2146233087) && (
+				                                          (e.Message.Contains("file open"))
+				                                          || (e.Message.Contains("archivo"))
+				    ))
+					throw new DbMngrNoExisteDbException("No existe la base de datos",e);
+				else if ((e.ErrorCode == -2146233087) && (
+				                                          (e.Message.Contains("network request"))
+				                                          || (e.Message.Contains("red") && e.Message.Contains("solicitud"))
+				    ))
+					throw new DbMngrNoAccesoServidorException("No se puede conectar con el servidor de la base de datos",e);
+				else
+					throw new DbMngrErrorDesconocidoException("Error desconocido",e);
+			}
+			finally
+			{
+				cmd.Connection.Close();
+			}
+			
+			//Console.WriteLine("*** {0} ***",versionDb);
+			
+			if (versionDb != VersionEsperada) 
+				throw new DbMngrVersionDbIncorrectaException(
+				                                             "La versión de la base de datos no corresponde con los binarios",
+				                                             versionDb, 
+				                                             VersionEsperada);
 		}
 
 		public void ActualizarDb()
