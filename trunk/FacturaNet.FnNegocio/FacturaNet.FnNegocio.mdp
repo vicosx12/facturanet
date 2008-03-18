@@ -22,6 +22,5 @@
     <ProjectReference type="Gac" localcopy="True" refto="System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Project" localcopy="True" refto="AmUtil" />
     <ProjectReference type="Gac" localcopy="True" refto="System.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-    <ProjectReference type="Assembly" localcopy="True" refto="../../../../usr/lib/mono/gac/FirebirdSql.Data.FirebirdClient/2.0.1.0__3750abcc3150b00c/FirebirdSql.Data.FirebirdClient.dll" />
   </References>
 </Project>
