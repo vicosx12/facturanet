@@ -26,65 +26,40 @@ namespace FacturaNet.FnMngr
 	{
 		public static void Main(string[] args)
 		{
-			if (args.Length > 0)
+			Opciones opciones = new Opciones(args);
+			
+			switch (opciones.Modo)
 			{
-				switch (args[0])
-				{					
-					//HACK: hay que mejorar la lectura de las opciones de linea de comandos
-					case "--actualizar_db" :
-						DbMngr.Db.ActualizarDb();
-						break;
-					case "--crear_usuario" : 
-						// FIXME: Esto debería hacerse desde otro lugar
-						DbMngr.Db.CrearUsuario(args[1], args[2]);
-						break;
-					case "--help" :
-						Console.WriteLine("AYUDA");
-						break;
-					case "--agregar_acceso_db" :
-						CfgDbMngr.Cfg.AgregarAccesoDb(
-						                             args[1], //Nombre
-						                             args[2], //ProviderName
-						                             args[3], //CnnString
-						                             args[4], //Server
-						                             args[5], //DataBase
-						                             args[6], //RealUser
-						                             args[7]  //RealPassword
-						                          );
-						break;
-					case "--crear_acceso_defecto" :
-						CfgDbMngr.Cfg.AgregarAccesoDb(
-						                             "firebird", 
-						                             "FirebirdSql.Data.FirebirdClient",
-						                             "a",//DataSource={0};Database={1};UserID={2};Password={3}", 
-						                             "localhost",
-						                             "facturanet",
-						                             "SYSDBA", 
-						                             "masterkey"
-						                          );
-						CfgDbMngr.Cfg.SeleccionarAccesoDb(args[1]);
-						break;	
-					case "--seleccionar_acceso_db" :
-						CfgDbMngr.Cfg.SeleccionarAccesoDb(args[1]);
-						break;	
-					case "--prb1" :
-						string e = Util.EncriptacionPropia("andrés");
-						Console.WriteLine(e);
-						Console.WriteLine(Util.DesencriptacionPropia(e));
-						break;		
-					case "--prb2" :
-						Console.WriteLine(Util.CalcularSHA1("0"));
-						break;		
-					case "--prb3" :
-						Assembly a = Assembly.GetExecutingAssembly();
-						//string [] resNames = a.GetManifestResourceNames();
-						Console.WriteLine((a.GetManifestResourceStream("recurso.txt")).Length);
-						break;		
-					default :
-						Console.WriteLine("Parametro desconocido");
-						break;
-				}
+				case ModoDeEjecucion.Actualizar_db :
+					DbMngr.Db.ActualizarDb();
+					break;
+				case ModoDeEjecucion.Agregar_acceso_db :
+					CfgDbMngr.Cfg.AgregarAccesoDb(
+					                              opciones.AccesoDb_Nombre,
+					                              opciones.AccesoDb_ProviderName,
+					                              opciones.AccesoDb_CnnString,
+					                              opciones.AccesoDb_Server,
+					                              opciones.AccesoDb_DataBase,
+					                              opciones.AccesoDb_RealUser,
+					                              opciones.AccesoDb_RealPassword);
+					
+					break;
+				case ModoDeEjecucion.Crear_usuario :
+					// FIXME: Esto debería hacerse desde otro lugar, no es muy seguro permitir crear usuarios asi nomas...
+					DbMngr.Db.CrearUsuario(
+					                       opciones.Usuario_Nombre, 
+					                       opciones.Usuario_Clave);
+					break;
+				case ModoDeEjecucion.Seleccionar_acceso_db :
+					CfgDbMngr.Cfg.SeleccionarAccesoDb(
+					                                  opciones.AccesoDb_Nombre);					
+					break;
 			}
+			/*
+			Assembly a = Assembly.GetExecutingAssembly();
+			//string [] resNames = a.GetManifestResourceNames();
+			Console.WriteLine((a.GetManifestResourceStream("recurso.txt")).Length);
+			*/
 		}
 	}
 }

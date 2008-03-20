@@ -22,21 +22,21 @@ using System.Runtime.CompilerServices;
 // Change them to the values specific to your project.
 
 [assembly: AssemblyTitle("FacturaNet.FnMngr")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("")]
-[assembly: AssemblyCopyright("")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
+[assembly: AssemblyDescription("Configura las opciones de FacturaNet (acceso a base de datos, etc).")]
+[assembly: AssemblyCopyright("GNU General Public License")]
 
 // The assembly version has the format "{Major}.{Minor}.{Build}.{Revision}".
 // If the build and revision are set to '*' they will be updated automatically.
-
 [assembly: AssemblyVersion("1.0.*.*")]
 
 // The following attributes are used to specify the signing key for the assembly, 
 // if desired. See the Mono documentation for more information about signing.
-
 [assembly: AssemblyDelaySign(false)]
 [assembly: AssemblyKeyFile("")]
+
+[assembly: Commons.About("Parte del sistema FacturaNet")]
+[assembly: Commons.Author("Andrés Moschini")]
+[assembly: Commons.UsageComplement("[DATOS]...\nPara obtener los valores correspondientes a cada modo agregue help luego del modo.")]
+[assembly: Commons.AdditionalInfo("")]
+[assembly: Commons.ReportBugsTo("andresmoschini+facturanet@gmail.com")]
+

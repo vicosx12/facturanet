@@ -54,26 +54,22 @@ namespace AmUtil
 				return _mCSP;
 			}
 		}
-		private static ICryptoTransform _encriptador = null;
 		private static ICryptoTransform encriptador
 		{
 			get
 			{
-				if (_encriptador == null)
-					_encriptador = mCSP.CreateEncryptor(mCSP.Key, mCSP.IV);
-				return _encriptador;
+				return mCSP.CreateEncryptor(mCSP.Key, mCSP.IV);
 			}
 		}
-		private static ICryptoTransform _desencriptador = null; 
+
 		private static ICryptoTransform desencriptador
 		{
 			get
 			{
-				if (_desencriptador == null)
-					_desencriptador = mCSP.CreateDecryptor(mCSP.Key, mCSP.IV);
-				return _desencriptador;
+				return mCSP.CreateDecryptor(mCSP.Key, mCSP.IV);
 			}
 		}
+
 		public static string EncriptacionPropia(string original)
 		{
 			MemoryStream ms = new MemoryStream(); 

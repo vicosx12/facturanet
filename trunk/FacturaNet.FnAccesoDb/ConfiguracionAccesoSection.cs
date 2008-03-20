@@ -134,7 +134,10 @@ namespace FacturaNet.FnAccesoDb
 	    }
 	    public string RealPassword
 	    {
-	        get { return Util.DesencriptacionPropia((string)this["RealPassword"]); }
+	        get 
+			{ 
+				return Util.DesencriptacionPropia((string)this["RealPassword"]); 
+			}
 	        set
 	        {
 	            ThrowIfReadOnly("RealPassword");

@@ -13,7 +13,7 @@ pero para la primer instalación aún necesita unos pequeños ajustes manuales:
             facturanet = {ruta de la base de datos}
 
     * Configuración del acceso a la base de datos
-        FacturaNet.FnMngr.exe --agregar_acceso_db firebird FirebirdSql.Data.FirebirdClient DataSource={0};Database={1};UserID={2};Password={3} localhost facturanet SYSDBA masterkey
+        FacturaNet.FnMngr.exe --agregar_acceso_db firebird FirebirdSql.Data.FirebirdClient "DataSource={0};Database={1};UserID={2};Password={3}" localhost facturanet SYSDBA masterkey
         FacturaNet.FnMngr.exe --seleccionar_acceso_db firebird
 
     * Creación de la base de datos (si no existe la crea, si existe la actualiza)
