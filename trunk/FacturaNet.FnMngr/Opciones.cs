@@ -85,7 +85,6 @@ namespace FacturaNet.FnMngr
 
 		private void AyudaModo()
 		{
-			//HACK: Mejorar esto
 			switch (Modo)
 			{
 				case ModoDeEjecucion.Actualizar_db :

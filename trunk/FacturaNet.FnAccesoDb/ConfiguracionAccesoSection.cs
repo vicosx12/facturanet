@@ -24,7 +24,6 @@ namespace FacturaNet.FnAccesoDb
 {
 	public sealed class ConfiguracionAccesoSection : ConfigurationSection
 	{
-		//HACK: Hay que mejorar este enchastre
 	    private static ConfigurationPropertyCollection _Properties;
 		private static bool _ReadOnly;
 

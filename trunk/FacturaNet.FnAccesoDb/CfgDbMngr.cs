@@ -127,7 +127,6 @@ namespace FacturaNet.FnAccesoDb
 		
 		public void AgregarAccesoDb(string nombre, string providerName, string cnnString, string server, string dataBase, string realUser, string realPassword)
 		{
-			//TODO: no funciona
 			if (config == null) 
 				config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 

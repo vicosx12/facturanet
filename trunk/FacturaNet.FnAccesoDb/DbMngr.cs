@@ -301,7 +301,7 @@ where
 		
 		public void CrearUsuario(string user, string password)
 		{
-			//TODO: Agregar algo para verificar que el usuario actual puede hacer esto y que está conectado		
+			//TODO: Agregar algo para que no cualquiera pueda hace esto		
 			DbCommand cmd = CreateCommand("SPS_NEW_USUARIO");
 			cmd.CommandType = CommandType.StoredProcedure;
 			cmd.Parameters.Add(CreateParameter(
