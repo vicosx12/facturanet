@@ -22,7 +22,7 @@ using Commons.GetOptions;
 
 namespace FacturaNet.FnMngr
 {
-	public class Opciones : Options
+	public class OpcionesGO : Options
 	{
 		[Option ("Actualiza la base de datos.", ShortForm='u', LongForm="actualizar_db")]
 		public bool actualizar_db 
@@ -126,7 +126,7 @@ namespace FacturaNet.FnMngr
 			System.Environment.Exit(1);
 		}
 		
-		public Opciones(string[] args) : base ()		                          
+		public OpcionesGO(string[] args) : base ()		                          
 		{
 			base.ParsingMode = OptionsParsingMode.GNU_DoubleDash;
 			base.ProcessArgs(args);

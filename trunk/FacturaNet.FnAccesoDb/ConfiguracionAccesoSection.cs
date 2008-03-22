@@ -135,12 +135,12 @@ namespace FacturaNet.FnAccesoDb
 	    {
 	        get 
 			{ 
-				return Util.DesencriptacionPropia((string)this["RealPassword"]); 
+				return Util.MiDesencriptacion((string)this["RealPassword"], "bws623er", "ma82ge4a"); 
 			}
 	        set
 	        {
 	            ThrowIfReadOnly("RealPassword");
-	            this["RealPassword"] = Util.EncriptacionPropia(value);
+	            this["RealPassword"] = Util.MiEncriptacion(value, "bws623er", "ma82ge4a");
 	        }
 	    }
 	    public string RealUser

@@ -27,74 +27,49 @@ namespace AmUtil
 {
 	public class Util
 	{
-		public static string BytesToStr(byte[] bytes)
-		{
-			StringBuilder builder = new StringBuilder(bytes.Length);
-			foreach (byte b in bytes)
-				builder.Append(b.ToString("X2"));
-			return builder.ToString();
-		}
 		public static string CalcularSHA1(string original)
 		{
 			SHA1CryptoServiceProvider hasher = new SHA1CryptoServiceProvider();
 			return Convert.ToBase64String(hasher.ComputeHash(System.Text.Encoding.UTF8.GetBytes(original)));
 		}
-		
-		private static SymmetricAlgorithm _mCSP = null;
-		private static SymmetricAlgorithm mCSP 
-		{
-			get
-			{
-				if (_mCSP == null)
-				{
-					_mCSP = new DESCryptoServiceProvider();
-					mCSP.Key = Encoding.UTF8.GetBytes("bws623er");
-					mCSP.IV = Encoding.UTF8.GetBytes("ma82ge4a");					
-				}
-				return _mCSP;
-			}
-		}
-		private static ICryptoTransform encriptador
-		{
-			get
-			{
-				return mCSP.CreateEncryptor(mCSP.Key, mCSP.IV);
-			}
-		}
 
-		private static ICryptoTransform desencriptador
+		private static string EncriptarDesencriptar(string cadena, bool encriptar, string key, string IV)
 		{
-			get
-			{
-				return mCSP.CreateDecryptor(mCSP.Key, mCSP.IV);
-			}
-		}
-
-		public static string EncriptacionPropia(string original)
-		{
-			MemoryStream ms = new MemoryStream(); 
+			DESCryptoServiceProvider mCSP = new DESCryptoServiceProvider();
+			mCSP.Key = Encoding.UTF8.GetBytes(key);
+			mCSP.IV = Encoding.UTF8.GetBytes(IV);
+					
+			MemoryStream ms = new MemoryStream();
+			
 			CryptoStream cs = new CryptoStream(
 			                      ms, 
-			                      encriptador,
+			                      encriptar ? mCSP.CreateEncryptor(mCSP.Key, mCSP.IV)
+			                                   : mCSP.CreateDecryptor(mCSP.Key, mCSP.IV),
 			                      CryptoStreamMode.Write);
-			cs.Write(Encoding.UTF8.GetBytes(original), 0, Encoding.UTF8.GetBytes(original).Length);
+
+			byte[] bytes = encriptar ? 
+				Encoding.UTF8.GetBytes(cadena) 
+					: Convert.FromBase64String(cadena);
+			
+			cs.Write(bytes, 0,bytes.Length);
 			cs.FlushFinalBlock();
 			cs.Close();
-			return Convert.ToBase64String(ms.ToArray());
+			
+			return encriptar ? 
+				Convert.ToBase64String(ms.ToArray()) 
+					: Encoding.UTF8.GetString(ms.ToArray());
 		}
 		
-		public static string DesencriptacionPropia(string encriptado)
+		public static string MiEncriptacion(string original, string key, string IV)
 		{
-			MemoryStream ms = new MemoryStream(); 
-			CryptoStream cs = new CryptoStream(
-			                      ms,
-			                      desencriptador,
-			                      CryptoStreamMode.Write);
-			cs.Write(Convert.FromBase64String(encriptado), 0, Convert.FromBase64String(encriptado).Length);
-			cs.FlushFinalBlock();
-			cs.Close();
-			return Encoding.UTF8.GetString(ms.ToArray());
+			return EncriptarDesencriptar(original, true, key, IV);
 		}
+		
+		public static string MiDesencriptacion(string encriptado, string key, string IV)
+		{
+			return EncriptarDesencriptar(encriptado, false, key, IV);
+		}
+
 		public static void Log(string texto)
 		{
 			Console.WriteLine(texto);

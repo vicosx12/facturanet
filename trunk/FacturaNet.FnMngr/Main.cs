@@ -26,7 +26,10 @@ namespace FacturaNet.FnMngr
 	{
 		public static void Main(string[] args)
 		{
-			Opciones opciones = new Opciones(args);
+			OpcionesN opcionesN = new OpcionesN(args);
+			Console.WriteLine("Modo: {0}",opcionesN.Modo);
+			
+			OpcionesGO opciones = new OpcionesGO(args);
 			
 			switch (opciones.Modo)
 			{
