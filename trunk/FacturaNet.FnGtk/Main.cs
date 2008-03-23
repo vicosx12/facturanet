@@ -3,6 +3,7 @@ using System;
 using Gtk;
 using FacturaNet.FnAccesoDb;
 using AmUtil;
+using FacturaNet.FnConfiguracion;
 
 namespace FacturaNet.FnGtk
 {
@@ -10,6 +11,8 @@ namespace FacturaNet.FnGtk
 	{
 		public static void Main (string[] args)
 		{
+			ConfigMngr.Inicializar(args);
+			
 			Application.Init ();
 		
 			SesionMngr sesion = DbMngr.Db.CreateSesion();

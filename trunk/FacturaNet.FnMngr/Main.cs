@@ -19,6 +19,7 @@ using System;
 using FacturaNet.FnAccesoDb;
 using AmUtil;
 using System.Reflection;
+using FacturaNet.FnConfiguracion;
 
 namespace FacturaNet.FnMngr
 {
@@ -26,6 +27,8 @@ namespace FacturaNet.FnMngr
 	{
 		public static void Main(string[] args)
 		{
+			Configuracion cfg = new Configuracion(args);
+			/*
 			OpcionesN opcionesN = new OpcionesN(args);
 			Console.WriteLine("Modo: {0}",opcionesN.Modo);
 			
@@ -56,8 +59,9 @@ namespace FacturaNet.FnMngr
 				case ModoDeEjecucion.Seleccionar_acceso_db :
 					CfgDbMngr.Cfg.SeleccionarAccesoDb(
 					                                  opciones.AccesoDb_Nombre);					
-					break;
+					break;					
 			}
+			*/
 			/*
 			Assembly a = Assembly.GetExecutingAssembly();
 			//string [] resNames = a.GetManifestResourceNames();

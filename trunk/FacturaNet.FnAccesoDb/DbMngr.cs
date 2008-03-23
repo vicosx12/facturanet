@@ -21,6 +21,7 @@ using System.Data;
 using System.Data.Common;
 using FirebirdSql.Data.FirebirdClient;
 using FirebirdSql.Data.Isql;
+using FacturaNet.FnConfiguracion;
 using AmUtil;
 
 namespace FacturaNet.FnAccesoDb
@@ -51,7 +52,8 @@ namespace FacturaNet.FnAccesoDb
 					foreach (DataRow row in DbProviderFactories.GetFactoryClasses().Rows)
 						Console.WriteLine("{0}\t{1}\t{2}\t{3}\n",row[0], row[1], row[2], row[3]);
 					Console.WriteLine(); Console.WriteLine();
-					_dbpFactory = DbProviderFactories.GetFactory(CfgDbMngr.Cfg.ProviderName);
+					//_dbpFactory = DbProviderFactories.GetFactory(CfgDbMngr.Cfg.ProviderName);
+					_dbpFactory = DbProviderFactories.GetFactory(ConfigMngr.Configuracion.AccesoDbProviderName);
 				}
 				return _dbpFactory;
 			}
@@ -61,11 +63,19 @@ namespace FacturaNet.FnAccesoDb
 		{
 			DbConnection cnn = dbpFactory.CreateConnection();
 			cnn.ConnectionString = string.Format(
-			                                      CfgDbMngr.Cfg.CnnString,
-			                                      CfgDbMngr.Cfg.Server,
-			                                      CfgDbMngr.Cfg.DataBaseName,
-			                                      CfgDbMngr.Cfg.RealUser,
-			                                      CfgDbMngr.Cfg.RealPassword);
+			                                     ConfigMngr.Configuracion.AccesoDbCnnString,
+			                                     ConfigMngr.Configuracion.AccesoDbServer,
+			                                     ConfigMngr.Configuracion.AccesoDbDataBase,
+			                                     ConfigMngr.Configuracion.AccesoDbRealUser,
+			                                     Util.MiDesencriptacion(
+			                                                            ConfigMngr.Configuracion.AccesoDbRealPassword, 
+			                                                            "bws623er", 
+			                                                            "ma82ge4a"));
+			                                     //CfgDbMngr.Cfg.CnnString,
+			                                      //CfgDbMngr.Cfg.Server,
+			                                      //CfgDbMngr.Cfg.DataBaseName,
+			                                      //CfgDbMngr.Cfg.RealUser,
+			                                      //CfgDbMngr.Cfg.RealPassword);
 			return cnn;
 		}
 		internal DbDataAdapter CreateDataAdapter()
@@ -238,7 +248,7 @@ static void ServiceOutput(object sender, ServiceOutputEventArgs e)
 			int versionDb;
 			
 			DbCommand cmd;
-			try
+			//try
 			{
 				cmd = CreateCommand(@"
 Select 
@@ -248,11 +258,13 @@ from
 where
 	TS_VERSIONDB.ID = 0");
 			}
+			/*
+			 TODO hay que ver que hacer con esta excepcion
 			catch (CfgDbMngrException e)
 			{
 				throw new DbMngrConfiguracionAccesoException("Error con la configuración del acceso a la base de datos",e);
 			}
-
+			 */
 			
 			try
 			{
@@ -284,8 +296,6 @@ where
 			{
 				cmd.Connection.Close();
 			}
-			
-			//Console.WriteLine("*** {0} ***",versionDb);
 			
 			if (versionDb != VersionEsperada) 
 				throw new DbMngrVersionDbIncorrectaException(

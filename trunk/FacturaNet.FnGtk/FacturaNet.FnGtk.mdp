@@ -34,6 +34,7 @@
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
     <ProjectReference type="Project" localcopy="True" refto="AmUtil" />
     <ProjectReference type="Project" localcopy="True" refto="FacturaNet.FnAccesoDb" />
+    <ProjectReference type="Project" localcopy="True" refto="FacturaNet.FnConfiguracion" />
   </References>
   <Deployment.LinuxDeployData scriptName="facturanetgtk" />
   <GtkDesignInfo gtkVersion="2.10.2" />

@@ -15,12 +15,9 @@
   </Configurations>
   <Contents>
     <File name="AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
-    <File name="ConfiguracionAccesoSection.cs" subtype="Code" buildaction="Compile" />
-    <File name="CfgDbMngr.cs" subtype="Code" buildaction="Compile" />
     <File name="SesionMngr.cs" subtype="Code" buildaction="Compile" />
     <File name="DbMngr.cs" subtype="Code" buildaction="Compile" />
     <File name="DbMngrException.cs" subtype="Code" buildaction="Compile" />
-    <File name="CfgDbMngrException.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
@@ -28,5 +25,6 @@
     <ProjectReference type="Project" localcopy="True" refto="AmUtil" />
     <ProjectReference type="Gac" localcopy="True" refto="System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Gac" localcopy="True" refto="System.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <ProjectReference type="Project" localcopy="True" refto="FacturaNet.FnConfiguracion" />
   </References>
 </Project>
