@@ -22,28 +22,35 @@ using AmUtil;
 
 namespace FacturaNet.FnConfiguracion
 {
-	public sealed class Configuracion
-	{
-		private const string cmdArgsSection = "cmdArgsSection";  
-		private string nombreIni = "facturanet.ini";
-		private IConfigSource source;
-		ArgvConfigSource argvSource = null;
+	public sealed class ConfiguracionFn : Configuracion
+	{			
+		/* TODO
+		 * Hacer la ayuda, el cartel de la version y el grabar
+		 * 
+		 * Verificar que se grabe correctamente
+		 *  
+		 * Verificar que se creen nuevas secciones
+		 * 
+		 * Verificar que se cambie de seccion
+		 * 
+		 * Ver donde llamar el actualizarDb (usar recursos: 
+		 * 	  Assembly a = Assembly.GetExecutingAssembly();
+		 *	  //string [] resNames = a.GetManifestResourceNames();
+		 *	  Console.WriteLine((a.GetManifestResourceStream("recurso.txt")).Length);
+		 * 
+		 * Ver donde llamar el creador de usuarios
+		 *
+		 * 
+		 */		
 		
-		private bool salir = false;
-		public bool Salir
-		{
-			get { return salir; }
-		}
-				
 #region AccesoDb
 		public string AccesoDbSelectedProvider
 		{
-			get { return source.Configs["AccesoDb"].GetString("SelectedProvider","Default"); }
+			get { return Source.Configs["AccesoDb"].GetString("SelectedProvider","Default"); }
 			private set  
 			{ 
-				source.Configs["AccesoDb"].Set("SelectedProvider",value);
-				ConfiguracionSelectedProvider = source.Configs["AccesoDb_" + value];
-				
+				Source.Configs["AccesoDb"].Set("SelectedProvider",value);
+				ConfiguracionSelectedProvider = Source.Configs["AccesoDb_" + value];				
 				/*
 				foreach (string key in ConfiguracionSelectedProvider.GetKeys())
 					Console.WriteLine(key);
@@ -55,13 +62,7 @@ namespace FacturaNet.FnConfiguracion
 		}
 		
 		private IConfig ConfiguracionSelectedProvider = null;
-			
-		/*
-		private IConfig ConfiguracionSelectedProvider
-		{
-			get { return source.Configs["AccesoDb_" + AccesoDbSelectedProvider]; }
-		}
-		*/
+
 		public string AccesoDbProviderName
 		{
 			get { return ConfiguracionSelectedProvider.GetString("ProviderName","* UNDEFINED *"); }
@@ -95,53 +96,21 @@ namespace FacturaNet.FnConfiguracion
 		} 
 #endregion
 		
-		private void SetSource(string archivo)
-		{
-			source = new IniConfigSource(archivo);
-			//SI NO EXISTE?
-			/* también abrir esta? (ahi se van a grabar los cambios)
-			 * C:\Documents and Settings\[username]\Local Settings\Application Data\[Application Name]\Settings.ini
-			 * string folder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-			 */		
-		}
 		
-		public Configuracion(string[] args)
+		public ConfiguracionFn(string nombreIni, string[] args) : base(nombreIni, args)
 		{
-			if (args != null) 
-				ProcesarCommandLine(args);
-			else
-				SetSource(nombreIni);
 		}
 
-		private void ProcesarCommandLine(string[] args)
-		{
-			argvSource = new ArgvConfigSource(args);
+		public ConfiguracionFn(string nombreIni) : base(nombreIni)
+		{			
+		}		
 
-			// agrego los switchs de control de la aplicacion (no configuracion)
-			argvSource.AddSwitch (cmdArgsSection, "help", "h");
-			argvSource.AddSwitch (cmdArgsSection, "version", "v");
+		protected override void ProcesarCommandLine(string nombreIni, string[] args)
+		{
+			// agrego los switchs de control de la aplicacion (no configuracion) Esto se podrá hacer en la clase padre?
 			argvSource.AddSwitch (cmdArgsSection, "save-user", "su"); //graba los cambios de la configuración en el usuario y sale
 			//argvSource.AddSwitch (cmdArgsSection, "SaveCommon", "sc"); //graba los cambios de la configuracion para todos los usuarios y sale
 			//argvSource.AddSwitch (cmdArgsSection, "SaveIni", "si"); //graba toda la configuración en un archivo personalizado			
-			argvSource.AddSwitch (cmdArgsSection, "IniFile", "if"); //selecciona un nombre de archivo ini diferente predeterminado (no la ruta) 			
-
-
-			if (argvSource.Configs[cmdArgsSection].Get("help") != null)
-			{
-				PrintUsage();
-				salir = true;
-				return;
-			}
-			if (argvSource.Configs[cmdArgsSection].Get("version") != null) 
-			{
-				PrintVersion ();
-				salir = true;
-				return;
-			}
-			
-			// cargo los inifiles
-			SetSource(argvSource.Configs[cmdArgsSection].GetString("IniFile",nombreIni));
-						
 			// agrego el switch de seleccion de configuracion
 			argvSource.AddSwitch ("AccesoDb", "SelectedProvider", "sp"); //indica cual es la configuración seleccionada
 			// cargo los datos de accesoDb
@@ -151,10 +120,8 @@ namespace FacturaNet.FnConfiguracion
 			argvSource.AddSwitch ("AccesoDb", "RealPassword", "rp");
 			argvSource.AddSwitch ("AccesoDb", "RealUser", "ru");
 			argvSource.AddSwitch ("AccesoDb", "Server", "s");
-			
 			// seteo la configuracion seleccionada en la configuracion principal
 			AccesoDbSelectedProvider = argvSource.Configs["AccesoDb"].GetString("SelectedProvider",AccesoDbSelectedProvider);
-			
 			// seteo los datos de la configuracion en la configuraion principal
 			AccesoDbProviderName = argvSource.Configs["AccesoDb"].GetString("ProviderName",AccesoDbProviderName);
 			AccesoDbCnnString = argvSource.Configs["AccesoDb"].GetString("CnnString",AccesoDbCnnString);
@@ -172,44 +139,21 @@ namespace FacturaNet.FnConfiguracion
 			if (argvSource.Configs[cmdArgsSection].Get("save") != null) 
 			{
 				SaveConfig();
-				salir = true;
+				Salir = true;
 				return;
 			}
 		}
 
-		private void PrintUsage()
+		protected override void PrintUsage()
 		{
 			//TODO: hay que mostrar la ayuda
 			Console.WriteLine("Aca se debería mostrar la ayuda");
 		}
 		
-		private void PrintVersion()
+		protected override void PrintVersion()
 		{
 			//TODO: hay que mostrar la versión
 			Console.WriteLine("Aca se debería mostrar la version");
-		}
-		
-		private void SaveConfig()
-		{
-			//TODO: hay que hacer que se pueda grabar el ini
-			Console.WriteLine("Aca se debería grabar");
-/*
-			if (IsArg ("new")) 
-			{
-				try 
-				{
-					CreateNewFile ();
-				}
-				catch (Exception ex) 
-				{
-					ThrowError ("Could not create file: " + ex.Message);
-				}
-			}
-			if (!File.Exists (configPath)) 
-			{
-				ThrowError ("Config file does not exist");
-			}
-*/
 		}
 	}
 }

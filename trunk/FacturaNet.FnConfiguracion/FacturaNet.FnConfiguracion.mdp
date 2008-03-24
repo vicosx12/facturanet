@@ -14,7 +14,7 @@
     </Configuration>
   </Configurations>
   <Contents>
-    <File name="Configuracion.cs" subtype="Code" buildaction="Compile" />
+    <File name="ConfiguracionFn.cs" subtype="Code" buildaction="Compile" />
     <File name="AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="ConfigMngr.cs" subtype="Code" buildaction="Compile" />
   </Contents>

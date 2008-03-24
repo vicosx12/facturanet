@@ -5,7 +5,6 @@
       <Entry build="True" name="FacturaNet.FnGtk" configuration="Debug" />
       <Entry build="True" name="FacturaNet.FnNegocio" configuration="Debug" />
       <Entry build="True" name="AmUtil" configuration="Debug" />
-      <Entry build="True" name="FacturaNet.FnMngr" configuration="Debug" />
       <Entry build="True" name="FacturaNet.FnAccesoDb" configuration="Debug" />
       <Entry build="True" name="Paquetes.net2005" configuration="" />
       <Entry build="True" name="FacturaNet.FnConfiguracion" configuration="Debug" />
@@ -15,7 +14,6 @@
       <Entry build="True" name="FacturaNet.FnGtk" configuration="Release" />
       <Entry build="True" name="FacturaNet.FnNegocio" configuration="Release" />
       <Entry build="True" name="AmUtil" configuration="Release" />
-      <Entry build="True" name="FacturaNet.FnMngr" configuration="Release" />
       <Entry build="True" name="FacturaNet.FnAccesoDb" configuration="Release" />
       <Entry build="True" name="Paquetes.net2005" configuration="" />
       <Entry build="True" name="FacturaNet.FnConfiguracion" configuration="Release" />
@@ -37,7 +35,6 @@
     <Entry filename="FacturaNet.FnGtk/FacturaNet.FnGtk.mdp" />
     <Entry filename="FacturaNet.FnNegocio/FacturaNet.FnNegocio.mdp" />
     <Entry filename="AmUtil/AmUtil.mdp" />
-    <Entry filename="FacturaNet.FnMngr/FacturaNet.FnMngr.mdp" />
     <Entry filename="FacturaNet.FnAccesoDb/FacturaNet.FnAccesoDb.mdp" />
     <Entry filename="Paquetes.net2005.mdse" />
     <Entry filename="FacturaNet.FnConfiguracion/FacturaNet.FnConfiguracion.mdp" />

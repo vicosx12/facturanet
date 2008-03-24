@@ -20,19 +20,21 @@ using System;
 
 namespace FacturaNet.FnConfiguracion
 {
-	
-	
 	public static class ConfigMngr
 	{
-		private static Configuracion configuracion;
-		public static Configuracion Configuracion
+		private static ConfiguracionFn configuracion;
+		public static ConfiguracionFn Configuracion
 		{
 			get { return configuracion; }
 		}
 		
 		public static void Inicializar(string[] args)
 		{
-			configuracion = new Configuracion(args);
+			configuracion = new ConfiguracionFn("facturanet.ini", args);
 		}
+		public static void Inicializar()
+		{
+			configuracion = new ConfiguracionFn("facturanet.ini");
+		}		
 	}
 }
