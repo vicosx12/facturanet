@@ -17,6 +17,8 @@
 //
 
 using System;
+using System.Text;
+using System.IO;
 using Nini.Config;
 using AmUtil;
 
@@ -25,7 +27,7 @@ namespace FacturaNet.FnConfiguracion
 	public sealed class ConfiguracionFn : Configuracion
 	{			
 		/* TODO
-		 * Hacer la ayuda, el cartel de la version y el grabar
+		 * Hacer el grabar
 		 * 
 		 * Verificar que se grabe correctamente
 		 *  
@@ -46,53 +48,99 @@ namespace FacturaNet.FnConfiguracion
 #region AccesoDb
 		public string AccesoDbSelectedProvider
 		{
+			get { return ConfigGetString("AccesoDb","SelectedProvider","Default"); }
+			private set
+			{
+				ConfigSet("AccesoDb","SelectedProvider",value);
+			}
+		}
+				
+		private void AccesoDbSelectedProviderSet(string key, object value)
+		{
+			ConfigSet("AccesoDb_" + AccesoDbSelectedProvider,key,value);
+		}
+		private string AccesoDbSelectedProviderGetString(string key, string defaultValue)
+		{
+			return ConfigGetString("AccesoDb_" + AccesoDbSelectedProvider,key,defaultValue);
+		}
+		
+			/*
 			get { return Source.Configs["AccesoDb"].GetString("SelectedProvider","Default"); }
 			private set  
 			{ 
 				Source.Configs["AccesoDb"].Set("SelectedProvider",value);
-				ConfiguracionSelectedProvider = Source.Configs["AccesoDb_" + value];				
-				/*
-				foreach (string key in ConfiguracionSelectedProvider.GetKeys())
-					Console.WriteLine(key);
-				foreach (string val in ConfiguracionSelectedProvider.GetValues())
-					Console.WriteLine(val);
-				*/
+				
+				if (Source.Configs["AccesoDb_" + value] == null)
+					Source.Configs.Add("AccesoDb_" + value);
+				
+				// ConfiguracionSelectedProvider = Source.Configs["AccesoDb_" + value];
+				
+				//foreach (string key in ConfiguracionSelectedProvider.GetKeys())
+				//	Console.WriteLine(key);
+				//foreach (string val in ConfiguracionSelectedProvider.GetValues())
+				//	Console.WriteLine(val);
+
 				//OJO CnnString y real password debería ir entre comillas por si hay puntos y comas
 			}
+			
 		}
-		
-		private IConfig ConfiguracionSelectedProvider = null;
+		*/
+		// private IConfig ConfiguracionSelectedProvider = null;
 
 		public string AccesoDbProviderName
 		{
-			get { return ConfiguracionSelectedProvider.GetString("ProviderName","* UNDEFINED *"); }
-			private set { ConfiguracionSelectedProvider.Set("ProviderName", value); }
+		    get { return AccesoDbSelectedProviderGetString("ProviderName","* UNDEFINED *"); }
+		    set { AccesoDbSelectedProviderSet("ProviderName", value); }
+			//get { return ConfiguracionSelectedProvider.GetString("ProviderName","* UNDEFINED *"); }
+			//private set { ConfiguracionSelectedProvider.Set("ProviderName", value); }
 		}	    
 		public string AccesoDbCnnString
 		{
-			get { return ConfiguracionSelectedProvider.GetString("CnnString","* UNDEFINED *"); }
-			private set { ConfiguracionSelectedProvider.Set("CnnString", value); }
+			// //get { return ConfiguracionSelectedProvider.GetString("CnnString","* UNDEFINED *").Replace("|",";"); }
+			// //private set { ConfiguracionSelectedProvider.Set("CnnString", value.Replace(";","|")); }
+			//get { return ConfiguracionSelectedProvider.GetString("CnnString","* UNDEFINED *"); }
+			//private set { ConfiguracionSelectedProvider.Set("CnnString", value); }
+		    get { return AccesoDbSelectedProviderGetString("CnnString","* UNDEFINED *"); }
+		    set { AccesoDbSelectedProviderSet("CnnString", value); }
 		}
 	    public string AccesoDbServer
 		{
-			get { return ConfiguracionSelectedProvider.GetString("Server","* UNDEFINED *"); }
-			private set { ConfiguracionSelectedProvider.Set("Server", value); }
+			//get { return ConfiguracionSelectedProvider.GetString("Server","* UNDEFINED *"); }
+			//private set { ConfiguracionSelectedProvider.Set("Server", value); }
+		    get { return AccesoDbSelectedProviderGetString("Server","* UNDEFINED *"); }
+		    set
+			{
+				/*
+				Console.WriteLine("**********************");
+				Console.WriteLine("AccesoDbSelectedProviderSet");
+				Console.WriteLine("Server");
+				Console.WriteLine(value);
+				Console.WriteLine("**********************");
+				*/
+				AccesoDbSelectedProviderSet("Server", value); 
+			}
 		}
 	    public string AccesoDbDataBase
 		{
-			get { return ConfiguracionSelectedProvider.GetString("DataBase","* UNDEFINED *"); }
-			private set { ConfiguracionSelectedProvider.Set("DataBase", value); }
+			//get { return ConfiguracionSelectedProvider.GetString("DataBase","* UNDEFINED *"); }
+			//private set { ConfiguracionSelectedProvider.Set("DataBase", value); }
+		    get { return AccesoDbSelectedProviderGetString("DataBase","* UNDEFINED *"); }
+		    set { AccesoDbSelectedProviderSet("DataBase", value); }
 		}
 	    public string AccesoDbRealPassword
 		{
-			get { return ConfiguracionSelectedProvider.GetString("RealPassword","* UNDEFINED *"); }
-			private set { ConfiguracionSelectedProvider.Set("RealPassword", value); }
+			//get { return ConfiguracionSelectedProvider.GetString("RealPassword","* UNDEFINED *"); }
+			//private set { ConfiguracionSelectedProvider.Set("RealPassword", value); }
 			//encriptado debería dejar las claves de encriptacion solamente en la librería que se conecta a la base de datos
+		    get { return AccesoDbSelectedProviderGetString("RealPassword","* UNDEFINED *"); }
+		    set { AccesoDbSelectedProviderSet("RealPassword", value); }
 		} 
 	    public string AccesoDbRealUser
 		{
-			get { return ConfiguracionSelectedProvider.GetString("RealUser","* UNDEFINED *"); }
-			private set { ConfiguracionSelectedProvider.Set("RealUser", value); }
+			//get { return ConfiguracionSelectedProvider.GetString("RealUser","* UNDEFINED *"); }
+			//private set { ConfiguracionSelectedProvider.Set("RealUser", value); }
+		    get { return AccesoDbSelectedProviderGetString("RealUser","* UNDEFINED *"); }
+		    set { AccesoDbSelectedProviderSet("RealUser", value); }
 		} 
 #endregion
 		
@@ -105,55 +153,92 @@ namespace FacturaNet.FnConfiguracion
 		{			
 		}		
 
-		protected override void ProcesarCommandLine(string nombreIni, string[] args)
+		protected override void ProcesarCommandLine(ArgvConfigSource argvSource, string nombreIni, string[] args)
 		{
-			// agrego los switchs de control de la aplicacion (no configuracion) Esto se podrá hacer en la clase padre?
-			argvSource.AddSwitch (cmdArgsSection, "save-user", "su"); //graba los cambios de la configuración en el usuario y sale
-			//argvSource.AddSwitch (cmdArgsSection, "SaveCommon", "sc"); //graba los cambios de la configuracion para todos los usuarios y sale
-			//argvSource.AddSwitch (cmdArgsSection, "SaveIni", "si"); //graba toda la configuración en un archivo personalizado			
 			// agrego el switch de seleccion de configuracion
 			argvSource.AddSwitch ("AccesoDb", "SelectedProvider", "sp"); //indica cual es la configuración seleccionada
+			
 			// cargo los datos de accesoDb
 			argvSource.AddSwitch ("AccesoDb", "ProviderName", "pn");
 			argvSource.AddSwitch ("AccesoDb", "CnnString", "cs");
 			argvSource.AddSwitch ("AccesoDb", "DataBase", "db");
 			argvSource.AddSwitch ("AccesoDb", "RealPassword", "rp");
 			argvSource.AddSwitch ("AccesoDb", "RealUser", "ru");
-			argvSource.AddSwitch ("AccesoDb", "Server", "s");
-			// seteo la configuracion seleccionada en la configuracion principal
+			argvSource.AddSwitch ("AccesoDb", "Server", "sv");
+
+			// seteo la configuracion seleccionada en la configuracion del ini
 			AccesoDbSelectedProvider = argvSource.Configs["AccesoDb"].GetString("SelectedProvider",AccesoDbSelectedProvider);
-			// seteo los datos de la configuracion en la configuraion principal
-			AccesoDbProviderName = argvSource.Configs["AccesoDb"].GetString("ProviderName",AccesoDbProviderName);
-			AccesoDbCnnString = argvSource.Configs["AccesoDb"].GetString("CnnString",AccesoDbCnnString);
-			AccesoDbDataBase = argvSource.Configs["AccesoDb"].GetString("DataBase",AccesoDbDataBase);
-			AccesoDbRealUser = argvSource.Configs["AccesoDb"].GetString("RealUser",AccesoDbRealUser);
-			AccesoDbServer = argvSource.Configs["AccesoDb"].GetString("Server",AccesoDbServer);
+			
+			// seteo los datos de la configuracion en la configuraion del ini
+			if (argvSource.Configs["AccesoDb"].GetString("ProviderName") != null)
+				AccesoDbProviderName = argvSource.Configs["AccesoDb"].GetString("ProviderName",AccesoDbProviderName);
 
+			if (argvSource.Configs["AccesoDb"].GetString("CnnString") != null)
+				AccesoDbCnnString = argvSource.Configs["AccesoDb"].GetString("CnnString",AccesoDbCnnString);
 
+			if (argvSource.Configs["AccesoDb"].GetString("DataBase") != null)
+				AccesoDbDataBase = argvSource.Configs["AccesoDb"].GetString("DataBase",AccesoDbDataBase);
+
+			if (argvSource.Configs["AccesoDb"].GetString("RealUser") != null)
+				AccesoDbRealUser = argvSource.Configs["AccesoDb"].GetString("RealUser",AccesoDbRealUser);
+			
+			if (argvSource.Configs["AccesoDb"].Get("Server") != null)
+				AccesoDbServer = argvSource.Configs["AccesoDb"].GetString("Server",AccesoDbServer);
+
+			// encripto el password
 			if (argvSource.Configs["AccesoDb"].Get("RealPassword") != null)
-				AccesoDbRealPassword = Util.MiEncriptacion(
+				AccesoDbRealPassword = AmString.Encriptar(
 				                                              argvSource.Configs["AccesoDb"].GetString("RealPassword"),
 				                                              "bws623er",
 				                                              "ma82ge4a"); 
-			
-			if (argvSource.Configs[cmdArgsSection].Get("save") != null) 
-			{
-				SaveConfig();
-				Salir = true;
-				return;
-			}
 		}
 
 		protected override void PrintUsage()
 		{
-			//TODO: hay que mostrar la ayuda
-			Console.WriteLine("Aca se debería mostrar la ayuda");
+			StringWriter writer = new StringWriter ();
+			writer.WriteLine("FacturaNet " + GetProductVersion () + 
+							 ", sistema de gestión y facturación");
+			writer.WriteLine("Uso: FacturaNet [OPCIONES]");
+			writer.WriteLine("");
+			writer.WriteLine("Opciones generales:");
+			writer.WriteLine("  -h,  --help                     Muestra esta ayuda");
+			writer.WriteLine("  -v,  --version                  Muestra la versión de la aplicación");
+			writer.WriteLine("  -if, --ini                  Muestra la versión de la aplicación");
+			writer.WriteLine("  -su, --save-user                Graba la configuración en el ini del usuario");
+			writer.WriteLine(""); 
+			writer.WriteLine("Opciones de acceso a la base de datos:");
+			writer.WriteLine("  -sp, --SelectedProvider=VALOR   Selecciona el acceso a la DB especificado");
+			writer.WriteLine("  -pn, --ProviderName=VALOR       Define el nombre del driver a utilizar");
+			writer.WriteLine("  -cs, --CnnString=VALOR          Define el formato del string de conexión");			
+			writer.WriteLine("  -sv, --Server=VALOR             Define la dirección del servidor");			
+			writer.WriteLine("  -db, --DataBase=VALOR           Define el nombre de la DB a utilizar");
+			writer.WriteLine("  -ru, --RealUser=VALOR           Define el usuario de acceso a la DB");
+			writer.WriteLine("  -rp, --RealPassword=VALOR       Define el password de acceso a la DB");
+			writer.WriteLine(""); 
+			writer.WriteLine("Opciones de administración:"); 
+			writer.WriteLine("  -up, --UpdateDb                Actualiza la versión de la DB");
+			writer.WriteLine("  -au, --AddUser=USER,PASSWORD   Agrega el usuario indicado a la DB");
+			writer.WriteLine("");
+			writer.WriteLine("FacturaNet homepage: http://code.google.com/p/facturanet/");
+
+			Console.WriteLine(writer.ToString ());
 		}
 		
+		protected override string GetProductVersion ()
+		{
+			return "0.0.1";
+		}
 		protected override void PrintVersion()
 		{
-			//TODO: hay que mostrar la versión
-			Console.WriteLine("Aca se debería mostrar la version");
+			//TODO HAY QUE SACAR LA VERSION DE OTRO LADO
+			StringWriter writer = new StringWriter ();
+			writer.WriteLine("FacturaNet " + GetProductVersion ());
+			writer.WriteLine("");
+			writer.WriteLine("Copyright 2008 Andrés Moschini");
+			writer.WriteLine("GNU General Public License Version 3:");
+			writer.WriteLine("http://www.gnu.org/licenses/gpl.html");
+			
+			Console.WriteLine(writer.ToString ());
 		}
 	}
 }

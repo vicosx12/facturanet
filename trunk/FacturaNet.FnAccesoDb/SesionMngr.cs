@@ -79,7 +79,7 @@ namespace FacturaNet.FnAccesoDb
 			cmd.Parameters.Add(db.CreateParameter(
 			                                   "@CLAVE",
 			                                   DbType.String,
-			                                   Util.CalcularSHA1(password)));  
+			                                   AmString.CalcularSHA1(password)));  
 			cmd.Connection.Open();
 			conectado = (int)cmd.ExecuteScalar() == 1;
 			cmd.Connection.Close();

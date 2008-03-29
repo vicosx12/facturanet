@@ -17,6 +17,8 @@
 //
 
 using System;
+using System.Text;
+using System.IO;
 using Nini.Config;
 
 
@@ -24,16 +26,46 @@ namespace AmUtil
 {
 	public abstract class Configuracion
 	{
+		private void Encomillar()
+		{
+			foreach (IConfig config in source.Configs)
+				foreach (string key in config.GetKeys())
+					if ((config.Get(key).IndexOf(';') >= 0) || (config.Get(key).IndexOf(' ') >= 0) || (config.Get(key).IndexOf('"') >= 0))
+						config.Set(
+						           key,
+						           AmString.PonerComillas(config.Get(key)));
+		}
+		
 		private string configPath = "";
 		protected const string cmdArgsSection = "cmdArgsSection";  
 
+		public readonly string[] Args = null;
+		
 		private IniConfigSource source;
+
+		/*
 		protected IniConfigSource Source
 		{
 			get { return source;}
 			private set { source = value; }
 		}
-		protected ArgvConfigSource argvSource = null;
+	   */
+		
+		protected string ConfigGetString(string section, string key, string defaultValue)
+		{
+			return source.Configs[section].GetString(key,defaultValue);
+		}
+		protected void ConfigSet(string section, string key, object value)
+		{
+			/*
+			Console.WriteLine("**********************");
+			Console.WriteLine(section);
+			Console.WriteLine(key);
+			Console.WriteLine(value);
+			Console.WriteLine("**********************");
+			*/
+			source.Configs[section].Set(key,value);
+		}
 		
 		private bool salir = false;
 		public bool Salir
@@ -41,15 +73,21 @@ namespace AmUtil
 			get { return salir; }
 			protected set { salir = value; }
 		}
-
+		
 		public Configuracion(string nombreIni, string[] args)
 		{
 			if (args != null)
 			{
-				argvSource = new ArgvConfigSource(args);
+				Args = args;
+				
+				ArgvConfigSource argvSource = new ArgvConfigSource(args);
+
 				argvSource.AddSwitch (cmdArgsSection, "help", "h");
 				argvSource.AddSwitch (cmdArgsSection, "version", "v");
-				argvSource.AddSwitch (cmdArgsSection, "IniFile", "if"); //selecciona un nombre de archivo ini diferente predeterminado (no la ruta) 			
+				argvSource.AddSwitch (cmdArgsSection, "ini-file", "if"); //selecciona un nombre de archivo ini diferente predeterminado (no la ruta) 			
+				argvSource.AddSwitch (cmdArgsSection, "save-user", "su"); //graba los cambios de la configuración en el usuario y sale			
+				//argvSource.AddSwitch (cmdArgsSection, "SaveCommon", "sc"); //graba los cambios de la configuracion para todos los usuarios y sale
+				//argvSource.AddSwitch (cmdArgsSection, "SaveIni", "si"); //graba toda la configuración en un archivo personalizado			
 				
 				if (argvSource.Configs[cmdArgsSection].Get("help") != null)
 				{
@@ -65,9 +103,16 @@ namespace AmUtil
 				}
 				
 				// cargo los inifiles
-				InicializarSource(argvSource.Configs[cmdArgsSection].GetString("IniFile",nombreIni));
+				InicializarSource(argvSource.Configs[cmdArgsSection].GetString("ini-file",nombreIni));
 				
-				ProcesarCommandLine(nombreIni, args);
+				ProcesarCommandLine(argvSource, nombreIni, args);
+				
+				if (argvSource.Configs[cmdArgsSection].Get("save-user") != null) 
+				{
+					SaveConfig();
+					Salir = true;
+					return;
+				}
 			}
 			else
 				InicializarSource(nombreIni);
@@ -81,7 +126,7 @@ namespace AmUtil
 		protected void InicializarSource(string nombreIni)
 		{
 			configPath = nombreIni; //aca habria que aplicar alguna transformacion, por ejemplo agregar la carpeta
-			Source = new IniConfigSource(configPath);
+			source = new IniConfigSource(configPath);
 			//SI NO EXISTE?
 			/* también abrir esta? (ahi se van a grabar los cambios)
 			 * C:\Documents and Settings\[username]\Local Settings\Application Data\[Application Name]\Settings.ini
@@ -89,44 +134,44 @@ namespace AmUtil
 			 */		
 		}
 		
-		protected abstract void ProcesarCommandLine(string nombreIni, string[] args); //para cuando se carga esto ya esta el help y cargado el ini correspondiente
-/*		
-		protected virtual void ProcesarCommandLine(string nombreIni, string[] args)
+		protected abstract void ProcesarCommandLine(ArgvConfigSource argvSource, string nombreIni, string[] args); //para cuando se carga esto ya esta el help y cargado el ini correspondiente
+
+		protected virtual void PrintUsage()
 		{
-			argvSource = new ArgvConfigSource(args);
-			argvSource.AddSwitch (cmdArgsSection, "help", "h");
-			argvSource.AddSwitch (cmdArgsSection, "version", "v");
-			argvSource.AddSwitch (cmdArgsSection, "IniFile", "if"); //selecciona un nombre de archivo ini diferente predeterminado (no la ruta) 			
-			
-			if (argvSource.Configs[cmdArgsSection].Get("help") != null)
-			{
-				PrintUsage();
-				Salir = true;
-				return;
-			}
-			if (argvSource.Configs[cmdArgsSection].Get("version") != null) 
-			{
-				PrintVersion();
-				Salir = true;
-				return;
-			}
-			
-			// cargo los inifiles
-			InicializarSource(argvSource.Configs[cmdArgsSection].GetString("IniFile",nombreIni));
+			StringWriter writer = new StringWriter ();
+			writer.WriteLine("");
+			writer.WriteLine("Opciones generales:");
+			writer.WriteLine("  -h,  --help                     Muestra esta ayuda");
+			writer.WriteLine("  -v,  --version                  Muestra la versión de la aplicación");
+			writer.WriteLine("  -if, --ini                  Muestra la versión de la aplicación");
+			writer.WriteLine("  -su, --save-user                Graba la configuración en el ini del usuario");
+			writer.WriteLine(""); 
+			Console.WriteLine(writer.ToString ());
 		}
-*/
-		protected abstract void PrintUsage();
+
+		protected virtual string GetProductVersion ()
+		{
+			return "0.0.0";
+		}
+		protected virtual void PrintVersion()
+		{
+			StringWriter writer = new StringWriter ();
+			writer.WriteLine("");
+			writer.WriteLine("Version " + GetProductVersion ());
+			writer.WriteLine("");			
+			Console.WriteLine(writer.ToString ());
+
+	    }
 		
-		protected abstract void PrintVersion();
 		
 		protected void SaveConfig()
 		{
 			//TODO: hay que hacer que se pueda grabar el ini
 			Console.WriteLine("Aca se debería grabar");
-			
 			try 
 			{
-				source.Save(configPath);
+				Encomillar();
+				source.Save(configPath);               
 			}
 			catch (Exception e)
 			{

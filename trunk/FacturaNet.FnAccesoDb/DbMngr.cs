@@ -67,7 +67,7 @@ namespace FacturaNet.FnAccesoDb
 			                                     ConfigMngr.Configuracion.AccesoDbServer,
 			                                     ConfigMngr.Configuracion.AccesoDbDataBase,
 			                                     ConfigMngr.Configuracion.AccesoDbRealUser,
-			                                     Util.MiDesencriptacion(
+			                                     AmString.Desencriptar(
 			                                                            ConfigMngr.Configuracion.AccesoDbRealPassword, 
 			                                                            "bws623er", 
 			                                                            "ma82ge4a"));
@@ -306,6 +306,7 @@ where
 
 		public void ActualizarDb()
 		{
+			Console.WriteLine("Aca se supone que tengo que actualizar o crear la base de datos");
 			
 		}
 		
@@ -325,7 +326,7 @@ where
 			cmd.Parameters.Add(CreateParameter(
 			                                   "@CLAVE",
 			                                   DbType.String,
-			                                   Util.CalcularSHA1(password)));  
+			                                   AmString.CalcularSHA1(password)));  
 			cmd.Connection.Open();
 			cmd.ExecuteNonQuery();
 			cmd.Connection.Close();

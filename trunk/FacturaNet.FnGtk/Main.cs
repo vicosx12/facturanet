@@ -14,25 +14,27 @@ namespace FacturaNet.FnGtk
 			ConfigMngr.Inicializar(args);
 			
 			if (!ConfigMngr.Configuracion.Salir)
-			{
-				Application.Init ();
+				Run();
+		}
 		
-				SesionMngr sesion = DbMngr.Db.CreateSesion();
+		public static void Run()
+		{
+			Application.Init ();
+	
+			SesionMngr sesion = DbMngr.Db.CreateSesion();
+		
+			FrmLogin loginWindow = new FrmLogin();
+			loginWindow.Show();
 			
-				FrmLogin loginWindow = new FrmLogin();
-				loginWindow.Show();
-				
-				Application.Run();			
-				loginWindow.Destroy();		
-			
-				if (sesion.Conectado)
-				{
-					FrmPrincipal frmPrincipal = new FrmPrincipal();
-					frmPrincipal.Show ();
-					Application.Run ();
-				}
+			Application.Run();			
+			loginWindow.Destroy();		
+		
+			if (sesion.Conectado)
+			{
+				FrmPrincipal frmPrincipal = new FrmPrincipal();
+				frmPrincipal.Show ();
+				Application.Run ();
 			}
-			Util.Log("SALE");
 		}
 	}
 }

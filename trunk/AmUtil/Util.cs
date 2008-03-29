@@ -25,15 +25,15 @@ using System.Text;
 
 namespace AmUtil
 {
-	public class Util
+	public static class Util
 	{
-		public static string CalcularSHA1(string original)
+		internal static string CalcularSHA1(string original)
 		{
 			SHA1CryptoServiceProvider hasher = new SHA1CryptoServiceProvider();
 			return Convert.ToBase64String(hasher.ComputeHash(System.Text.Encoding.UTF8.GetBytes(original)));
 		}
 
-		private static string EncriptarDesencriptar(string cadena, bool encriptar, string key, string IV)
+		internal static string EncriptarDesencriptar(string cadena, bool encriptar, string key, string IV)
 		{
 			DESCryptoServiceProvider mCSP = new DESCryptoServiceProvider();
 			mCSP.Key = Encoding.UTF8.GetBytes(key);
@@ -60,23 +60,9 @@ namespace AmUtil
 					: Encoding.UTF8.GetString(ms.ToArray());
 		}
 		
-		public static string MiEncriptacion(string original, string key, string IV)
-		{
-			return EncriptarDesencriptar(original, true, key, IV);
-		}
-		
-		public static string MiDesencriptacion(string encriptado, string key, string IV)
-		{
-			return EncriptarDesencriptar(encriptado, false, key, IV);
-		}
-
 		public static void Log(string texto)
 		{
 			Console.WriteLine(texto);
-		}
-
-		private Util()
-		{
 		}
 	}
 }
