@@ -166,12 +166,11 @@ namespace AmUtil
 		
 		protected void SaveConfig()
 		{
-			//TODO: hay que hacer que se pueda grabar el ini
-			Console.WriteLine("Aca se debería grabar");
 			try 
 			{
 				Encomillar();
 				source.Save(configPath);               
+			    Console.WriteLine("Se grabó el archivo INI.");				
 			}
 			catch (Exception e)
 			{

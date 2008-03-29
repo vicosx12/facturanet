@@ -226,11 +226,11 @@ namespace FacturaNet.FnConfiguracion
 		
 		protected override string GetProductVersion ()
 		{
+			//HACK: HAY QUE SACAR LA VERSION DE OTRO LADO
 			return "0.0.1";
 		}
 		protected override void PrintVersion()
 		{
-			//TODO HAY QUE SACAR LA VERSION DE OTRO LADO
 			StringWriter writer = new StringWriter ();
 			writer.WriteLine("FacturaNet " + GetProductVersion ());
 			writer.WriteLine("");

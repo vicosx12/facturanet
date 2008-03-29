@@ -20,7 +20,7 @@ using System;
 
 namespace AmUtil
 {
-	//TODO hacer esto como metodos de extension
+	//HACK: hacer esto como metodos de extension
 	public static class AmString
 	{
 		public static string PonerComillas (/*this*/ string self)

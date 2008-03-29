@@ -248,7 +248,7 @@ static void ServiceOutput(object sender, ServiceOutputEventArgs e)
 			int versionDb;
 			
 			DbCommand cmd;
-			//try
+			try
 			{
 				cmd = CreateCommand(@"
 Select 
@@ -258,13 +258,10 @@ from
 where
 	TS_VERSIONDB.ID = 0");
 			}
-			/*
-			 TODO hay que ver que hacer con esta excepcion
-			catch (CfgDbMngrException e)
+			catch (System.Configuration.ConfigurationException e)
 			{
-				throw new DbMngrConfiguracionAccesoException("Error con la configuración del acceso a la base de datos",e);
+				throw new DbMngrConfiguracionAccesoException("Error con el .Net Provider",e);
 			}
-			 */
 			
 			try
 			{
