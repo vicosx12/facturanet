@@ -7,6 +7,7 @@ namespace FacturaNet.FnAccesoDb
 {
 	public class SesionMngr
 	{
+		/*
 		static private SesionMngr sesion = null;		
 		static public SesionMngr Sesion
 		{	
@@ -16,7 +17,8 @@ namespace FacturaNet.FnAccesoDb
 					sesion = DbMngr.Db.CreateSesion();
 				return sesion;
 			}
-		}		
+		}
+		*/
 		
 		private DbMngr db;
 		

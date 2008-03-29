@@ -33,11 +33,16 @@ namespace FacturaNet.FnAccesoDb
 		{	
 			get
 			{
-				if (db == null)
-					db = new DbMngr();
+				//if (db == null)
+				//	db = new DbMngr();
 				return db;
 			}
 		}		
+		static public void Init()
+		{
+			if (db == null)
+				db = new DbMngr();
+		}
 		
 		public readonly int VersionEsperada = 1;
 
@@ -131,14 +136,29 @@ FROM
 			return da.Fill(tablaUsuarios);
 		}
 		
+		/*
 		public SesionMngr CreateSesion()
 		{
 			VerificarVersionDb();
 			return new SesionMngr(this);
 		}
+		*/
+		
+		private SesionMngr sesion = null;		
+		public SesionMngr Sesion
+		{	
+			get
+			{
+				//if (sesion == null)
+				//	sesion = CreateSesion();
+				return sesion;
+			}
+		}
 		
 		private DbMngr()
 		{
+			VerificarVersionDb();
+			sesion = new SesionMngr(this);
 		}
 /*
 		public void PrepararFirebird()

@@ -20,16 +20,34 @@ namespace FacturaNet.FnGtk
 		public static void Run()
 		{
 			Application.Init ();
-	
-			SesionMngr sesion = DbMngr.Db.CreateSesion();
+			
+			try 
+			{
+				DbMngr.Init();
+			}
+			catch (Exception e)
+			{
+				MessageDialog md = new MessageDialog (null, 
+				                                      DialogFlags.Modal,
+				                                      MessageType.Error, 
+				                                      ButtonsType.Close,
+				                                      string.Format(
+@"No se pudo conectar el sistema. Mensaje del error: 
+	<i>{0}</i>",e.Message));
+
+				md.Title = "Error conectando con la base de datos";
+				md.Run();
+				md.Destroy();
+				return;
+			}
 		
 			FrmLogin loginWindow = new FrmLogin();
 			loginWindow.Show();
 			
 			Application.Run();			
-			loginWindow.Destroy();		
-		
-			if (sesion.Conectado)
+			loginWindow.Destroy();
+			
+			if (DbMngr.Db.Sesion.Conectado)
 			{
 				FrmPrincipal frmPrincipal = new FrmPrincipal();
 				frmPrincipal.Show ();
