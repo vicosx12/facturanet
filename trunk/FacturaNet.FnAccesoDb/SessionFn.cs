@@ -5,7 +5,7 @@ using AmUtil;
 
 namespace FacturaNet.FnAccesoDb
 {
-	public class SesionMngr
+	public class SessionFn
 	{
 		/*
 		static private SesionMngr sesion = null;		
@@ -20,11 +20,11 @@ namespace FacturaNet.FnAccesoDb
 		}
 		*/
 		
-		private DbMngr db;
+		private DatabaseFn database;
 		
-		internal SesionMngr(DbMngr db)
+		internal SessionFn(DatabaseFn db)
 		{
-			this.db = db;
+			this.database = db;
 		}
 		
 		private string user = "";
@@ -38,47 +38,47 @@ namespace FacturaNet.FnAccesoDb
 		
 		public DbConnection CreateConnection()
 		{
-			return Conectado? db.CreateConnection() : null;
+			return Conectado? database.CreateConnection() : null;
 		}
 		public DbDataAdapter CreateDataAdapter()
 		{
-			return Conectado? db.CreateDataAdapter() : null;
+			return Conectado? database.CreateDataAdapter() : null;
 		}
 		public DbDataAdapter CreateDataAdapter(string selectCommand)
 		{
-			return Conectado? db.CreateDataAdapter(selectCommand) : null;
+			return Conectado? database.CreateDataAdapter(selectCommand) : null;
 		}
 		public DbCommand CreateCommand()
 		{
-			return Conectado? db.CreateCommand() : null;
+			return Conectado? database.CreateCommand() : null;
 		}
 		public DbCommand CreateCommand(string commandText)
 		{
-			return Conectado? db.CreateCommand(commandText) : null;
+			return Conectado? database.CreateCommand(commandText) : null;
 		}
 		public DbParameter CreateParameter()
 		{
-			return Conectado? db.CreateParameter() : null;
+			return Conectado? database.CreateParameter() : null;
 		}
 		public DbParameter CreateParameter(string parameterName, DbType dbType)
 		{
-			return Conectado? db.CreateParameter(parameterName, dbType) : null;
+			return Conectado? database.CreateParameter(parameterName, dbType) : null;
 		}
 		public DbParameter CreateParameter(string parameterName, DbType dbType, object value)
 		{
-			return Conectado? db.CreateParameter(parameterName, dbType, value) : null;
+			return Conectado? database.CreateParameter(parameterName, dbType, value) : null;
 		}
 		
 		public bool ReConectar()
 		{
 			conectado = false;
-			DbCommand cmd = db.CreateCommand("SPS_VRF_USUARIO"); 
+			DbCommand cmd = database.CreateCommand("SPS_VRF_USUARIO"); 
 			cmd.CommandType = CommandType.StoredProcedure;
-			cmd.Parameters.Add(db.CreateParameter(
+			cmd.Parameters.Add(database.CreateParameter(
 			                                   "@NB_USUARIO",
 			                                   DbType.String,
 			                                   user));  
-			cmd.Parameters.Add(db.CreateParameter(
+			cmd.Parameters.Add(database.CreateParameter(
 			                                   "@CLAVE",
 			                                   DbType.String,
 			                                   AmString.CalcularSHA1(password)));  

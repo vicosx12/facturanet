@@ -23,7 +23,7 @@ namespace FacturaNet.FnGtk
 			
 			try 
 			{
-				DbMngr.Init();
+				DatabaseFn.Init();
 			}
 			catch (Exception e)
 			{
@@ -47,7 +47,7 @@ namespace FacturaNet.FnGtk
 			Application.Run();			
 			loginWindow.Destroy();
 			
-			if (DbMngr.Db.Sesion.Conectado)
+			if (DatabaseFn.DatabaseCAMBIAR.Sesion.Conectado)
 			{
 				FrmPrincipal frmPrincipal = new FrmPrincipal();
 				frmPrincipal.Show ();

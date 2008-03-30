@@ -65,7 +65,7 @@ namespace FacturaNet.FnGtk
 
 		protected virtual void OnBtnAceptarClicked (object sender, System.EventArgs e)
 		{		
-			if (DbMngr.Db.Sesion.Conectar(txtNombre.Text,txtClave.Text)) 
+			if (DatabaseFn.DatabaseCAMBIAR.Sesion.Conectar(txtNombre.Text,txtClave.Text)) 
 				Application.Quit();
 			else if (++intentos < 3)
 				Console.WriteLine("Usuario o contraseñas no válidos.");

@@ -26,22 +26,22 @@ using AmUtil;
 
 namespace FacturaNet.FnAccesoDb
 {
-	public class DbMngr
+	public class DatabaseFn
 	{
-		static private DbMngr db = null;		
-		static public DbMngr Db
+		static private DatabaseFn database = null;		
+		static public DatabaseFn DatabaseCAMBIAR
 		{	
 			get
 			{
 				//if (db == null)
 				//	db = new DbMngr();
-				return db;
+				return database;
 			}
 		}		
 		static public void Init()
 		{
-			if (db == null)
-				db = new DbMngr();
+			if (database == null)
+				database = new DatabaseFn();
 		}
 		
 		public readonly int VersionEsperada = 1;
@@ -144,8 +144,8 @@ FROM
 		}
 		*/
 		
-		private SesionMngr sesion = null;		
-		public SesionMngr Sesion
+		private SessionFn sesion = null;		
+		public SessionFn Sesion
 		{	
 			get
 			{
@@ -155,10 +155,10 @@ FROM
 			}
 		}
 		
-		private DbMngr()
+		private DatabaseFn()
 		{
 			VerificarVersionDb();
-			sesion = new SesionMngr(this);
+			sesion = new SessionFn(this);
 		}
 /*
 		public void PrepararFirebird()
@@ -280,7 +280,7 @@ where
 			}
 			catch (System.Configuration.ConfigurationException e)
 			{
-				throw new DbMngrConfiguracionAccesoException("Error con el .Net Provider",e);
+				throw new AccesoDbConfiguracionException("Error con el .Net Provider",e);
 			}
 			
 			try
@@ -295,19 +295,19 @@ where
 				                                     (e.Message.Contains("user name") && e.Message.Contains("password")) 
 				                                     || (e.Message.Contains("usuario") && e.Message.Contains("clave"))
 					))
-					throw new DbMngrPermisosDbException("Usuario y clave internos no válidos",e);
+					throw new AccesoDbPermisosException("Usuario y clave internos no válidos",e);
 				else if ((e.ErrorCode == -2146233087) && (
 				                                          (e.Message.Contains("file open"))
 				                                          || (e.Message.Contains("archivo"))
 				    ))
-					throw new DbMngrNoExisteDbException("No existe la base de datos",e);
+					throw new AccesoDbNoExisteException("No existe la base de datos",e);
 				else if ((e.ErrorCode == -2146233087) && (
 				                                          (e.Message.Contains("network request"))
 				                                          || (e.Message.Contains("red") && e.Message.Contains("solicitud"))
 				    ))
-					throw new DbMngrNoAccesoServidorException("No se puede conectar con el servidor de la base de datos",e);
+					throw new AccesoDbServidorNoEncontradoException("No se puede conectar con el servidor de la base de datos",e);
 				else
-					throw new DbMngrErrorDesconocidoException("Error desconocido",e);
+					throw new AccesoDbInesperadoException("Error desconocido",e);
 			}
 			finally
 			{
@@ -315,7 +315,7 @@ where
 			}
 			
 			if (versionDb != VersionEsperada) 
-				throw new DbMngrVersionDbIncorrectaException(
+				throw new AccesoDbVersionException(
 				                                             "La versión de la base de datos no corresponde con los binarios",
 				                                             versionDb, 
 				                                             VersionEsperada);

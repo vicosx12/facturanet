@@ -20,64 +20,64 @@ using System;
 
 namespace FacturaNet.FnAccesoDb
 {
-	public abstract class DbMngrException : ApplicationException
+	public abstract class AccesoDbException : ApplicationException
 	{
-		public DbMngrException(string message) : base(message)
+		public AccesoDbException(string message) : base(message)
 		{
 		}
-		public DbMngrException(
+		public AccesoDbException(
 		                       string message, 
 		                       Exception inner) : base(message, inner)
 		{
 		}	
 	}
 
-	public class DbMngrConfiguracionAccesoException : DbMngrException
+	public class AccesoDbConfiguracionException : AccesoDbException
 	{
-		public DbMngrConfiguracionAccesoException(
+		public AccesoDbConfiguracionException(
 		                                 string message, 
 		                                 Exception inner) : base(message, inner)
 		{
 		}
 	}
 	
-	public class DbMngrPermisosDbException : DbMngrException
+	public class AccesoDbPermisosException : AccesoDbException
 	{
-		public DbMngrPermisosDbException(
+		public AccesoDbPermisosException(
 		                                 string message, 
 		                                 Exception inner) : base(message, inner)
 		{
 		}
 	}
 	
-	public class DbMngrNoExisteDbException : DbMngrException
+	public class AccesoDbNoExisteException : AccesoDbException
 	{
-		public DbMngrNoExisteDbException(
+		public AccesoDbNoExisteException(
 		                                 string message, 
 		                                 Exception inner) : base(message, inner)
 		{
 		}
 	}
 	
-	public class DbMngrNoAccesoServidorException : DbMngrException
+	public class AccesoDbServidorNoEncontradoException : AccesoDbException
 	{
-		public DbMngrNoAccesoServidorException(
-		                                 string message, 
-		                                 Exception inner) : base(message, inner)
-		{
-		}
-	}
-	
-	public class DbMngrErrorDesconocidoException : DbMngrException
-	{
-		public DbMngrErrorDesconocidoException(
+		public AccesoDbServidorNoEncontradoException(
 		                                 string message, 
 		                                 Exception inner) : base(message, inner)
 		{
 		}
 	}
 
-	public class DbMngrVersionDbIncorrectaException : DbMngrException
+	public class AccesoDbInesperadoException : AccesoDbException
+	{
+		public AccesoDbInesperadoException(
+		                                 string message, 
+		                                 Exception inner) : base(message, inner)
+		{
+		}
+	}
+	
+	public class AccesoDbVersionException : AccesoDbException
 	{
 		private int versionDb;
 		private int versionEsperada;
@@ -98,7 +98,7 @@ namespace FacturaNet.FnAccesoDb
 			this.versionEsperada = versionEsperada;
 		}
 
-		public DbMngrVersionDbIncorrectaException(
+		public AccesoDbVersionException(
 		                                          string message, 
 		                                          int versionDb, 
 		                                          int versionEsperada) : base(message)

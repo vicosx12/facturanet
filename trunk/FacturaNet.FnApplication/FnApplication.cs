@@ -1,4 +1,4 @@
-// CfgDbMngr.cs
+// MyClass.cs
 // 
 // Copyright (C) 2008 Andrés Moschini
 //
@@ -17,24 +17,45 @@
 //
 
 using System;
+using FacturaNet.FnAccesoDb;
 
-namespace FacturaNet.FnConfiguracion
+namespace FacturaNet.FnApplication
 {
-	public static class ConfigMngr
+	
+	
+	public static class FnApplication
 	{
-		private static ConfiguracionFn configuracion;
-		public static ConfiguracionFn Configuracion
+		static private DatabaseFn database;
+		static public DatabaseFn Database 
 		{
-			get { return configuracion; }
+			get { return database; }
+			private set { database = value; }
 		}
 		
-		public static void Inicializar(string[] args)
+		static private SessionFn session;
+		static public SessionFn Session 
 		{
-			configuracion = new ConfiguracionFn("facturanet.ini", args);
+			get { return session; }
+			private set { session = value; }
 		}
-		public static void Inicializar()
+
+		static private ConfiguracionFn configuracion;
+		public static ConfiguracionFn Configuracion 
 		{
-			configuracion = new ConfiguracionFn("facturanet.ini");
-		}		
+			get { return configuracion; }
+			private set { configuracion = value; } 
+		}
+
+		
+		
+		public static void Init(string[] args)
+		{
+			Configuracion = new ConfiguracionFn("facturanet.ini", args);
+		}
+		public static void Init()
+		{
+			Configuracion = new ConfiguracionFn("facturanet.ini");
+		}				
+		
 	}
 }
