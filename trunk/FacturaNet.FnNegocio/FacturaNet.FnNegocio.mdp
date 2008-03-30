@@ -15,7 +15,6 @@
   </Configurations>
   <Contents>
     <File name="AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
-    <File name="borrar.cs" subtype="Code" buildaction="Compile" />
     <File name="Global.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
