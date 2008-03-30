@@ -8,7 +8,6 @@
       <Entry build="True" name="FacturaNet.FnAccesoDb" configuration="Debug" />
       <Entry build="True" name="Paquetes.net2005" configuration="" />
       <Entry build="True" name="FacturaNet.FnConfiguracion" configuration="Debug" />
-      <Entry build="True" name="FacturaNet.FnApplication" configuration="Debug" />
     </Configuration>
     <Configuration name="Release" ctype="CombineConfiguration">
       <Entry build="True" name="FacturaNet" configuration="Release" />
@@ -18,7 +17,6 @@
       <Entry build="True" name="FacturaNet.FnAccesoDb" configuration="Release" />
       <Entry build="True" name="Paquetes.net2005" configuration="" />
       <Entry build="True" name="FacturaNet.FnConfiguracion" configuration="Release" />
-      <Entry build="True" name="FacturaNet.FnApplication" configuration="Release" />
     </Configuration>
   </Configurations>
   <StartMode startupentry="FacturaNet" single="True">
@@ -30,7 +28,6 @@
     <Execute type="None" entry="FacturaNet.FnAccesoDb" />
     <Execute type="None" entry="Paquetes.net2005" />
     <Execute type="None" entry="FacturaNet.FnConfiguracion" />
-    <Execute type="None" entry="FacturaNet.FnApplication" />
   </StartMode>
   <MonoDevelop.ChangeLogAddIn.ChangeLogInfo policy="OneChangeLogInEachDirectory" />
   <Entries>
@@ -41,6 +38,5 @@
     <Entry filename="FacturaNet.FnAccesoDb/FacturaNet.FnAccesoDb.mdp" />
     <Entry filename="Paquetes.net2005.mdse" />
     <Entry filename="FacturaNet.FnConfiguracion/FacturaNet.FnConfiguracion.mdp" />
-    <Entry filename="FacturaNet.FnApplication/FacturaNet.FnApplication.mdp" />
   </Entries>
 </Combine>
