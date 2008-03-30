@@ -28,24 +28,6 @@ namespace FacturaNet.FnAccesoDb
 {
 	public class DatabaseFn
 	{
-		static private DatabaseFn database = null;		
-		static public DatabaseFn DatabaseCAMBIAR
-		{	
-			get
-			{
-				//if (db == null)
-				//	db = new DbMngr();
-				return database;
-			}
-		}		
-		static public void Init()
-		{
-			if (database == null)
-				database = new DatabaseFn();
-		}
-		
-		public readonly int VersionEsperada = 1;
-
 		private DbProviderFactory _dbpFactory = null;
 		private DbProviderFactory dbpFactory 
 		{
@@ -58,7 +40,7 @@ namespace FacturaNet.FnAccesoDb
 						Console.WriteLine("{0}\t{1}\t{2}\t{3}\n",row[0], row[1], row[2], row[3]);
 					Console.WriteLine(); Console.WriteLine();
 					//_dbpFactory = DbProviderFactories.GetFactory(CfgDbMngr.Cfg.ProviderName);
-					_dbpFactory = DbProviderFactories.GetFactory(ConfigMngr.Configuracion.AccesoDbProviderName);
+					_dbpFactory = DbProviderFactories.GetFactory(Global.Configuracion.AccesoDbProviderName);
 				}
 				return _dbpFactory;
 			}
@@ -68,12 +50,12 @@ namespace FacturaNet.FnAccesoDb
 		{
 			DbConnection cnn = dbpFactory.CreateConnection();
 			cnn.ConnectionString = string.Format(
-			                                     ConfigMngr.Configuracion.AccesoDbCnnString,
-			                                     ConfigMngr.Configuracion.AccesoDbServer,
-			                                     ConfigMngr.Configuracion.AccesoDbDataBase,
-			                                     ConfigMngr.Configuracion.AccesoDbRealUser,
+			                                     Global.Configuracion.AccesoDbCnnString,
+			                                     Global.Configuracion.AccesoDbServer,
+			                                     Global.Configuracion.AccesoDbDataBase,
+			                                     Global.Configuracion.AccesoDbRealUser,
 			                                     AmString.Desencriptar(
-			                                                            ConfigMngr.Configuracion.AccesoDbRealPassword, 
+			                                                            Global.Configuracion.AccesoDbRealPassword, 
 			                                                            "bws623er", 
 			                                                            "ma82ge4a"));
 			                                     //CfgDbMngr.Cfg.CnnString,
@@ -136,14 +118,15 @@ FROM
 			return da.Fill(tablaUsuarios);
 		}
 		
-		/*
-		public SesionMngr CreateSesion()
+		
+		public SessionFn CreateSesion()
 		{
 			VerificarVersionDb();
-			return new SesionMngr(this);
+			return new SessionFn(this);
 		}
-		*/
 		
+		
+		/*
 		private SessionFn sesion = null;		
 		public SessionFn Sesion
 		{	
@@ -154,11 +137,12 @@ FROM
 				return sesion;
 			}
 		}
+		*/
 		
-		private DatabaseFn()
+		public DatabaseFn()
 		{
 			VerificarVersionDb();
-			sesion = new SessionFn(this);
+			//sesion = new SessionFn(this);
 		}
 /*
 		public void PrepararFirebird()
@@ -314,11 +298,11 @@ where
 				cmd.Connection.Close();
 			}
 			
-			if (versionDb != VersionEsperada) 
+			if (versionDb != Global.VersionEsperada) 
 				throw new AccesoDbVersionException(
 				                                             "La versión de la base de datos no corresponde con los binarios",
 				                                             versionDb, 
-				                                             VersionEsperada);
+				                                             Global.VersionEsperada);
 		}
 
 		public void ActualizarDb()

@@ -25,7 +25,7 @@ using AmUtil;
 namespace FacturaNet.FnConfiguracion
 {
 	public sealed class ConfiguracionFn : Configuracion
-	{			
+	{
 		/* TODO
 		 * Hacer el grabar
 		 * 
@@ -145,11 +145,10 @@ namespace FacturaNet.FnConfiguracion
 #endregion
 		
 		
-		public ConfiguracionFn(string nombreIni, string[] args) : base(nombreIni, args)
+		public ConfiguracionFn(string[] args) : base(Global.NombreIni, args)
 		{
 		}
-
-		public ConfiguracionFn(string nombreIni) : base(nombreIni)
+		public ConfiguracionFn() : base(Global.NombreIni)
 		{			
 		}		
 

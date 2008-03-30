@@ -35,6 +35,7 @@
     <ProjectReference type="Project" localcopy="True" refto="AmUtil" />
     <ProjectReference type="Project" localcopy="True" refto="FacturaNet.FnAccesoDb" />
     <ProjectReference type="Project" localcopy="True" refto="FacturaNet.FnConfiguracion" />
+    <ProjectReference type="Project" localcopy="True" refto="FacturaNet.FnNegocio" />
   </References>
   <Deployment.LinuxDeployData scriptName="facturanetgtk" />
   <GtkDesignInfo gtkVersion="2.10.2" />

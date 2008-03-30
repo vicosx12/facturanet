@@ -1,4 +1,4 @@
-// borrar.cs
+// Global.cs
 // 
 // Copyright (C) 2008 Andrés Moschini
 //
@@ -18,15 +18,12 @@
 
 using System;
 
-namespace FacturaNet.FnNegocio
+namespace FacturaNet.FnConfiguracion
 {
 	
 	
-	public class borrar
+	public static class Global
 	{
-		
-		public borrar()
-		{
-		}
+		static internal readonly string NombreIni = "facturanet.ini";
 	}
 }

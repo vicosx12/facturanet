@@ -8,9 +8,14 @@ namespace FacturaNet
 	{
 		public static void Main(string[] args)
 		{
-			ConfigMngr.Inicializar(args);
+			ConfiguracionFn configuracion = new ConfiguracionFn(args);
+			FacturaNet.FnGtk.MainClass.Run(configuracion);
+			
+//			ConfigMngr.Inicializar(args);
+//			if (!ConfigMngr.Configuracion.Salir)
+//				FacturaNet.FnGtk.MainClass.Run();
 						
-//aca revisar las demas opciones que van a admin
+//TODO: aca revisar las demas opciones que van a admin
 /*
 DbMngr.ActualizarDb()
 DbMngr.CrearUsuario(string user, string password)
@@ -28,8 +33,6 @@ DbMngr.CrearUsuario(string user, string password)
 Seleccionar_acceso_db y Agregar_acceso_db van en la parte de configuracion			
 */
 			
-			if (!ConfigMngr.Configuracion.Salir)
-				FacturaNet.FnGtk.MainClass.Run();
 		}
 	}
 }

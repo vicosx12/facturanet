@@ -1,3 +1,7 @@
+2008-03-30  Andres Moschini <andresmoschini+facturanet@gmail.com> 
+
+	* Configuracion.cs: Clases y objetos globales reorganizados
+
 2008-03-29  Andres Moschini <andresmoschini+facturanet@gmail.com> 
 
 	

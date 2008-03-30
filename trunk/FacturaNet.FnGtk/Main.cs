@@ -2,6 +2,7 @@
 using System;
 using Gtk;
 using FacturaNet.FnAccesoDb;
+using FacturaNet.FnNegocio;
 using AmUtil;
 using FacturaNet.FnConfiguracion;
 
@@ -11,47 +12,62 @@ namespace FacturaNet.FnGtk
 	{
 		public static void Main (string[] args)
 		{
+			ConfiguracionFn configuracion = new ConfiguracionFn(args);
+			Run(configuracion);
+/*			
 			ConfigMngr.Inicializar(args);
 			
 			if (!ConfigMngr.Configuracion.Salir)
 				Run();
+*/				
 		}
 		
-		public static void Run()
+		public static void Run(ConfiguracionFn configuracion)
 		{
-			Application.Init ();
-			
-			try 
-			{
-				DatabaseFn.Init();
-			}
-			catch (Exception e)
-			{
-				MessageDialog md = new MessageDialog (null, 
-				                                      DialogFlags.Modal,
-				                                      MessageType.Error, 
-				                                      ButtonsType.Close,
-				                                      string.Format(
-@"No se pudo conectar el sistema. Mensaje del error: 
-	<i>{0}</i>",e.Message));
-
-				md.Title = "Error conectando con la base de datos";
-				md.Run();
-				md.Destroy();
+			if (configuracion.NoIngresarAlEntorno)
 				return;
-			}
-		
-			FrmLogin loginWindow = new FrmLogin();
-			loginWindow.Show();
-			
-			Application.Run();			
-			loginWindow.Destroy();
-			
-			if (DatabaseFn.DatabaseCAMBIAR.Sesion.Conectado)
+			else
 			{
-				FrmPrincipal frmPrincipal = new FrmPrincipal();
-				frmPrincipal.Show ();
-				Application.Run ();
+				Application.Init ();
+				FnAccesoDb.Global.Init(configuracion);
+				DatabaseFn database;
+				
+				try 
+				{
+					
+					database = new DatabaseFn();
+				}
+				catch (Exception e)
+				{
+					MessageDialog md = new MessageDialog (null, 
+					                                      DialogFlags.Modal,
+					                                      MessageType.Error, 
+					                                      ButtonsType.Close,
+					                                      string.Format(
+	@"No se pudo conectar el sistema. Mensaje del error: 
+		<i>{0}</i>",e.Message));
+
+					md.Title = "Error conectando con la base de datos";
+					md.Run();
+					md.Destroy();
+					return;
+				}
+			
+				
+				FnNegocio.Global.Init(configuracion,database);
+				
+				FrmLogin loginWindow = new FrmLogin();
+				loginWindow.Show();
+				
+				Application.Run();			
+				loginWindow.Destroy();
+				
+				if (FnNegocio.Global.Session.Conectado)
+				{
+					FrmPrincipal frmPrincipal = new FrmPrincipal();
+					frmPrincipal.Show ();
+					Application.Run ();
+				}
 			}
 		}
 	}

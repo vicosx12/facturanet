@@ -67,11 +67,11 @@ namespace AmUtil
 			source.Configs[section].Set(key,value);
 		}
 		
-		private bool salir = false;
-		public bool Salir
+		private bool noIngresarAlEntorno = false;
+		public bool NoIngresarAlEntorno
 		{
-			get { return salir; }
-			protected set { salir = value; }
+			get { return noIngresarAlEntorno; }
+			protected set { noIngresarAlEntorno = value; }
 		}
 		
 		public Configuracion(string nombreIni, string[] args)
@@ -92,13 +92,13 @@ namespace AmUtil
 				if (argvSource.Configs[cmdArgsSection].Get("help") != null)
 				{
 					PrintUsage();
-					Salir = true;
+					NoIngresarAlEntorno = true;
 					return;
 				}
 				if (argvSource.Configs[cmdArgsSection].Get("version") != null) 
 				{
 					PrintVersion();
-					Salir = true;
+					NoIngresarAlEntorno = true;
 					return;
 				}
 				
@@ -110,7 +110,7 @@ namespace AmUtil
 				if (argvSource.Configs[cmdArgsSection].Get("save-user") != null) 
 				{
 					SaveConfig();
-					Salir = true;
+					NoIngresarAlEntorno = true;
 					return;
 				}
 			}
