@@ -63,87 +63,61 @@ namespace FacturaNet.FnConfiguracion
 		{
 			return ConfigGetString("AccesoDb_" + AccesoDbSelectedProvider,key,defaultValue);
 		}
-		
-			/*
-			get { return Source.Configs["AccesoDb"].GetString("SelectedProvider","Default"); }
-			private set  
-			{ 
-				Source.Configs["AccesoDb"].Set("SelectedProvider",value);
-				
-				if (Source.Configs["AccesoDb_" + value] == null)
-					Source.Configs.Add("AccesoDb_" + value);
-				
-				// ConfiguracionSelectedProvider = Source.Configs["AccesoDb_" + value];
-				
-				//foreach (string key in ConfiguracionSelectedProvider.GetKeys())
-				//	Console.WriteLine(key);
-				//foreach (string val in ConfiguracionSelectedProvider.GetValues())
-				//	Console.WriteLine(val);
-
-				//OJO CnnString y real password debería ir entre comillas por si hay puntos y comas
-			}
-			
-		}
-		*/
-		// private IConfig ConfiguracionSelectedProvider = null;
 
 		public string AccesoDbProviderName
 		{
 		    get { return AccesoDbSelectedProviderGetString("ProviderName","* UNDEFINED *"); }
 		    set { AccesoDbSelectedProviderSet("ProviderName", value); }
-			//get { return ConfiguracionSelectedProvider.GetString("ProviderName","* UNDEFINED *"); }
-			//private set { ConfiguracionSelectedProvider.Set("ProviderName", value); }
 		}	    
 		public string AccesoDbCnnString
 		{
-			// //get { return ConfiguracionSelectedProvider.GetString("CnnString","* UNDEFINED *").Replace("|",";"); }
-			// //private set { ConfiguracionSelectedProvider.Set("CnnString", value.Replace(";","|")); }
-			//get { return ConfiguracionSelectedProvider.GetString("CnnString","* UNDEFINED *"); }
-			//private set { ConfiguracionSelectedProvider.Set("CnnString", value); }
 		    get { return AccesoDbSelectedProviderGetString("CnnString","* UNDEFINED *"); }
 		    set { AccesoDbSelectedProviderSet("CnnString", value); }
 		}
 	    public string AccesoDbServer
 		{
-			//get { return ConfiguracionSelectedProvider.GetString("Server","* UNDEFINED *"); }
-			//private set { ConfiguracionSelectedProvider.Set("Server", value); }
 		    get { return AccesoDbSelectedProviderGetString("Server","* UNDEFINED *"); }
-		    set
-			{
-				/*
-				Console.WriteLine("**********************");
-				Console.WriteLine("AccesoDbSelectedProviderSet");
-				Console.WriteLine("Server");
-				Console.WriteLine(value);
-				Console.WriteLine("**********************");
-				*/
-				AccesoDbSelectedProviderSet("Server", value); 
-			}
+		    set { AccesoDbSelectedProviderSet("Server", value); }
 		}
 	    public string AccesoDbDataBase
 		{
-			//get { return ConfiguracionSelectedProvider.GetString("DataBase","* UNDEFINED *"); }
-			//private set { ConfiguracionSelectedProvider.Set("DataBase", value); }
 		    get { return AccesoDbSelectedProviderGetString("DataBase","* UNDEFINED *"); }
 		    set { AccesoDbSelectedProviderSet("DataBase", value); }
 		}
 	    public string AccesoDbRealPassword
 		{
-			//get { return ConfiguracionSelectedProvider.GetString("RealPassword","* UNDEFINED *"); }
-			//private set { ConfiguracionSelectedProvider.Set("RealPassword", value); }
-			//encriptado debería dejar las claves de encriptacion solamente en la librería que se conecta a la base de datos
 		    get { return AccesoDbSelectedProviderGetString("RealPassword","* UNDEFINED *"); }
 		    set { AccesoDbSelectedProviderSet("RealPassword", value); }
 		} 
 	    public string AccesoDbRealUser
 		{
-			//get { return ConfiguracionSelectedProvider.GetString("RealUser","* UNDEFINED *"); }
-			//private set { ConfiguracionSelectedProvider.Set("RealUser", value); }
 		    get { return AccesoDbSelectedProviderGetString("RealUser","* UNDEFINED *"); }
 		    set { AccesoDbSelectedProviderSet("RealUser", value); }
 		} 
 #endregion
+
+#region AccionesAdministracion
+		private bool accionesAdministracionActualizarDb;
+		public bool AccionesAdministracionActualizarDb 
+		{
+	    	get { return accionesAdministracionActualizarDb; }
+			private set { accionesAdministracionActualizarDb = value; }
+	    }
 		
+		private string[] accionesAdministracionAgregarUsuarioNombreClave;
+		public bool AccionesAdministracionAgregarUsuario 
+		{
+	    	get { return accionesAdministracionAgregarUsuarioNombreClave != null; }
+	    }
+		public string AccionesAdministracionAgregarUsuarioNombre 
+		{
+	    	get { return accionesAdministracionAgregarUsuarioNombreClave[0]; }
+	    }
+		public string AccionesAdministracionAgregarUsuarioClave 
+		{
+	    	get { return accionesAdministracionAgregarUsuarioNombreClave[1]; }
+	    }
+#endregion
 		
 		public ConfiguracionFn(string[] args) : base(Global.NombreIni, args)
 		{
@@ -152,7 +126,33 @@ namespace FacturaNet.FnConfiguracion
 		{			
 		}		
 
-		protected override void ProcesarCommandLine(ArgvConfigSource argvSource, string nombreIni, string[] args)
+		protected override void ProcesarCommandLine(ArgvConfigSource argvSource)//, string nombareIni, string[] args)
+		{
+			ProcesarCommandLineAccesoDb(argvSource);
+			ProcesarCommandLineAccionesAdministracion(argvSource);
+		}
+		private void ProcesarCommandLineAccionesAdministracion(ArgvConfigSource argvSource)
+		{
+			argvSource.AddSwitch ("AccionesAdministracion", "UpdateDb", "up");
+			argvSource.AddSwitch ("AccionesAdministracion", "AddUser", "au");
+						
+			AccionesAdministracionActualizarDb = (argvSource.Configs["AccionesAdministracion"].Get("UpdateDb") != null);
+			
+			if (argvSource.Configs["AccionesAdministracion"].Get("AddUser") == null)
+				accionesAdministracionAgregarUsuarioNombreClave = null;
+			else
+			{
+				accionesAdministracionAgregarUsuarioNombreClave = argvSource.Configs["AccionesAdministracion"].GetString("AddUser").Split (',');
+				if (accionesAdministracionAgregarUsuarioNombreClave.Length != 2)
+				{
+					accionesAdministracionAgregarUsuarioNombreClave = null;
+					throw new Exception ("AddUser requiere un parámetro del tipo USER,PASSWORD");
+				}
+			}
+			
+			NoIngresarAlEntorno = AccionesAdministracionActualizarDb | AccionesAdministracionAgregarUsuario;
+		}
+		private void ProcesarCommandLineAccesoDb(ArgvConfigSource argvSource)
 		{
 			// agrego el switch de seleccion de configuracion
 			argvSource.AddSwitch ("AccesoDb", "SelectedProvider", "sp"); //indica cual es la configuración seleccionada

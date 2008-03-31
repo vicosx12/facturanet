@@ -42,14 +42,6 @@ namespace AmUtil
 		public readonly string[] Args = null;
 		
 		private IniConfigSource source;
-
-		/*
-		protected IniConfigSource Source
-		{
-			get { return source;}
-			private set { source = value; }
-		}
-	   */
 		
 		protected string ConfigGetString(string section, string key, string defaultValue)
 		{
@@ -57,13 +49,6 @@ namespace AmUtil
 		}
 		protected void ConfigSet(string section, string key, object value)
 		{
-			/*
-			Console.WriteLine("**********************");
-			Console.WriteLine(section);
-			Console.WriteLine(key);
-			Console.WriteLine(value);
-			Console.WriteLine("**********************");
-			*/
 			source.Configs[section].Set(key,value);
 		}
 		
@@ -105,7 +90,7 @@ namespace AmUtil
 				// cargo los inifiles
 				InicializarSource(argvSource.Configs[cmdArgsSection].GetString("ini-file",nombreIni));
 				
-				ProcesarCommandLine(argvSource, nombreIni, args);
+				ProcesarCommandLine(argvSource); //, nombreIni, args);
 				
 				if (argvSource.Configs[cmdArgsSection].Get("save-user") != null) 
 				{
@@ -134,7 +119,7 @@ namespace AmUtil
 			 */		
 		}
 		
-		protected abstract void ProcesarCommandLine(ArgvConfigSource argvSource, string nombreIni, string[] args); //para cuando se carga esto ya esta el help y cargado el ini correspondiente
+		protected abstract void ProcesarCommandLine(ArgvConfigSource argvSource);//, string nombreIni, string[] args); //para cuando se carga esto ya esta el help y cargado el ini correspondiente
 
 		protected virtual void PrintUsage()
 		{
