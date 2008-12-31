@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Facturanet.Business" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Facturanet.Business" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/Facturanet.Server" />
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/Facturanet.Entities" />
+  <xs:complexType name="GetClientsRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/Facturanet.Server" base="q1:BaseRequestOfGetClientsResponsel0JvM9sf">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Filter" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetClientsRequest" nillable="true" type="tns:GetClientsRequest" />
+  <xs:complexType name="RemoveProductRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q2="http://schemas.datacontract.org/2004/07/Facturanet.Server" base="q2:BaseRequestOfRemoveProductResponsel0JvM9sf">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ProductIdentificator" nillable="true" type="q2:SelectorOfProductZSiI1OEz" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="RemoveProductRequest" nillable="true" type="tns:RemoveProductRequest" />
+  <xs:complexType name="GetInvoiceRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q3="http://schemas.datacontract.org/2004/07/Facturanet.Server" base="q3:BaseRequestOfGetInvoiceResponsel0JvM9sf">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Id" type="xs:int" />
+          <xs:element minOccurs="0" name="Number" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetInvoiceRequest" nillable="true" type="tns:GetInvoiceRequest" />
+  <xs:complexType name="GetProductsRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q4="http://schemas.datacontract.org/2004/07/Facturanet.Server" base="q4:BaseRequestOfGetProductsResponsel0JvM9sf">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Filter" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetProductsRequest" nillable="true" type="tns:GetProductsRequest" />
+  <xs:complexType name="GetClientsResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q5="http://schemas.datacontract.org/2004/07/Facturanet.Server" base="q5:Response">
+        <xs:sequence>
+          <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Facturanet.Entities" minOccurs="0" name="Clients" nillable="true" type="q6:ArrayOfCustomer" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetClientsResponse" nillable="true" type="tns:GetClientsResponse" />
+  <xs:complexType name="RemoveProductResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q7="http://schemas.datacontract.org/2004/07/Facturanet.Server" base="q7:Response">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="RespuestaPrueba" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="RemoveProductResponse" nillable="true" type="tns:RemoveProductResponse" />
+  <xs:complexType name="GetProductsResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q8="http://schemas.datacontract.org/2004/07/Facturanet.Server" base="q8:Response">
+        <xs:sequence>
+          <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/Facturanet.Entities" minOccurs="0" name="Products" nillable="true" type="q9:ArrayOfProduct" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetProductsResponse" nillable="true" type="tns:GetProductsResponse" />
+  <xs:complexType name="GetInvoiceResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q10="http://schemas.datacontract.org/2004/07/Facturanet.Server" base="q10:Response">
+        <xs:sequence>
+          <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Facturanet.Entities" minOccurs="0" name="Invoice" nillable="true" type="q11:Invoice" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetInvoiceResponse" nillable="true" type="tns:GetInvoiceResponse" />
+</xs:schema>
