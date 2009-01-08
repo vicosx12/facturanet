@@ -81,6 +81,7 @@
     <Compile Include="Server\Request.cs" />
     <Compile Include="Server\Response.cs" />
     <Compile Include="Server\Selector.cs" />
+    <Compile Include="Util\IdentifierHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Application\" />

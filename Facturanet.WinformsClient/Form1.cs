@@ -43,6 +43,8 @@ namespace Facturanet.WinformsClient
 
 
             GetProductsResponse respuestaRecuperarArticulos = respuesta.Responses[1] as GetProductsResponse;
+            Console.WriteLine("*respuestaRecuperarArticulos*");
+            Console.WriteLine(respuestaRecuperarArticulos.ToString());
 
             this.articuloBindingSource.DataSource = respuestaRecuperarArticulos.Products;
             //this.clienteBindingSource.DataSource = Servicios.BusinessServices.RecuperarClientes();

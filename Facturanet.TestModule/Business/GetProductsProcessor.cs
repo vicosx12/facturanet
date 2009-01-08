@@ -5,6 +5,7 @@ using System.Text;
 using Facturanet.Entities;
 using Facturanet.Server;
 using Facturanet.Business;
+using Facturanet.Util;
 
 
 namespace Facturanet.Business
@@ -17,10 +18,10 @@ namespace Facturanet.Business
             {
                 Products = new List<Product>()
                 {
-                    new Product() { Id = 1, Taxes = 1, Name = "Articulo1"},
-                    new Product() { Id = 2, Taxes = 2, Name = "Articulo2"},
-                    new Product() { Id = 3, Taxes = 3, Name = "Articulo3"},
-                    new Product() { Id = 4, Taxes = 4, Name = "Articulo4"}
+                    new Product() { Id = IdentifierHelper.GenerateComb(), Taxes = 1, Name = "Articulo1"},
+                    new Product() { Id = IdentifierHelper.GenerateComb(), Taxes = 2, Name = "Articulo2"},
+                    new Product() { Id = IdentifierHelper.GenerateComb(), Taxes = 3, Name = "Articulo3"},
+                    new Product() { Id = IdentifierHelper.GenerateComb(), Taxes = 4, Name = "Articulo4"}
                 }
             };
         }

@@ -23,9 +23,9 @@ namespace Facturanet.Server
             Configuration cfg = new Configuration();
             cfg.Configure(ConfigNH);
             cfg.AddAssembly(Assembly);
-            CrearEstructuraDB(cfg);
+            //CrearEstructuraDB(cfg);
             SessionFactory = cfg.BuildSessionFactory();
-            CrearDatosDB();
+            //CrearDatosDB();
         }
 
         public static void ForceInit()
@@ -33,7 +33,7 @@ namespace Facturanet.Server
             Console.WriteLine(SessionFactory);
         }
 
-
+        /*
         private static void CrearEstructuraDB(Configuration config)
         {
             SchemaExport exporter = new SchemaExport(config);
@@ -59,14 +59,14 @@ namespace Facturanet.Server
             {
                 Customer = c1,
                 Number = "Factura001"
-                /*
-                ,Items = 
-                {
-                    new ItemFactura() { Articulo = a1, Cantidad=5, PrecioBase=10 },
-                    new ItemFactura() { Articulo = a1, Cantidad=1, PrecioBase=20 },
-                    new ItemFactura() { Articulo = a2, Cantidad=5, PrecioBase=10 }
-                }
-                */
+                
+                //,Items = 
+                //{
+                //    new ItemFactura() { Articulo = a1, Cantidad=5, PrecioBase=10 },
+                //    new ItemFactura() { Articulo = a1, Cantidad=1, PrecioBase=20 },
+                //    new ItemFactura() { Articulo = a2, Cantidad=5, PrecioBase=10 }
+                //}
+                
             };
 
             f1.Items.Add(new InvoiceItem() { Product = a1, Quantity = 5, BasePrice = 10, Invoice = f1 });
@@ -77,5 +77,6 @@ namespace Facturanet.Server
 
             session.Close();
         }
+         * */
     }
 }
