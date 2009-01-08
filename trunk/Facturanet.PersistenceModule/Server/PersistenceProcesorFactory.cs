@@ -29,7 +29,7 @@ namespace Facturanet.Server
         public void ForceInit()
         {
             Console.WriteLine("ForzarInicializacion del Factory DB");
-            NHibernateHelper.ForceInit();
+             NHibernateHelper.ForceInit();
         }
     }
 }

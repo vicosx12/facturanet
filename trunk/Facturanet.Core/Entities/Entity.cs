@@ -12,7 +12,7 @@ namespace Facturanet.Entities
     public abstract class Entity
     {
         [DataMember]
-        public virtual int Id { get; set; }
+        public virtual Guid Id { get; set; }
 
         static Type[] GetKnownTypes()
         {
