@@ -25,7 +25,6 @@ namespace Facturanet.DbMigration.Migrations
 
         public override void Down()
         {
-            //
             Database.RemoveTable("InvoiceItem");
         }
     }
