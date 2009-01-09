@@ -13,7 +13,7 @@ namespace Facturanet.DbMigration.Migrations
             Database.AddTable("Invoice", new Column[]
             {
                 new Column("Id", DbType.Guid, ColumnProperty.PrimaryKey),
-                new Column("Number", DbType.String, 30, ColumnProperty.NotNull),
+                new Column("Number", DbType.String, 30, ColumnProperty.NotNull | ColumnProperty.Unique),
                 new Column("IdCustomer", DbType.Guid)
             });
 
@@ -22,7 +22,6 @@ namespace Facturanet.DbMigration.Migrations
 
         public override void Down()
         {
-            //Database.RemoveForeignKey("Invoice", "fk_Invoice_Customer");
             Database.RemoveTable("Invoice");
         }
     }

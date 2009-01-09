@@ -92,11 +92,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\0001AddCustomerTable.cs" />
-    <Compile Include="Migrations\0002AddInvoiceTable.cs" />
-    <Compile Include="Migrations\0005InsertTestData.cs" />
-    <Compile Include="Migrations\0004AddInvoiceItemTable.cs" />
-    <Compile Include="Migrations\0003AddProductTable.cs" />
+    <Compile Include="Migrations00000000\0001AddCustomerTable.cs" />
+    <Compile Include="Migrations00000000\0002AddInvoiceTable.cs" />
+    <Compile Include="Migrations00000000\0005InsertTestData.cs" />
+    <Compile Include="Migrations00000000\0004AddInvoiceItemTable.cs" />
+    <Compile Include="Migrations00000000\0003AddProductTable.cs" />
+    <Compile Include="Migrations00000000\0007AddContableAccountTable.cs" />
+    <Compile Include="Migrations00000000\0006AddAccountTreeTable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
