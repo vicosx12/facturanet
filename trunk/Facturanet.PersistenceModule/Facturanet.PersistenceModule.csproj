@@ -69,8 +69,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Business\GetProductsProcessor.cs" />
-    <Compile Include="Business\RemoveProductProcessor.cs" />
+    <Compile Include="Business\ListProductsProcessor.cs" />
+    <None Include="Business\Borrar RemoveProductProcessor.cs" />
     <Compile Include="Infrastructure\SystemInfoProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server\CompositeProcessor.cs" />
@@ -79,17 +79,18 @@
     <Compile Include="Server\PersistenceProcessor.cs" />
     <Compile Include="Server\NHibernateHelper.cs" />
     <Compile Include="Server\SelectorExtensions.cs" />
+    <Compile Include="Test\GenerateTestDataProcessor.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mappings\Customer.hbm.xml" />
     <EmbeddedResource Include="Mappings\Invoice.hbm.xml" />
-    <EmbeddedResource Include="Mappings\InvoiceItem.hbm.xml" />
     <EmbeddedResource Include="Mappings\Product.hbm.xml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Facturanet.PersistenceModule.dll.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="Mappings\Enterprise.hbm.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\facturanet.core\Facturanet.Core.csproj">

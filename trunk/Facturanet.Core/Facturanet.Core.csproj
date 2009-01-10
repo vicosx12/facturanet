@@ -52,14 +52,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Business\GetClientsRequest.cs" />
-    <Compile Include="Business\GetClientsResponse.cs" />
-    <Compile Include="Business\GetInvoiceRequest.cs" />
-    <Compile Include="Business\GetInvoiceResponse.cs" />
-    <Compile Include="Business\GetProductsRequest.cs" />
-    <Compile Include="Business\GetProductsResponse.cs" />
-    <Compile Include="Business\RemoveProductRequest.cs" />
-    <Compile Include="Business\RemoveProductResponse.cs" />
+    <Compile Include="Business\ListProductsRequest.cs" />
+    <Compile Include="Business\ListProductsResponse.cs" />
+    <Compile Include="Entities\Enterprise.cs" />
     <Compile Include="Entities\Customer.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Invoice.cs" />
@@ -81,6 +76,8 @@
     <Compile Include="Server\Request.cs" />
     <Compile Include="Server\Response.cs" />
     <Compile Include="Server\Selector.cs" />
+    <Compile Include="Test\GenerateTestDataRequest.cs" />
+    <Compile Include="Test\GenerateTestDataResponse.cs" />
     <Compile Include="Util\IdentifierHelper.cs" />
   </ItemGroup>
   <ItemGroup>

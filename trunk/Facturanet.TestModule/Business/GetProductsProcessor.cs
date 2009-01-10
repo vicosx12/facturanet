@@ -10,11 +10,11 @@ using Facturanet.Util;
 
 namespace Facturanet.Business
 {
-    internal class GetProductsProcessor : Processor<GetProductsRequest,GetProductsResponse>
+    internal class GetProductsProcessor : Processor<ListProductsRequest,ListProductsResponse>
     {
-        public override GetProductsResponse Run(GetProductsRequest request, IContext context)
+        public override ListProductsResponse Run(ListProductsRequest request, IContext context)
         {
-            return new GetProductsResponse()
+            return new ListProductsResponse()
             {
                 Products = new List<Product>()
                 {

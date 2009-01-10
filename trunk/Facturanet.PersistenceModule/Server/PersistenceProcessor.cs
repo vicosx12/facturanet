@@ -18,12 +18,23 @@ namespace Facturanet.Server
             {
                 ResponseType response = null;
 
+
+                using (var session = NHibernateHelper.SessionFactory.OpenSession())
+                using (var transaction = session.BeginTransaction())
+                {
+                    response = RunInContext(request, new PersistenceContext(session, transaction));
+                    transaction.Commit();
+                } 
+
+                /*
                 using (ISession session = NHibernateHelper.SessionFactory.OpenSession())
                 {
                     session.FlushMode = FlushMode.Never;
                     response = RunInContext(request, new PersistenceContext(session));
                     session.Flush();
                 }
+                */
+
                 return response;
             }
             else

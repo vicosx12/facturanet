@@ -11,6 +11,7 @@ using Facturanet.Entities;
 using Facturanet.Server;
 using Facturanet.Business;
 using Facturanet.Infrastructure;
+using Facturanet.Test;
 
 namespace Facturanet.WinformsClient
 {
@@ -27,7 +28,7 @@ namespace Facturanet.WinformsClient
 
 
             SystemInfoRequest solicitud0 = new SystemInfoRequest();
-            GetProductsRequest solicitud1 = new GetProductsRequest();
+            ListProductsRequest solicitud1 = new ListProductsRequest();
 
             solicitudes.Requests.Add(solicitud0);
             solicitudes.Requests.Add(solicitud1);
@@ -42,7 +43,7 @@ namespace Facturanet.WinformsClient
             Console.WriteLine(respuestaInfoSistema.ToString());
 
 
-            GetProductsResponse respuestaRecuperarArticulos = respuesta.Responses[1] as GetProductsResponse;
+            ListProductsResponse respuestaRecuperarArticulos = respuesta.Responses[1] as ListProductsResponse;
             Console.WriteLine("*respuestaRecuperarArticulos*");
             Console.WriteLine(respuestaRecuperarArticulos.ToString());
 
@@ -78,6 +79,17 @@ namespace Facturanet.WinformsClient
 
         private void button2_Click(object sender, EventArgs e)
         {
+            GenerateTestDataRequest r = new GenerateTestDataRequest();
+            try
+            {
+                r.Run();
+                MessageBox.Show("GenerateTestData OK");
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.ToString());
+            }
+            /*
             CompositeRequest requests = new CompositeRequest();
             requests.Requests.Add(
                 new SystemInfoRequest()
@@ -103,6 +115,7 @@ namespace Facturanet.WinformsClient
                         Example = new Product() { Name = "POLLO" }
                     }
                 });
+             */
             /*
             requests.Requests.Add(
                 new RemoveProductRequest()
@@ -113,6 +126,7 @@ namespace Facturanet.WinformsClient
                     }
                 });
             */
+            /*
             try
             {
                 CompositeResponse responses = requests.Run();
@@ -132,6 +146,7 @@ namespace Facturanet.WinformsClient
             {
                 Console.WriteLine(exception);
             }
+             * */
         }
     }
 }

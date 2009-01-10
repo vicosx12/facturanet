@@ -18,5 +18,10 @@ namespace Facturanet.Entities
         {
             return FacturanetProcessorFactory.GetKnownTypesOf(typeof(Entity));
         }
+
+        public Entity()
+        {
+            Id = Util.IdentifierHelper.GenerateComb();
+        }
     }
 }

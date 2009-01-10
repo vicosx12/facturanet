@@ -12,10 +12,12 @@ namespace Facturanet.Server
     public class PersistenceContext : IContext
     {
         public ISession Session { get; private set; }
+        public ITransaction Transaction { get; private set; }
 
-        public PersistenceContext(ISession session)
+        public PersistenceContext(ISession session, ITransaction transaction)
         {
             Session = session;
+            Transaction = transaction;
         }
     }
 }

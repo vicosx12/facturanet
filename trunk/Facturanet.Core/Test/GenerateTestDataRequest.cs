@@ -3,15 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Facturanet.Server;
-using Facturanet.Entities;
 using System.Runtime.Serialization;
 
-namespace Facturanet.Business
+namespace Facturanet.Test
 {
     [DataContract]
-    public class GetProductsResponse : Response
+    public class GenerateTestDataRequest : BaseRequest<GenerateTestDataResponse>
     {
-        [DataMember]
-        public IList<Product> Products { get; set; }
     }
 }
