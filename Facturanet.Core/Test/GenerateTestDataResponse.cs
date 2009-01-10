@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Facturanet.Server;
+using Facturanet.Entities;
 using System.Runtime.Serialization;
 
-namespace Facturanet.Business
+namespace Facturanet.Test
 {
     [DataContract]
-    public class GetProductsRequest : BaseRequest<GetProductsResponse>
+    public class GenerateTestDataResponse : Response
     {
-        [DataMember]
-        public string Filter { get; set; }
     }
 }

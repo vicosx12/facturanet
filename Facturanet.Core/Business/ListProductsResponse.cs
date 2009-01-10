@@ -9,9 +9,9 @@ using System.Runtime.Serialization;
 namespace Facturanet.Business
 {
     [DataContract]
-    public class GetInvoiceResponse : Response
+    public class ListProductsResponse : Response
     {
         [DataMember]
-        public Invoice Invoice { get; set; }
+        public IList<Product> Products { get; set; }
     }
 }

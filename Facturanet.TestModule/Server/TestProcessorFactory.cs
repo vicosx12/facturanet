@@ -15,7 +15,7 @@ namespace Facturanet.Server
 
             if (tipoSolicitud == typeof(Server.CompositeRequest))
                 procesador = new Server.CompositeProcessor();
-            else if (tipoSolicitud == typeof(Business.GetProductsRequest))
+            else if (tipoSolicitud == typeof(Business.ListProductsRequest))
                 procesador = new Business.GetProductsProcessor();
             else if (tipoSolicitud == typeof(Infrastructure.SystemInfoRequest))
                 procesador = new Infrastructure.SystemInfoProcessor();

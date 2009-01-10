@@ -5,22 +5,15 @@ using System.Runtime.Serialization;
 
 namespace Facturanet.Entities
 {
-    
-    public class InvoiceItem : Entity
+    public class InvoiceItem 
     {
-        //public virtual int Id { get; set; }
-        
-        public virtual Product Product { get; set; }
-
-        
         public virtual Invoice Invoice { get; set; }
-
-        
+        public virtual int InvoiceLine { get; set; }
+        public virtual Product Product { get; set; }
         public virtual decimal Quantity { get; set; }
-
-        
         public virtual decimal BasePrice { get; set; }
-
+        
+        //Esto me parece que está mal
         public virtual decimal FinalPrice
         {
             get 
