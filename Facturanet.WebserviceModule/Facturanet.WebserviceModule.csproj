@@ -87,6 +87,8 @@
     <None Include="Service References\FacturanetServiceReference\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Service References\FacturanetServiceReference\Arrays.xsd" />
+    <None Include="Service References\FacturanetServiceReference\Facturanet.Tdo.xsd" />
     <None Include="Service References\FacturanetServiceReference\Facturanet.Test.xsd" />
     <None Include="Service References\FacturanetServiceReference\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>

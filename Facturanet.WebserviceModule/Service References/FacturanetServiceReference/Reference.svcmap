@@ -28,6 +28,8 @@
     <MetadataFile FileName="Facturanet.Business.xsd" MetadataType="Schema" ID="d226f3b3-26ec-42a9-b0cb-67285b13f070" SourceId="1" SourceUrl="http://localhost:8731/Design_Time_Addresses/Facturanet/Webservice/mex" />
     <MetadataFile FileName="Facturanet.Test.xsd" MetadataType="Schema" ID="c46ed292-6f66-47d1-971a-404ce62cd218" SourceId="1" SourceUrl="http://localhost:8731/Design_Time_Addresses/Facturanet/Webservice/mex" />
     <MetadataFile FileName="Facturanet.Entities.xsd" MetadataType="Schema" ID="6258b330-005b-4310-ae4a-b08228c2e951" SourceId="1" SourceUrl="http://localhost:8731/Design_Time_Addresses/Facturanet/Webservice/mex" />
+    <MetadataFile FileName="Facturanet.Tdo.xsd" MetadataType="Schema" ID="7c19ecb8-12f2-41de-aba2-35ea3f2bbf9f" SourceId="1" SourceUrl="http://localhost:8731/Design_Time_Addresses/Facturanet/Webservice/mex" />
+    <MetadataFile FileName="Arrays.xsd" MetadataType="Schema" ID="0793d4cb-0d9c-4dd4-b089-88c7b8760436" SourceId="1" SourceUrl="http://localhost:8731/Design_Time_Addresses/Facturanet/Webservice/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />

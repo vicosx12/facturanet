@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Facturanet.Entities;
 using Facturanet.Server;
 using Facturanet.Business;
 using NHibernate;
@@ -15,7 +14,7 @@ namespace Facturanet.Business
     {
         protected override ListProductsResponse RunInContext(ListProductsRequest request, PersistenceContext context)
         {
-            IList<Product> list = context.Session.CreateCriteria(typeof(Product)).List<Product>();
+            IList<Lines.ILineProduct> list = context.Session.CreateCriteria(typeof(Entities.Product)).List<Lines.ILineProduct>();
             return new ListProductsResponse() { List = list };
         }
 

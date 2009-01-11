@@ -10,7 +10,7 @@ using System.Xml.Serialization;
 namespace Facturanet.Entities
 {
 
-    public class Invoice : Entity
+    public class Invoice : Entity, Lines.ILineInvoice
     {
         public virtual Enterprise Enterprise { get; set; }
         public virtual string FiscalType { get; set; }
@@ -23,6 +23,26 @@ namespace Facturanet.Entities
         {
             get { return items; }
             set { items = value; }
+        }
+
+        string Lines.ILineInvoice.EnterpriseCode
+        {
+            get { return Enterprise.Code; }
+        }
+
+        string Lines.ILineInvoice.CustomerCode
+        {
+            get { return Customer.Code; }
+        }
+
+        string Lines.ILineInvoice.CustomerName
+        {
+            get { return Customer.Name; }
+        }
+
+        public virtual double Total
+        {
+            get { return Items.Sum(item => item.Quantity * item.Price); }
         }
     }
 }

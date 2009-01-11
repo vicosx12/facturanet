@@ -87,16 +87,19 @@
     <Compile Include="Test\GenerateTestDataProcessor.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Mappings\Customer.hbm.xml" />
-    <EmbeddedResource Include="Mappings\Invoice.hbm.xml" />
-    <EmbeddedResource Include="Mappings\Product.hbm.xml" />
+    <EmbeddedResource Include="NHMappings\Customer.hbm.xml" />
+    <EmbeddedResource Include="NHMappings\Invoice.hbm.xml" />
+    <EmbeddedResource Include="NHMappings\Product.hbm.xml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Facturanet.PersistenceModule.dll.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <EmbeddedResource Include="Mappings\Varios.hbm.xml" />
-    <EmbeddedResource Include="Mappings\Enterprise.hbm.xml" />
+    <EmbeddedResource Include="NHQueries\Invoices_CompleteGraph.hbm.xml" />
+    <EmbeddedResource Include="NHImports\TDOs.hbm.xml" />
+    <EmbeddedResource Include="NHImports\Entity.hbm.xml" />
+    <EmbeddedResource Include="NHQueries\InvoicesList.hbm.xml" />
+    <EmbeddedResource Include="NHMappings\Enterprise.hbm.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\facturanet.core\Facturanet.Core.csproj">

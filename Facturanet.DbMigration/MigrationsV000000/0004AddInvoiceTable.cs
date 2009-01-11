@@ -30,7 +30,7 @@ namespace Facturanet.DbMigration.Migrations
                 new Column("InvoiceLine", DbType.Int32, ColumnProperty.NotNull),
                 new Column("IdProduct", DbType.Guid),
                 new Column("Quantity", DbType.Decimal, ColumnProperty.NotNull),
-                new Column("BasePrice", DbType.Decimal, ColumnProperty.NotNull),
+                new Column("Price", DbType.Decimal, ColumnProperty.NotNull),
             });
             //TODO: hacer el primary key con IdInvoice e Id
             Database.AddForeignKey("fk_InvoiceItem_Product", "InvoiceItem", "IdProduct", "Product", "Id");
