@@ -5,7 +5,8 @@ using System.Runtime.Serialization;
 
 namespace Facturanet.Entities
 {
-    public class InvoiceItem 
+    //TODO: Sacar la herencia de Entity
+    public class InvoiceItem : Entity
     {
         public virtual Invoice Invoice { get; set; }
         public virtual int InvoiceLine { get; set; }
@@ -18,10 +19,13 @@ namespace Facturanet.Entities
         {
             get 
             {
+                return 0;
+                /*
                 if (Product == null)
                     return 0;
                 else
                     return BasePrice * (1 + Product.Taxes); 
+                */
             }
         }
     }

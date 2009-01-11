@@ -17,15 +17,10 @@ namespace Facturanet.Test
         {
             var session = context.Session;
 
-            //session.Delete("from Facturanet.Entities.Entity");
-            //session.Delete("from Invoice");
-            //session.Delete("from Product");
-            //session.Delete("from Customer");
-            //session.Delete("from Enterprise");
-
-            //session.Delete("from Entity"); //No se por que no funciona
-
-            session.Delete("from System.Object");
+            session.Delete("from Invoice");
+            session.Delete("from Product");
+            session.Delete("from Customer");
+            session.Delete("from Enterprise");
 
             session.Flush();
             //IQuery q1 = session.CreateQuery("from Enterprise");
@@ -83,6 +78,7 @@ namespace Facturanet.Test
                         }
                     }
             };
+            session.Save(i1);
 
             return new GenerateTestDataResponse();
         }

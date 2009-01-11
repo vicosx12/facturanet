@@ -59,6 +59,9 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Runtime.Serialization">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -69,6 +72,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business\ListInvoicesProcessor.cs" />
+    <Compile Include="Business\ListCustomersProcessor.cs" />
     <Compile Include="Business\ListProductsProcessor.cs" />
     <None Include="Business\Borrar RemoveProductProcessor.cs" />
     <Compile Include="Infrastructure\SystemInfoProcessor.cs" />
@@ -90,6 +95,7 @@
     <Content Include="Facturanet.PersistenceModule.dll.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="Mappings\Varios.hbm.xml" />
     <EmbeddedResource Include="Mappings\Enterprise.hbm.xml" />
   </ItemGroup>
   <ItemGroup>

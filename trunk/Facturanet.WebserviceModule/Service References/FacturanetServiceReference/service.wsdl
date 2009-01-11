@@ -227,6 +227,7 @@
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/Facturanet.Server" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/Facturanet.Infrastructure" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/Facturanet.Business" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Facturanet.Test" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/Facturanet.Entities" />
     </xsd:schema>
   </wsdl:types>

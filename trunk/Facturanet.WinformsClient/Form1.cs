@@ -17,6 +17,8 @@ namespace Facturanet.WinformsClient
 {
     public partial class Form1 : Form
     {
+        private Customer selectedCustomer = null;
+
         public Form1()
         {
             InitializeComponent();
@@ -24,32 +26,49 @@ namespace Facturanet.WinformsClient
 
         private void button1_Click(object sender, EventArgs e)
         {
-            CompositeRequest solicitudes = new CompositeRequest();
+            var solicitudes = new CompositeRequest()
+            {
+                Requests = 
+                {
+                    new SystemInfoRequest(),
+                    new ListProductsRequest(),
+                    new ListCustomersRequest()
+                }
+            };
 
+            /*
+            var solicitudes = new CompositeRequest();
 
-            SystemInfoRequest solicitud0 = new SystemInfoRequest();
-            ListProductsRequest solicitud1 = new ListProductsRequest();
+            var solicitud0 = new SystemInfoRequest();
+            var solicitud1 = new ListProductsRequest();
+            var solicitud2 = new ListCustomersRequest();
 
             solicitudes.Requests.Add(solicitud0);
             solicitudes.Requests.Add(solicitud1);
+            solicitudes.Requests.Add(solicitud2);
+            */
 
-            CompositeResponse respuesta = this.checkBox1.Checked
+            var respuesta = this.checkBox1.Checked
                 ? solicitudes.RunMock()
                 : solicitudes.Run();
 
 
-            SystemInfoResponse respuestaInfoSistema = respuesta.Responses[0] as SystemInfoResponse;
-            Console.WriteLine("RESPUESTAINFOSISTEMA");
-            Console.WriteLine(respuestaInfoSistema.ToString());
+            var systemInfoResponse = respuesta.Responses[0] as SystemInfoResponse;
+            Console.WriteLine("*systemInfoResponse*");
+            Console.WriteLine(systemInfoResponse.ToString());
 
 
-            ListProductsResponse respuestaRecuperarArticulos = respuesta.Responses[1] as ListProductsResponse;
-            Console.WriteLine("*respuestaRecuperarArticulos*");
-            Console.WriteLine(respuestaRecuperarArticulos.ToString());
+            var listProductsResponse = respuesta.Responses[1] as ListProductsResponse;
+            Console.WriteLine("*listProductsResponse*");
+            Console.WriteLine(listProductsResponse.ToString());
 
-            this.articuloBindingSource.DataSource = respuestaRecuperarArticulos.Products;
-            //this.clienteBindingSource.DataSource = Servicios.BusinessServices.RecuperarClientes();
-            //this.facturaBindingSource.DataSource = Servicios.BusinessServices.RecuperarFacturas();
+
+            var listCustomersResponse = respuesta.Responses[2] as ListCustomersResponse;
+            Console.WriteLine("*listCustomersResponse*");
+            Console.WriteLine(listCustomersResponse.ToString());
+
+            this.articuloBindingSource.DataSource = listProductsResponse.List;
+            this.clienteBindingSource.DataSource = listCustomersResponse.List;
             
             ActualizarItems();
         }
@@ -147,6 +166,34 @@ namespace Facturanet.WinformsClient
                 Console.WriteLine(exception);
             }
              * */
+        }
+
+        private void clienteBindingSource_CurrentChanged(object sender, EventArgs e)
+        {
+            ActualizarFacturas(clienteBindingSource.Current as Customer);
+        }
+
+        private void ActualizarFacturas(Customer customer)
+        {
+            if (customer != selectedCustomer)
+            {
+                selectedCustomer = customer;
+
+                if (customer == null)
+                {
+                    facturaBindingSource.DataSource = typeof(Invoice);
+                }
+                else
+                {
+                    var solicitud = new ListInvoicesRequest();
+
+                    var respuesta = this.checkBox1.Checked
+                        ? solicitud.RunMock()
+                        : solicitud.Run();
+
+                    facturaBindingSource.DataSource = respuesta.List;
+                }
+            }
         }
     }
 }

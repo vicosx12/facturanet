@@ -52,6 +52,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business\ListInvoicesRequest.cs" />
+    <Compile Include="Business\ListInvoicesResponse.cs" />
+    <Compile Include="Business\ListCustomersRequest.cs" />
+    <Compile Include="Business\ListCustomersResponse.cs" />
     <Compile Include="Business\ListProductsRequest.cs" />
     <Compile Include="Business\ListProductsResponse.cs" />
     <Compile Include="Entities\Enterprise.cs" />
@@ -72,10 +76,12 @@
     <Compile Include="Server\IProcessor.cs" />
     <Compile Include="Server\IProcessorFactory.cs" />
     <Compile Include="Server\IService.cs" />
+    <Compile Include="Server\ListResponse.cs" />
     <Compile Include="Server\Processor.cs" />
     <Compile Include="Server\Request.cs" />
     <Compile Include="Server\Response.cs" />
     <Compile Include="Server\Selector.cs" />
+    <Compile Include="Tdo\InvoiceListItem.cs" />
     <Compile Include="Test\GenerateTestDataRequest.cs" />
     <Compile Include="Test\GenerateTestDataResponse.cs" />
     <Compile Include="Util\IdentifierHelper.cs" />

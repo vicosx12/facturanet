@@ -26,6 +26,7 @@
     <MetadataFile FileName="Facturanet.Server.xsd" MetadataType="Schema" ID="0645f7a8-6545-46f2-8f44-6dcda15d0641" SourceId="1" SourceUrl="http://localhost:8731/Design_Time_Addresses/Facturanet/Webservice/mex" />
     <MetadataFile FileName="Facturanet.Infrastructure.xsd" MetadataType="Schema" ID="6544aa12-270b-4701-b82c-b7fdc0bea82e" SourceId="1" SourceUrl="http://localhost:8731/Design_Time_Addresses/Facturanet/Webservice/mex" />
     <MetadataFile FileName="Facturanet.Business.xsd" MetadataType="Schema" ID="d226f3b3-26ec-42a9-b0cb-67285b13f070" SourceId="1" SourceUrl="http://localhost:8731/Design_Time_Addresses/Facturanet/Webservice/mex" />
+    <MetadataFile FileName="Facturanet.Test.xsd" MetadataType="Schema" ID="c46ed292-6f66-47d1-971a-404ce62cd218" SourceId="1" SourceUrl="http://localhost:8731/Design_Time_Addresses/Facturanet/Webservice/mex" />
     <MetadataFile FileName="Facturanet.Entities.xsd" MetadataType="Schema" ID="6258b330-005b-4310-ae4a-b08228c2e951" SourceId="1" SourceUrl="http://localhost:8731/Design_Time_Addresses/Facturanet/Webservice/mex" />
   </Metadata>
   <Extensions>

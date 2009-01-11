@@ -10,7 +10,6 @@ using System.Xml.Serialization;
 namespace Facturanet.Entities
 {
 
-    
     public class Invoice : Entity
     {
         public virtual Enterprise Enterprise { get; set; }

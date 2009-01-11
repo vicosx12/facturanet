@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Facturanet.Server;
-using Facturanet.Entities;
 using System.Runtime.Serialization;
 
 namespace Facturanet.Business
 {
     [DataContract]
-    public class ListProductsResponse : ListResponse<Product>
+    public class ListCustomersRequest : BaseRequest<ListCustomersResponse>
     {
     }
 }

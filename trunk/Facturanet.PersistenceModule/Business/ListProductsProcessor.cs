@@ -16,7 +16,7 @@ namespace Facturanet.Business
         protected override ListProductsResponse RunInContext(ListProductsRequest request, PersistenceContext context)
         {
             IList<Product> list = context.Session.CreateCriteria(typeof(Product)).List<Product>();
-            return new ListProductsResponse() { Products = list };
+            return new ListProductsResponse() { List = list };
         }
 
     }

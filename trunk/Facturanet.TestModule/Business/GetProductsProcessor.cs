@@ -16,7 +16,7 @@ namespace Facturanet.Business
         {
             return new ListProductsResponse()
             {
-                Products = new List<Product>()
+                List = new List<Product>()
                 {
                     new Product() { Id = IdentifierHelper.GenerateComb(), Taxes = 1, Name = "Articulo1"},
                     new Product() { Id = IdentifierHelper.GenerateComb(), Taxes = 2, Name = "Articulo2"},
