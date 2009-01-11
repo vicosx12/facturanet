@@ -9,7 +9,7 @@ using System.Runtime.Serialization;
 namespace Facturanet.Business
 {
     [DataContract]
-    public class ListProductsResponse : ListResponse<Product>
+    public class ListInvoicesResponse : ListResponse<Invoice>
     {
     }
 }

@@ -6,10 +6,12 @@ using Facturanet.Server;
 using Facturanet.Entities;
 using System.Runtime.Serialization;
 
-namespace Facturanet.Business
+namespace Facturanet.Server
 {
     [DataContract]
-    public class ListProductsResponse : ListResponse<Product>
+    public abstract class ListResponse<T> : Response
     {
+        [DataMember]
+        public IList<T> List { get; set; }
     }
 }

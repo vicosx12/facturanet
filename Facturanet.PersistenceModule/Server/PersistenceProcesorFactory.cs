@@ -20,8 +20,12 @@ namespace Facturanet.Server
                 processor = new Business.ListProductsProcessor();
             else if (requestType == typeof(Infrastructure.SystemInfoRequest))
                 processor = new Infrastructure.SystemInfoProcessor();
-            else if (requestType  == typeof(Test.GenerateTestDataRequest))
+            else if (requestType == typeof(Test.GenerateTestDataRequest))
                 processor = new Test.GenerateTestDataProcessor();
+            else if (requestType == typeof(Business.ListCustomersRequest))
+                processor = new Business.ListCustomersProcessor();
+            else if (requestType == typeof(Business.ListInvoicesRequest))
+                processor = new Business.ListInvoicesProcessor();
             else processor = null;
 
             return processor;

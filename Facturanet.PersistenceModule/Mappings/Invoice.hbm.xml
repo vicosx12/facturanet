@@ -15,17 +15,11 @@
       <key column="IdInvoice" />
       <index column="InvoiceLine" />
       <composite-element class="InvoiceItem">
-        <parent name="Invoice" />
+        <parent name="Invoice" /> 
         <many-to-one name ="Product" column="IdProduct" not-null="true" />
         <property name="Quantity"/>
         <property name="BasePrice"/>
       </composite-element>      
     </list>
-    <!--
-    <bag name="Items" cascade="all-delete-orphan" inverse="true">
-      <key column="IdInvoice"/>
-      <one-to-many class="InvoiceItem"/>
-    </bag>
-    -->
   </class>
 </hibernate-mapping>

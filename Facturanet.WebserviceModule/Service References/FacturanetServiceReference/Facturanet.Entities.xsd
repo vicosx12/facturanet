@@ -1,9 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Facturanet.Entities" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Facturanet.Entities" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Facturanet.Entities" xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Facturanet.Entities" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:complexType name="ArrayOfProduct">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Product" nillable="true" type="tns:Product" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfProduct" nillable="true" type="tns:ArrayOfProduct" />
   <xs:complexType name="Product">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Entity">
         <xs:sequence>
+          <xs:element minOccurs="0" name="Active" type="xs:boolean" />
+          <xs:element minOccurs="0" name="Code" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="Taxes" type="xs:decimal" />
         </xs:sequence>
@@ -13,7 +22,7 @@
   <xs:element name="Product" nillable="true" type="tns:Product" />
   <xs:complexType name="Entity">
     <xs:sequence>
-      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Id" type="ser:guid" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Entity" nillable="true" type="tns:Entity" />
@@ -22,6 +31,9 @@
       <xs:extension base="tns:Entity">
         <xs:sequence>
           <xs:element minOccurs="0" name="Customer" nillable="true" type="tns:Customer" />
+          <xs:element minOccurs="0" name="Date" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="Enterprise" nillable="true" type="tns:Enterprise" />
+          <xs:element minOccurs="0" name="FiscalType" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="Items" nillable="true" type="tns:ArrayOfInvoiceItem" />
           <xs:element minOccurs="0" name="Number" nillable="true" type="xs:string" />
         </xs:sequence>
@@ -33,6 +45,11 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Entity">
         <xs:sequence>
+          <xs:element minOccurs="0" name="Active" type="xs:boolean" />
+          <xs:element minOccurs="0" name="Address" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Code" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="FiscalId" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="FiscalType" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
         </xs:sequence>
       </xs:extension>
@@ -44,14 +61,25 @@
       <xs:extension base="tns:Entity">
         <xs:sequence>
           <xs:element minOccurs="0" name="BasePrice" type="xs:decimal" />
-          <xs:element minOccurs="0" name="Invoice" nillable="true" type="tns:Invoice" />
-          <xs:element minOccurs="0" name="Product" nillable="true" type="tns:Product" />
+          <xs:element minOccurs="0" name="InvoiceLine" type="xs:int" />
           <xs:element minOccurs="0" name="Quantity" type="xs:decimal" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="InvoiceItem" nillable="true" type="tns:InvoiceItem" />
+  <xs:complexType name="Enterprise">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Entity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Active" type="xs:boolean" />
+          <xs:element minOccurs="0" name="Code" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Enterprise" nillable="true" type="tns:Enterprise" />
   <xs:complexType name="ArrayOfInvoiceItem">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="InvoiceItem" nillable="true" type="tns:InvoiceItem" />
@@ -64,10 +92,10 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfCustomer" nillable="true" type="tns:ArrayOfCustomer" />
-  <xs:complexType name="ArrayOfProduct">
+  <xs:complexType name="ArrayOfInvoice">
     <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="Product" nillable="true" type="tns:Product" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Invoice" nillable="true" type="tns:Invoice" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ArrayOfProduct" nillable="true" type="tns:ArrayOfProduct" />
+  <xs:element name="ArrayOfInvoice" nillable="true" type="tns:ArrayOfInvoice" />
 </xs:schema>
