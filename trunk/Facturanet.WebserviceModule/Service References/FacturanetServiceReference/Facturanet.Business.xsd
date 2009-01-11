@@ -25,17 +25,9 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="ListInvoicesRequest" nillable="true" type="tns:ListInvoicesRequest" />
-  <xs:complexType name="ListProductsResponse">
-    <xs:complexContent mixed="false">
-      <xs:extension xmlns:q4="http://schemas.datacontract.org/2004/07/Facturanet.Server" base="q4:ListResponseOfProductZSiI1OEz">
-        <xs:sequence />
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="ListProductsResponse" nillable="true" type="tns:ListProductsResponse" />
   <xs:complexType name="ListCustomersResponse">
     <xs:complexContent mixed="false">
-      <xs:extension xmlns:q5="http://schemas.datacontract.org/2004/07/Facturanet.Server" base="q5:ListResponseOfCustomerZSiI1OEz">
+      <xs:extension xmlns:q4="http://schemas.datacontract.org/2004/07/Facturanet.Server" base="q4:ListResponseOfCustomerZSiI1OEz">
         <xs:sequence />
       </xs:extension>
     </xs:complexContent>
@@ -43,10 +35,18 @@
   <xs:element name="ListCustomersResponse" nillable="true" type="tns:ListCustomersResponse" />
   <xs:complexType name="ListInvoicesResponse">
     <xs:complexContent mixed="false">
-      <xs:extension xmlns:q6="http://schemas.datacontract.org/2004/07/Facturanet.Server" base="q6:ListResponseOfInvoiceZSiI1OEz">
+      <xs:extension xmlns:q5="http://schemas.datacontract.org/2004/07/Facturanet.Server" base="q5:ListResponseOfanyType">
         <xs:sequence />
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="ListInvoicesResponse" nillable="true" type="tns:ListInvoicesResponse" />
+  <xs:complexType name="ListProductsResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q6="http://schemas.datacontract.org/2004/07/Facturanet.Server" base="q6:ListResponseOfProductZSiI1OEz">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ListProductsResponse" nillable="true" type="tns:ListProductsResponse" />
 </xs:schema>

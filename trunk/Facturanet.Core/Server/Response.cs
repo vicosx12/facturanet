@@ -10,9 +10,15 @@ namespace Facturanet.Server
     [KnownType("GetKnownTypes")]
     public abstract class Response
     {
+        static private Type[] knownTypesCache = null;
         static Type[] GetKnownTypes()
         {
-            return FacturanetProcessorFactory.GetKnownTypesOf(typeof(Response));
+            if (knownTypesCache == null)
+                knownTypesCache = FacturanetProcessorFactory.GetKnownTypesOf(typeof(Response));
+                //knownTypesCache = FacturanetProcessorFactory.GetKnownTypesOf(typeof(Response),typeof(Entities.ILines));
+                //Funciona, pero lo comento porque en cada response evaluaría por cualquiera de las líneas
+    
+            return knownTypesCache;
         }
     }
 }

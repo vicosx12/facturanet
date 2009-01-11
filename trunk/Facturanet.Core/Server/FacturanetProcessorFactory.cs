@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using Facturanet.Entities;
@@ -19,18 +20,30 @@ namespace Facturanet.Server
 
         public static readonly FacturanetProcessorFactory Instance;
 
-        internal static Type[] GetKnownTypesOf(Type type)
+        internal static Type[] GetKnownTypesOf(params Type[] types)
         {
             //aca se podría limitar lo tipos permitidos desde algún archivo de configuración
+            //otra opción sería usar atributos en los tipos que se van a agregar aca
 
             List<Type> subclasses = new List<Type>();
 
-            Assembly assembly = type.Module.Assembly;
+            foreach (Type type in types)
+            {
+                Assembly assembly = type.Module.Assembly;
 
-            foreach (Type testType in assembly.GetTypes())
-                if (testType.IsSubclassOf(type) && !testType.IsAbstract)
-                    subclasses.Add(testType);
-
+                if (type.IsInterface)
+                {
+                    foreach (Type testType in assembly.GetTypes())
+                        if (!testType.IsAbstract && testType.GetInterfaces().Contains(type))
+                            subclasses.Add(testType);
+                }
+                else
+                {
+                    foreach (Type testType in assembly.GetTypes())
+                        if (testType.IsSubclassOf(type) && !testType.IsAbstract)
+                            subclasses.Add(testType);
+                }
+            }
             return subclasses.ToArray();
         }
 

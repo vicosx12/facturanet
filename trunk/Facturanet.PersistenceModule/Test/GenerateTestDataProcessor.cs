@@ -57,7 +57,7 @@ namespace Facturanet.Test
             {
                 Code = "1",
                 Name = "Arroz",
-                Taxes = 0.2M
+                Taxes = 0.2
             };
             session.Save(p1);
 
@@ -72,7 +72,7 @@ namespace Facturanet.Test
                     {
                         new InvoiceItem() 
                         {
-                            BasePrice = 10,
+                            Price = 10,
                             Product = p1,
                             Quantity = 10
                         }

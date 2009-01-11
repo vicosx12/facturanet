@@ -11,9 +11,13 @@ namespace Facturanet.Server
     [KnownType("GetKnownTypes")]
     public abstract class Request
     {
+
+        static private Type[] knownTypesCache = null;
         static Type[] GetKnownTypes()
         {
-            return FacturanetProcessorFactory.GetKnownTypesOf(typeof(Request));
+            if (knownTypesCache == null)
+                knownTypesCache = FacturanetProcessorFactory.GetKnownTypesOf(typeof(Request));
+            return knownTypesCache;
         }
 
         public Response Run()

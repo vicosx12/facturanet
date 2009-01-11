@@ -14,9 +14,12 @@ namespace Facturanet.Entities
         [DataMember]
         public virtual Guid Id { get; set; }
 
+        static private Type[] knownTypesCache = null;
         static Type[] GetKnownTypes()
         {
-            return FacturanetProcessorFactory.GetKnownTypesOf(typeof(Entity));
+            if (knownTypesCache == null)
+                knownTypesCache = FacturanetProcessorFactory.GetKnownTypesOf(typeof(Entity));
+            return knownTypesCache;
         }
 
         public Entity()
