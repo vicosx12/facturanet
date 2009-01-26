@@ -5,7 +5,7 @@ using Facturanet.Util;
 
 namespace Facturanet.DbMigration.Migrations
 {
-    [Migration(7)]
+    [Migration(20010101010107)]
     public class AddContableAccountTable : Migration
     {
         public override void  Up()
