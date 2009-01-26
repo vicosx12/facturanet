@@ -5,7 +5,7 @@ using Facturanet.Util;
 
 namespace Facturanet.DbMigration.Migrations
 {
-    [Migration(5)]
+    [Migration(20010101010105)]
     public class InsertTestData : Migration
     {
         public override void  Up()
