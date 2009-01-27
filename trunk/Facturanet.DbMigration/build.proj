@@ -23,10 +23,25 @@
     <CreateProperty Value="-1"  Condition="'$(SchemaVersion)'==''">
       <Output TaskParameter="Value" PropertyName="SchemaVersion"/>
     </CreateProperty>
-    <Migrate Provider="SqlServer"
-            Connectionstring="Server=XPVIRTUAL\SQLEXPRESS;Database=PruebasAndres;Integrated Security=True;"
+
+    <Migrate Provider="MySql"
+            Connectionstring="Database=PruebasAndres;Data Source=servidor;Username=root"
             Migrations="bin/Facturanet.DbMigration.dll"
             To="$(SchemaVersion)"/>
+
+    <!--
+    
+    <Migrate Provider="MySql"
+            Connectionstring="Database=PruebasAndres;Data Source=servidor;User=root"
+            Migrations="bin/Facturanet.DbMigration.dll"
+            To="$(SchemaVersion)"/>
+
+    
+    <Migrate Provider="SqlServer"
+            Connectionstring="Server=XPVIRTUAL\SQLEXPRESS;Database=PruebasAndres;Integrated Security=True"
+            Migrations="bin/Facturanet.DbMigration.dll"
+            To="$(SchemaVersion)"/>
+    -->
   </Target>
   
 </Project>
