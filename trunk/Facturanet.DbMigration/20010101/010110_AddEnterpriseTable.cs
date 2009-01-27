@@ -5,26 +5,23 @@ using Facturanet.Util;
 
 namespace Facturanet.DbMigration.Migrations
 {
-    [Migration(20010101010102)]
-    public class AddCustomerTable : Migration
+    [Migration(20010101010110)]
+    public class AddEnterpriseTable : Migration
     {
         public override void Up()
         {
-            Database.AddTable("Customer", new Column[]
+            Database.AddTable("Enterprise", new Column[]
             {
                 new Column("Id", DbType.Guid, ColumnProperty.PrimaryKey),
                 new Column("Code", DbType.String, 30, ColumnProperty.NotNull | ColumnProperty.Unique),
                 new Column("Active", DbType.Boolean, 1, ColumnProperty.NotNull, true),
-                new Column("Name", DbType.String, 100, ColumnProperty.NotNull),
-                new Column("FiscalType", DbType.String, 30, ColumnProperty.NotNull),
-                new Column("FiscalId", DbType.String, 30, ColumnProperty.NotNull | ColumnProperty.Unique),
-                new Column("Address", DbType.String, 255, ColumnProperty.NotNull)
+                new Column("Name", DbType.String, 100, ColumnProperty.NotNull | ColumnProperty.Unique)
             });
         }
 
         public override void Down()
         {
-            Database.RemoveTable("Customer");
+            Database.RemoveTable("Enterprise");
         }
     }
 }
