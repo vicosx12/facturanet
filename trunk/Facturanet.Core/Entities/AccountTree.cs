@@ -14,5 +14,13 @@ namespace Facturanet.Entities
         public virtual string Description { get; set; }
 
         public virtual IList<ContableAccount> Accounts { get; set; }
+
+        public void AddAccount(ContableAccount account)
+        {
+            account.AccountTree = this;
+            if (!Accounts.Contains(account))
+                Accounts.Add(account);
+        }
+
     }
 }

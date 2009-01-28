@@ -48,6 +48,7 @@
     <Compile Include="20010101\010160_AddAccountTreeTable.cs" />
     <Compile Include="20010101\010120_AddCustomerTable.cs" />
     <Compile Include="20010101\010180_AddContableConfigurationTable.cs" />
+    <Compile Include="20090128\181800_InsertAccountTreeTestData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
