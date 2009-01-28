@@ -2,11 +2,9 @@
 <hibernate-configuration  xmlns="urn:nhibernate-configuration-2.2" >
   <session-factory name="Facturanet.PersistenceModule">
 
-
-    <property name="connection.driver_class">NHibernate.Driver.MySqlDataDriver</property>
-    <property name="dialect">NHibernate.Dialect.MySQLDialect</property>
-    <property name="connection.connection_string">Database=PruebasAndres;Data Source=servidor;User=root</property>
-
+    <property name="connection.driver_class">NHibernate.Driver.SqlClientDriver</property>
+    <property name="dialect">NHibernate.Dialect.MsSql2005Dialect</property>
+    <property name="connection.connection_string">Server=XPVIRTUAL\SQLEXPRESS;Database=PruebasAndres;Integrated Security=True;</property>
 
     <!--
     <property name="connection.driver_class">NHibernate.Driver.SqlClientDriver</property>

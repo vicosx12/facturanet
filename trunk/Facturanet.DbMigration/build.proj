@@ -24,8 +24,8 @@
       <Output TaskParameter="Value" PropertyName="SchemaVersion"/>
     </CreateProperty>
 
-    <Migrate Provider="MySql"
-            Connectionstring="Database=PruebasAndres;Data Source=servidor;Username=root"
+    <Migrate Provider="SqlServer"
+            Connectionstring="Server=XPVIRTUAL\SQLEXPRESS;Database=PruebasAndres;Integrated Security=True"
             Migrations="bin/Facturanet.DbMigration.dll"
             To="$(SchemaVersion)"/>
 
