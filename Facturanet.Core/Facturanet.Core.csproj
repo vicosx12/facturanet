@@ -58,6 +58,9 @@
     <Compile Include="Business\ListCustomersResponse.cs" />
     <Compile Include="Business\ListProductsRequest.cs" />
     <Compile Include="Business\ListProductsResponse.cs" />
+    <Compile Include="Entities\ContableAccount.cs" />
+    <Compile Include="Entities\ContableConfiguration.cs" />
+    <Compile Include="Entities\AccountTree.cs" />
     <Compile Include="Entities\Enterprise.cs" />
     <Compile Include="Entities\Customer.cs" />
     <Compile Include="Entities\Entity.cs" />
