@@ -6,7 +6,6 @@ using System.Runtime.Serialization;
 
 namespace Facturanet.Entities
 {
-    
     public class Product : Entity, Lines.ILineProduct
     {
         public virtual string Code { get; set; }

@@ -49,11 +49,15 @@
     <Compile Include="20010101\010120_AddCustomerTable.cs" />
     <Compile Include="20010101\010180_AddContableConfigurationTable.cs" />
     <Compile Include="20090128\181800_InsertAccountTreeTestData.cs" />
+    <Compile Include="FacturanetMigration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="build.proj">
     </None>
+    <None Include="ToVersion.cmd" />
+    <None Include="Up.cmd" />
+    <None Include="Zero.cmd" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\facturanet.core\Facturanet.Core.csproj">

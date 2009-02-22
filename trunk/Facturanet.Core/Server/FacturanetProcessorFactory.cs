@@ -22,8 +22,8 @@ namespace Facturanet.Server
 
         internal static Type[] GetKnownTypesOf(params Type[] types)
         {
-            //aca se podría limitar lo tipos permitidos desde algún archivo de configuración
-            //otra opción sería usar atributos en los tipos que se van a agregar aca
+            // aca se podría limitar lo tipos permitidos desde algún archivo de configuración
+            // otra opción sería usar atributos en los tipos que se van a agregar aca
 
             List<Type> subclasses = new List<Type>();
 
@@ -61,7 +61,7 @@ namespace Facturanet.Server
             ProcessorFactoryCollection.Add(processorFactory);
 
             ////////////////////////////////////////////////////////////
-            //TODO: habría que hacer que se cargue un array de factories
+            // TODO: habría que hacer que se cargue un array de factories
             ////////////////////////////////////////////////////////////
 #if DEBUG
             string cfgDriverAssemblyMock = ConfigurationManager.AppSettings["ModuleAssemblyTest"];

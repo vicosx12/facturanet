@@ -9,7 +9,11 @@
     <MigratorTasksLib>$(MigratorTasksPath)\Migrator.MSBuild.dll</MigratorTasksLib>
   </PropertyGroup>
 
+
   <Target Name="BuildMigrations">
+    <MSBuild Projects="$(MigrationsProject)" Targets="Clean">
+      <Output TaskParameter="TargetOutputs" ItemName="MigrationAssemblies" />
+    </MSBuild>
     <MSBuild Projects="$(MigrationsProject)" Targets="Build">
       <Output TaskParameter="TargetOutputs" ItemName="MigrationAssemblies" />
     </MSBuild>
