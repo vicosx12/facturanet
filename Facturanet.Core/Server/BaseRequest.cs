@@ -10,7 +10,7 @@ namespace Facturanet.Server
     public abstract class BaseRequest<ResponseType> : Request
         where ResponseType : Response
     {
-        static private ResponseType CastResponse(Response response)
+        private static ResponseType CastResponse(Response response)
         {
             if (response == null)
                 return null;

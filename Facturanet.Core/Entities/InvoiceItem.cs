@@ -5,10 +5,10 @@ using System.Runtime.Serialization;
 
 namespace Facturanet.Entities
 {
-    //TODO: Sacar la herencia de Entity
+    // TODO: Sacar la herencia de Entity
     public class InvoiceItem : Entity
     {
-        //public virtual Invoice Invoice { get; set; }
+        // public virtual Invoice Invoice { get; set; }
         public virtual int InvoiceLine { get; set; }
         public virtual Product Product { get; set; }
         public virtual double Quantity { get; set; }
