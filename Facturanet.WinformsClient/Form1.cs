@@ -195,5 +195,11 @@ namespace Facturanet.WinformsClient
                 }
             }
         }
+
+        private void btnEditAccountTrees_Click(object sender, EventArgs e)
+        {
+            var f = new Forms.AccountTreesForm();
+            f.Show();
+        }
     }
 }
