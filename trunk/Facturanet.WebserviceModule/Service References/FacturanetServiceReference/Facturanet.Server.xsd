@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Facturanet.Server" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Facturanet.Server" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import namespace="http://schemas.datacontract.org/2004/07/Facturanet.Entities" />
   <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
   <xs:complexType name="Request">
     <xs:sequence />
@@ -106,6 +105,36 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="BaseRequestOfListInvoicesResponsel0JvM9sf" nillable="true" type="tns:BaseRequestOfListInvoicesResponsel0JvM9sf" />
+  <xs:complexType name="BaseRequestOfListAccountTreesResponsel0JvM9sf">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="BaseRequestOf{0}{#}" Namespace="http://schemas.datacontract.org/2004/07/Facturanet.Server" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="ListAccountTreesResponse" Namespace="http://schemas.datacontract.org/2004/07/Facturanet.Business" />
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Request">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="BaseRequestOfListAccountTreesResponsel0JvM9sf" nillable="true" type="tns:BaseRequestOfListAccountTreesResponsel0JvM9sf" />
+  <xs:complexType name="BaseRequestOfEmptyResponse30VHCHZM">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="BaseRequestOf{0}{#}" Namespace="http://schemas.datacontract.org/2004/07/Facturanet.Server" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="EmptyResponse" Namespace="http://schemas.datacontract.org/2004/07/Facturanet.Server" />
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Request">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="BaseRequestOfEmptyResponse30VHCHZM" nillable="true" type="tns:BaseRequestOfEmptyResponse30VHCHZM" />
   <xs:complexType name="ArrayOfRequest">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Request" nillable="true" type="tns:Request" />
@@ -116,23 +145,6 @@
     <xs:sequence />
   </xs:complexType>
   <xs:element name="Response" nillable="true" type="tns:Response" />
-  <xs:complexType name="ListResponseOfCustomerZSiI1OEz">
-    <xs:annotation>
-      <xs:appinfo>
-        <GenericType Name="ListResponseOf{0}{#}" Namespace="http://schemas.datacontract.org/2004/07/Facturanet.Server" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
-          <GenericParameter Name="Customer" Namespace="http://schemas.datacontract.org/2004/07/Facturanet.Entities" />
-        </GenericType>
-      </xs:appinfo>
-    </xs:annotation>
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:Response">
-        <xs:sequence>
-          <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Facturanet.Entities" minOccurs="0" name="List" nillable="true" type="q1:ArrayOfCustomer" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="ListResponseOfCustomerZSiI1OEz" nillable="true" type="tns:ListResponseOfCustomerZSiI1OEz" />
   <xs:complexType name="ListResponseOfanyType">
     <xs:annotation>
       <xs:appinfo>
@@ -144,29 +156,12 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Response">
         <xs:sequence>
-          <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="List" nillable="true" type="q2:ArrayOfanyType" />
+          <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="List" nillable="true" type="q1:ArrayOfanyType" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="ListResponseOfanyType" nillable="true" type="tns:ListResponseOfanyType" />
-  <xs:complexType name="ListResponseOfProductZSiI1OEz">
-    <xs:annotation>
-      <xs:appinfo>
-        <GenericType Name="ListResponseOf{0}{#}" Namespace="http://schemas.datacontract.org/2004/07/Facturanet.Server" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
-          <GenericParameter Name="Product" Namespace="http://schemas.datacontract.org/2004/07/Facturanet.Entities" />
-        </GenericType>
-      </xs:appinfo>
-    </xs:annotation>
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:Response">
-        <xs:sequence>
-          <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Facturanet.Entities" minOccurs="0" name="List" nillable="true" type="q3:ArrayOfProduct" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="ListResponseOfProductZSiI1OEz" nillable="true" type="tns:ListResponseOfProductZSiI1OEz" />
   <xs:complexType name="CompositeResponse">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Response">
@@ -183,4 +178,12 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfResponse" nillable="true" type="tns:ArrayOfResponse" />
+  <xs:complexType name="EmptyResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Response">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="EmptyResponse" nillable="true" type="tns:EmptyResponse" />
 </xs:schema>

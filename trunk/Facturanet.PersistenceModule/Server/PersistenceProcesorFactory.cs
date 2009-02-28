@@ -26,6 +26,10 @@ namespace Facturanet.Server
                 processor = new Business.ListCustomersProcessor();
             else if (requestType == typeof(Business.ListInvoicesRequest))
                 processor = new Business.ListInvoicesProcessor();
+            else if (requestType == typeof(Business.ListAccountTreesRequest))
+                processor = new Business.ListAccountTreesProcessor();
+            else if (requestType == typeof(Business.CreateAccountTreeRequest))
+                processor = new Business.CreateAccountTreeProcessor();
             else processor = null;
 
             return processor;

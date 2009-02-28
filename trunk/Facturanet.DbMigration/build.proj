@@ -29,7 +29,7 @@
     </CreateProperty>
 
     <Migrate Provider="SqlServer"
-            Connectionstring="Server=XPVIRTUAL\SQLEXPRESS;Database=PruebasAndres;Integrated Security=True"
+            Connectionstring="Server=XPVIRTUAL\SQLEXPRESS;Database=Facturanet;Integrated Security=True"
             Migrations="bin/Facturanet.DbMigration.dll"
             To="$(SchemaVersion)"/>
 

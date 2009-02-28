@@ -17,4 +17,17 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="InvoicesListItem" nillable="true" type="tns:InvoicesListItem" />
+  <xs:complexType name="AccountTreesListItem">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q2="http://schemas.datacontract.org/2004/07/Facturanet.Entities" base="q2:Entity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Active" type="xs:boolean" />
+          <xs:element minOccurs="0" name="Code" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="AccountTreesListItem" nillable="true" type="tns:AccountTreesListItem" />
 </xs:schema>

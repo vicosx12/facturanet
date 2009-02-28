@@ -9,6 +9,13 @@
     <property name="Name" />
     <property name="Description" />
 
+<!--
+    <list name="Accounts" cascade="all-delete-orphan" inverse="true">
+      <key column="IdAccountTree"/>
+      <index column="Id"/>
+      <one-to-many class="ContableAccount"/>
+    </list>
+-->
     <set name="Accounts" cascade="all-delete-orphan" inverse="true">
       <key column="IdAccountTree"/>
       <one-to-many class="ContableAccount"/>

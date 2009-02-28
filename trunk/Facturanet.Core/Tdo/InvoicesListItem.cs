@@ -6,9 +6,8 @@ using Facturanet.Entities;
 
 namespace Facturanet.Tdo
 {
-    public class InvoicesListItem : Lines.ILineInvoice
+    public class InvoicesListItem : Facturanet.Entities.Entity, Lines.ILineInvoice
     {
-        public Guid Id { get; set; }
         public string FiscalType { get; set; }
         public string Number { get; set; }
         public DateTime Date { get; set; }
@@ -17,7 +16,7 @@ namespace Facturanet.Tdo
         public string CustomerCode { get; set; }
         public string CustomerName { get; set; }
 
-        public InvoicesListItem()
+        public InvoicesListItem() : base()
         {
         }
       

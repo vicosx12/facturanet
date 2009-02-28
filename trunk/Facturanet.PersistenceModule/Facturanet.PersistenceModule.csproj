@@ -72,6 +72,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business\CreateAccountTreeProcessor.cs" />
+    <Compile Include="Business\ListAccountTreesProcessor.cs" />
     <Compile Include="Business\ListInvoicesProcessor.cs" />
     <Compile Include="Business\ListCustomersProcessor.cs" />
     <Compile Include="Business\ListProductsProcessor.cs" />
@@ -79,6 +81,7 @@
     <Compile Include="Infrastructure\SystemInfoProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server\CompositeProcessor.cs" />
+    <Compile Include="Server\PersistenceEmptyResponseProcessor.cs" />
     <Compile Include="Server\PersistenceContext.cs" />
     <Compile Include="Server\PersistenceProcesorFactory.cs" />
     <Compile Include="Server\PersistenceProcessor.cs" />
