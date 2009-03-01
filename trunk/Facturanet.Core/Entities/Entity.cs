@@ -5,7 +5,7 @@ using System.Text;
 using System.Runtime.Serialization;
 using Facturanet.Server;
 
-namespace Facturanet.Entities
+namespace Facturanet.Entities.Base
 {
     [DataContract]
     [KnownType("GetKnownTypes")]

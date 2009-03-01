@@ -10,7 +10,7 @@ namespace Facturanet.Business
     [DataContract]
     [KnownType(typeof(Entities.AccountTree))]
     [KnownType(typeof(Tdo.AccountTreesListItem))]
-    public class ListAccountTreesResponse : ListResponse<Lines.ILineAccountTree>
+    public class ListAccountTreesResponse : ListResponse<Tdo.AccountTreesListItem>
     {
     }
 }

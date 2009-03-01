@@ -3,16 +3,21 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.Serialization;
 
-
-namespace Facturanet.Entities
+namespace Facturanet.Entities.Base
 {
-    public class ContableConfiguration : Entity
+    public abstract class ContableConfigurationBase : Entity
     {
         public virtual string Code { get; set; }
         public virtual bool Active { get; set; }
         public virtual string Name { get; set; }
         public virtual string Description { get; set; }
+    }
+}
 
+namespace Facturanet.Entities
+{
+    public class ContableConfiguration : Base.ContableConfigurationBase
+    {
         public virtual AccountTree AccountTree { get; set; }
         public virtual ContableAccount DefaultAccount { get; set; }
     }

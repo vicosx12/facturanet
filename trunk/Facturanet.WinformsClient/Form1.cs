@@ -67,8 +67,8 @@ namespace Facturanet.WinformsClient
             Console.WriteLine("*listCustomersResponse*");
             Console.WriteLine(listCustomersResponse.ToString());
 
-            this.articuloBindingSource.DataSource = listProductsResponse.List;
-            this.clienteBindingSource.DataSource = listCustomersResponse.List;
+            this.articuloBindingSource.DataSource = listProductsResponse.Items;
+            this.clienteBindingSource.DataSource = listCustomersResponse.Items;
             
             ActualizarItems();
         }
@@ -191,7 +191,7 @@ namespace Facturanet.WinformsClient
                         ? solicitud.RunMock()
                         : solicitud.Run();
 
-                    facturaBindingSource.DataSource = respuesta.List;
+                    facturaBindingSource.DataSource = respuesta.Items;
                 }
             }
         }

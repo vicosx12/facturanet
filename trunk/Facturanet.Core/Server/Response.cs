@@ -14,7 +14,8 @@ namespace Facturanet.Server
         static Type[] GetKnownTypes()
         {
             if (knownTypesCache == null)
-                knownTypesCache = FacturanetProcessorFactory.GetKnownTypesOf(typeof(Response));
+                knownTypesCache = FacturanetProcessorFactory.GetKnownTypesOf(typeof(Response), typeof(Tdo.ITdo));
+                //knownTypesCache = FacturanetProcessorFactory.GetKnownTypesOf(typeof(Response));
                 //knownTypesCache = FacturanetProcessorFactory.GetKnownTypesOf(typeof(Response),typeof(Entities.ILines));
                 //Funciona, pero lo comento porque en cada response evaluaría por cualquiera de las líneas
     

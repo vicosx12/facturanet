@@ -4,13 +4,20 @@ using System.Text;
 using System.Runtime.Serialization;
 
 
-namespace Facturanet.Entities
+namespace Facturanet.Entities.Base
 {
-    
-    public class Enterprise : Entity
+    public abstract class EnterpriseBase : Entity
     {
         public virtual string Code { get; set; }
         public virtual bool Active { get; set; }
         public virtual string Name { get; set; }
+    }
+}
+
+namespace Facturanet.Entities
+{
+
+    public class Enterprise : Base.EnterpriseBase
+    {
     }
 }

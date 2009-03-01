@@ -4,9 +4,9 @@ using System.Text;
 using System.Runtime.Serialization;
 
 
-namespace Facturanet.Entities
+namespace Facturanet.Entities.Base
 {
-    public class Customer : Entity, Lines.ILineCustomer
+    public abstract class CustomerBase : Entity
     {
         public virtual string Code { get; set; }
         public virtual bool Active { get; set; }
@@ -14,5 +14,12 @@ namespace Facturanet.Entities
         public virtual string FiscalType { get; set; }
         public virtual string FiscalId { get; set; }
         public virtual string Address { get; set; }
+    }
+}
+
+namespace Facturanet.Entities
+{
+    public class Customer : Base.CustomerBase
+    {
     }
 }

@@ -14,7 +14,9 @@ namespace Facturanet.WinformsClient.Forms
     public partial class AccountTreesForm : Form
     {
         //private IList<Lines.ILineAccountTree> list;
-        private FacturanetBindingList<Lines.ILineAccountTree, Entities.AccountTree> list;
+        /***/
+        //private FacturanetBindingList<Lines.ILineAccountTree, Entities.AccountTree> list;
+        private FacturanetBindingList<Tdo.AccountTreesListItem> list;
         
         public AccountTreesForm()
         {
@@ -29,7 +31,7 @@ namespace Facturanet.WinformsClient.Forms
         {
             var request = new ListAccountTreesRequest();
             var response = request.Run();
-            list = new FacturanetBindingList<Lines.ILineAccountTree, Entities.AccountTree>(response.List);
+            list = new FacturanetBindingList<Facturanet.Tdo.AccountTreesListItem>(response.Items);
             list.ListChanged += new ListChangedEventHandler(list_ListChanged);
             //ACA ME QUEDE
             listBindingSource.DataSource = list;

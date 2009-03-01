@@ -6,37 +6,23 @@ using Facturanet.Entities;
 
 namespace Facturanet.Tdo
 {
-    public class InvoicesListItem : Facturanet.Entities.Entity, Lines.ILineInvoice
+    public class InvoicesListItem : Entities.Base.InvoiceBase, Tdo.ITdo
     {
-        public string FiscalType { get; set; }
-        public string Number { get; set; }
-        public DateTime Date { get; set; }
-        public double Total { get; set; }
-        public string EnterpriseCode { get; set; }
-        public string CustomerCode { get; set; }
-        public string CustomerName { get; set; }
+        public string EnterpriseCode { get; private set; }
+        public string CustomerCode { get; private set; }
+        public string CustomerName { get; private set; }
+        public double Total { get; private set; }
 
-        public InvoicesListItem() : base()
+        public InvoicesListItem(Invoice invoice, string enterpriseCode, string customerCode, string customerName, double total)
         {
-        }
-      
-        public InvoicesListItem(
-            Guid id,
-            string enterpriseCode,
-            string fiscalType,
-            string number,
-            DateTime date,
-            string customerCode,
-            string customerName,
-            double total)
-        {
-            Id = id;
+            Date = invoice.Date;
+            FiscalType = invoice.FiscalType;
+            Id = invoice.Id;
+            Number = invoice.Number;
+
             EnterpriseCode = enterpriseCode;
-            FiscalType = fiscalType;
-            Number = number;
-            Date = date;
-            CustomerName = customerName;
             CustomerCode = customerCode;
+            CustomerName = customerName;
             Total = total;
         }
     }

@@ -98,6 +98,7 @@
     <Content Include="Facturanet.PersistenceModule.dll.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="NHQueries\AccountTreesList.hbm.xml" />
     <EmbeddedResource Include="NHMappings\AccountTree.hbm.xml" />
     <EmbeddedResource Include="NHMappings\ContableAccount.hbm.xml" />
     <EmbeddedResource Include="NHMappings\ContableConfiguration.hbm.xml" />

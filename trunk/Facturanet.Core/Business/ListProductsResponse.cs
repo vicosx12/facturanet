@@ -9,7 +9,7 @@ namespace Facturanet.Business
 {
     [DataContract]
     [KnownType(typeof(Entities.Product))]
-    public class ListProductsResponse : ListResponse<Lines.ILineProduct>
+    public class ListProductsResponse : ListResponse<Tdo.ProductsListItem>
     {
     }
 }
