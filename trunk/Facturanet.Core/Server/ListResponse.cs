@@ -12,6 +12,6 @@ namespace Facturanet.Server
     public abstract class ListResponse<T> : Response
     {
         [DataMember]
-        public T[] Items { get; set; }
+        public List<T> Items { get; set; }
     }
 }

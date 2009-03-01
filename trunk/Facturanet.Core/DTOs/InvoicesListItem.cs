@@ -13,17 +13,20 @@ namespace Facturanet.DTOs
         public string CustomerName { get; private set; }
         public double Total { get; private set; }
 
-        public InvoicesListItem(Invoice invoice, string enterpriseCode, string customerCode, string customerName, double total)
+        public Entities.Base.InvoiceBase CopyFromInvoice
         {
-            Date = invoice.Date;
-            FiscalType = invoice.FiscalType;
-            Id = invoice.Id;
-            Number = invoice.Number;
+            set
+            {
+                Date = value.Date;
+                FiscalType = value.FiscalType;
+                Id = value.Id;
+                Number = value.Number;
 
-            EnterpriseCode = enterpriseCode;
-            CustomerCode = customerCode;
-            CustomerName = customerName;
-            Total = total;
+                //EnterpriseCode = enterpriseCode;
+                //CustomerCode = customerCode;
+                //CustomerName = customerName;
+                //Total = total;
+            }
         }
     }
 }

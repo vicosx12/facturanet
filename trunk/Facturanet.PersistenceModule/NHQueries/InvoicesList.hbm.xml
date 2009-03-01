@@ -1,44 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
 
-<!--
-  En realidad habría que escribir el parentesis así, pero da un error extraño.
-  Creo que es un bug en NHibernate.Hql.Classic.SelectParser.Token
-  
   <query name="InvoicesList" read-only="true">
     <![CDATA[
-    select new InvoicesListItem(
-      invoice.Id,
+    select 
+      invoice,
       invoice.Enterprise.Code, 
-      invoice.FiscalType, 
-      invoice.Number, 
-      invoice.Date, 
-      invoice.Customer.Code, 
-      invoice.Customer.Name,
-      sum(item.Quantity * item.Price))
-    from 
-      Invoice invoice 
-      join invoice.Items item
-    group by 
-      invoice.Id,
-      invoice.Enterprise.Code, 
-      invoice.FiscalType, 
-      invoice.Number, 
-      invoice.Date, 
-      invoice.Customer.Code, 
-      invoice.Customer.Name
-    ]]>
-  </query>
--->
-  <!--
-  <query name="InvoicesList" read-only="true">
-    <![CDATA[
-    select new InvoicesListItem()
-      invoice.Id,
-      invoice.Enterprise.Code, 
-      invoice.FiscalType, 
-      invoice.Number, 
-      invoice.Date, 
       invoice.Customer.Code, 
       invoice.Customer.Name,
       sum(item.Quantity * item.Price)
@@ -46,14 +13,7 @@
       Invoice invoice
       join invoice.Items item
     group by 
-      invoice.Id,
-      invoice.Enterprise.Code, 
-      invoice.FiscalType, 
-      invoice.Number, 
-      invoice.Date, 
-      invoice.Customer.Code, 
-      invoice.Customer.Name
+      invoice
     ]]>
   </query>
-  -->
 </hibernate-mapping>

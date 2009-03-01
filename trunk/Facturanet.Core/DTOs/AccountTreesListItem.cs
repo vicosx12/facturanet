@@ -9,17 +9,16 @@ namespace Facturanet.DTOs
 {
     public class AccountTreesListItem : Entities.Base.AccountTreeBase, DTOs.IDTO
     {
-        public AccountTreesListItem()
+        public Entities.Base.AccountTreeBase CopyFromAccountTree
         {
-        }
-
-        public AccountTreesListItem(Entities.AccountTree accountTree)
-        {
-            this.Active = accountTree.Active;
-            this.Code = accountTree.Code;
-            this.Description = accountTree.Description;
-            this.Id = accountTree.Id;
-            this.Name = accountTree.Name;
+            set
+            {
+                this.Active = value.Active;
+                this.Code = value.Code;
+                this.Description = value.Description;
+                this.Id = value.Id;
+                this.Name = value.Name;
+            }
         }
     }
 }

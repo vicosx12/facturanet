@@ -17,7 +17,7 @@ namespace Facturanet.WinformsClient
 {
     public partial class Form1 : Form
     {
-        private Customer selectedCustomer = null;
+        //private Customer selectedCustomer = null;
 
         public Form1()
         {
@@ -32,7 +32,8 @@ namespace Facturanet.WinformsClient
                 {
                     new SystemInfoRequest(),
                     new ListProductsRequest(),
-                    new ListCustomersRequest()
+                    new ListCustomersRequest(),
+                    new ListInvoicesRequest()
                 }
             };
 
@@ -66,6 +67,10 @@ namespace Facturanet.WinformsClient
             var listCustomersResponse = respuesta.Responses[2] as ListCustomersResponse;
             Console.WriteLine("*listCustomersResponse*");
             Console.WriteLine(listCustomersResponse.ToString());
+
+            var listInvoicesResponse = respuesta.Responses[3] as ListInvoicesResponse;
+            Console.WriteLine("*ListInvoicesResponse*");
+            Console.WriteLine(listInvoicesResponse.ToString());
 
             this.articuloBindingSource.DataSource = listProductsResponse.Items;
             this.clienteBindingSource.DataSource = listCustomersResponse.Items;
@@ -175,6 +180,7 @@ namespace Facturanet.WinformsClient
 
         private void ActualizarFacturas(Customer customer)
         {
+            /*
             if (customer != selectedCustomer)
             {
                 selectedCustomer = customer;
@@ -194,6 +200,7 @@ namespace Facturanet.WinformsClient
                     facturaBindingSource.DataSource = respuesta.Items;
                 }
             }
+            */
         }
 
         private void btnEditAccountTrees_Click(object sender, EventArgs e)
