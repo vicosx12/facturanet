@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Runtime.Serialization;
 
-namespace Facturanet.Tdo
+namespace Facturanet.DTOs
 {
-    public interface ITdo
+    public interface IDTO
     {
     }
 }
