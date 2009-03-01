@@ -13,14 +13,10 @@ namespace Facturanet.Entities.Base
         public virtual string FiscalType { get; set; }
         public virtual string Number { get; set; }
         public virtual DateTime Date { get; set; }
-        
-        /*
-         * Esto no debería ir, si lo necesito lo hago, ¿para que tengo las cosas?
-        public abstract string EnterpriseCode { get; }
-        public abstract string CustomerCode { get; }
-        public abstract string CustomerName { get; }
-        public abstract double Total { get; }
-         * */
+        public abstract string EnterpriseCode { get; set; }
+        public abstract string CustomerCode { get; set; }
+        public abstract string CustomerName { get; set; }
+        public abstract double Total { get; set; }
     }
 }
 
@@ -38,26 +34,33 @@ namespace Facturanet.Entities
             set { items = value; }
         }
 
-        /*
+        [IgnoreDataMember]
         public override string EnterpriseCode 
         {
             get { return Enterprise.Code; }
+            set { throw new DTOs.DTOException(); }
         }
+
+        [IgnoreDataMember]
         public override string CustomerCode 
         {
             get { return Customer.Code; }
+            set { throw new DTOs.DTOException(); }
         }
 
+        [IgnoreDataMember]
         public override string CustomerName 
         {
             get { return Customer.Name; }
+            set { throw new DTOs.DTOException(); }
         }
 
+        [IgnoreDataMember]
         public override double Total 
         {
             get { return Items.Sum(i => i.Total); }
+            set { throw new DTOs.DTOException(); }
         }
-         * */
     }
 }
 

@@ -96,6 +96,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <None Include="app.config" />
+    <None Include="Properties\DataSources\Facturanet.DTOs.InvoicesListItem.datasource" />
     <None Include="Properties\DataSources\Facturanet.Entities.AccountTree.datasource" />
     <None Include="Properties\DataSources\Facturanet.Entities.ContableConfiguration.datasource" />
     <None Include="Properties\Settings.settings">
