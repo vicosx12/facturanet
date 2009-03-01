@@ -14,11 +14,11 @@ namespace Facturanet.Business
     {
         protected override ListAccountTreesResponse RunInContext(ListAccountTreesRequest request, PersistenceContext context)
         {
-            IList<Tdo.AccountTreesListItem> list = context.Session
+            IList<DTOs.AccountTreesListItem> list = context.Session
                 .CreateQuery("select new AccountTreesListItem(accountTree) from AccountTree accountTree")
                 .SetReadOnly(true)
-                .List<Tdo.AccountTreesListItem>();
-            return new ListAccountTreesResponse() { Items = list.ToArray<Tdo.AccountTreesListItem>() };
+                .List<DTOs.AccountTreesListItem>();
+            return new ListAccountTreesResponse() { Items = list.ToArray<DTOs.AccountTreesListItem>() };
         }
     }
 }

@@ -5,9 +5,9 @@ using System.Text;
 using Facturanet.Entities;
 using System.Runtime.Serialization;
 
-namespace Facturanet.Tdo
+namespace Facturanet.DTOs
 {
-    public class AccountTreesListItem : Entities.Base.AccountTreeBase, Tdo.ITdo
+    public class AccountTreesListItem : Entities.Base.AccountTreeBase, DTOs.IDTO
     {
         public AccountTreesListItem()
         {

@@ -9,8 +9,8 @@ namespace Facturanet.Business
 {
     [DataContract]
     [KnownType(typeof(Entities.AccountTree))]
-    [KnownType(typeof(Tdo.AccountTreesListItem))]
-    public class ListAccountTreesResponse : ListResponse<Tdo.AccountTreesListItem>
+    [KnownType(typeof(DTOs.AccountTreesListItem))]
+    public class ListAccountTreesResponse : ListResponse<DTOs.AccountTreesListItem>
     {
     }
 }

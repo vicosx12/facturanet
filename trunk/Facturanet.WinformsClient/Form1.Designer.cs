@@ -127,7 +127,7 @@
             // 
             // articuloBindingSource
             // 
-            this.articuloBindingSource.DataSource = typeof(Facturanet.Tdo.ProductsListItem);
+            this.articuloBindingSource.DataSource = typeof(Facturanet.DTOs.ProductsListItem);
             // 
             // button1
             // 
@@ -201,7 +201,7 @@
             // 
             // clienteBindingSource
             // 
-            this.clienteBindingSource.DataSource = typeof(Facturanet.Tdo.CustomersListItem);
+            this.clienteBindingSource.DataSource = typeof(Facturanet.DTOs.CustomersListItem);
             this.clienteBindingSource.CurrentChanged += new System.EventHandler(this.clienteBindingSource_CurrentChanged);
             // 
             // dataGridView3
@@ -277,7 +277,7 @@
             // 
             // facturaBindingSource
             // 
-            this.facturaBindingSource.DataSource = typeof(Facturanet.Tdo.InvoicesListItem);
+            this.facturaBindingSource.DataSource = typeof(Facturanet.DTOs.InvoicesListItem);
             this.facturaBindingSource.CurrentChanged += new System.EventHandler(this.facturaBindingSource_CurrentChanged);
             // 
             // dataGridView4

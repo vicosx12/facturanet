@@ -9,8 +9,8 @@ namespace Facturanet.Business
 {
     [DataContract]
     [KnownType(typeof(Entities.Invoice))]
-    [KnownType(typeof(Tdo.InvoicesListItem))]
-    public class ListInvoicesResponse : ListResponse<Tdo.InvoicesListItem>
+    [KnownType(typeof(DTOs.InvoicesListItem))]
+    public class ListInvoicesResponse : ListResponse<DTOs.InvoicesListItem>
     {
     }
 }

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using Facturanet.Entities;
 
-namespace Facturanet.Tdo
+namespace Facturanet.DTOs
 {
-    public class InvoicesListItem : Entities.Base.InvoiceBase, Tdo.ITdo
+    public class InvoicesListItem : Entities.Base.InvoiceBase, DTOs.IDTO
     {
         public string EnterpriseCode { get; private set; }
         public string CustomerCode { get; private set; }

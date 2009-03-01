@@ -106,7 +106,7 @@
             // 
             // listBindingSource
             // 
-            this.listBindingSource.DataSource = typeof(Facturanet.Tdo.AccountTreesListItem);
+            this.listBindingSource.DataSource = typeof(Facturanet.DTOs.AccountTreesListItem);
             this.listBindingSource.AddingNew += new System.ComponentModel.AddingNewEventHandler(this.listBindingSource_AddingNew);
             this.listBindingSource.ListChanged += new System.ComponentModel.ListChangedEventHandler(this.listBindingSource_ListChanged);
             // 
