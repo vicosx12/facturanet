@@ -74,6 +74,7 @@ namespace Facturanet.WinformsClient
 
             this.articuloBindingSource.DataSource = listProductsResponse.Items;
             this.clienteBindingSource.DataSource = listCustomersResponse.Items;
+            this.invoicesListItemBindingSource.DataSource = listInvoicesResponse.Items;
             
             ActualizarItems();
         }
@@ -103,6 +104,8 @@ namespace Facturanet.WinformsClient
 
         private void button2_Click(object sender, EventArgs e)
         {
+
+            /*
             GenerateTestDataRequest r = new GenerateTestDataRequest();
             try
             {
@@ -113,6 +116,7 @@ namespace Facturanet.WinformsClient
             {
                 MessageBox.Show(exc.ToString());
             }
+             * */
             /*
             CompositeRequest requests = new CompositeRequest();
             requests.Requests.Add(
