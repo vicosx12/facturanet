@@ -30,7 +30,7 @@
     ]]>
   </query>
 -->
-  
+  <!--
   <query name="InvoicesList" read-only="true">
     <![CDATA[
     select new InvoicesListItem()
@@ -55,4 +55,5 @@
       invoice.Customer.Name
     ]]>
   </query>
+  -->
 </hibernate-mapping>

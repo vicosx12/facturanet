@@ -14,8 +14,10 @@ namespace Facturanet.Business
     {
         protected override ListProductsResponse RunInContext(ListProductsRequest request, PersistenceContext context)
         {
-            IList<Lines.ILineProduct> list = context.Session.CreateCriteria(typeof(Entities.Product)).List<Lines.ILineProduct>();
-            return new ListProductsResponse() { List = list };
+            //IList<Lines.ILineProduct> list = context.Session.CreateCriteria(typeof(Entities.Product)).List<Lines.ILineProduct>();
+            //return new ListProductsResponse() { List = list };
+            /***/
+            return new ListProductsResponse();
         }
 
     }

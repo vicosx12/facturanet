@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.Serialization;
 
-
-namespace Facturanet.Entities
+namespace Facturanet.Entities.Base
 {
-    public class Product : Entity, Lines.ILineProduct
+    public abstract class ProductBase : Entity
     {
         public virtual string Code { get; set; }
         public virtual bool Active { get; set; }
@@ -16,5 +15,12 @@ namespace Facturanet.Entities
         {
             return this.Name;
         }
+    }
+}
+
+namespace Facturanet.Entities
+{
+    public class Product : Base.ProductBase
+    {
     }
 }

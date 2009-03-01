@@ -14,8 +14,11 @@ namespace Facturanet.Business
     {
         public override ListProductsResponse Run(ListProductsRequest request, IContext context)
         {
+             /***/
             return new ListProductsResponse()
+            /*
             {
+                
                 List = new List<Lines.ILineProduct>()
                 {
                     new Product() { Id = IdentifierHelper.GenerateComb(), Taxes = 1, Name = "Articulo1" },
@@ -23,7 +26,7 @@ namespace Facturanet.Business
                     new Product() { Id = IdentifierHelper.GenerateComb(), Taxes = 3, Name = "Articulo3" },
                     new Product() { Id = IdentifierHelper.GenerateComb(), Taxes = 4, Name = "Articulo4" }
                 }
-            };
+            }*/;
         }
     }
 }

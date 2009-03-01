@@ -3,37 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Facturanet.Entities;
+using System.Runtime.Serialization;
 
 namespace Facturanet.Tdo
 {
-    public class AccountTreesListItem : Facturanet.Entities.Entity, Lines.ILineAccountTree
+    public class AccountTreesListItem : Entities.Base.AccountTreeBase, Tdo.ITdo
     {
-        public virtual string Code { get; set; }
-        public virtual bool Active { get; set; }
-        public virtual string Name { get; set; }
-        public virtual string Description { get; set; }
-
-        public AccountTreesListItem() : base()
+        public AccountTreesListItem()
         {
         }
 
-        public AccountTreesListItem(
-            Guid id,
-            string code,
-            bool active,
-            string name,
-            string description)
+        public AccountTreesListItem(Entities.AccountTree accountTree)
         {
-            Id = id;
-            Code = code;
-            Active = active;
-            Name = name;
-            Description = description;
-        }
-
-        public AccountTreesListItem(Entities.AccountTree accountTree) : 
-            this(accountTree.Id, accountTree.Code, accountTree.Active, accountTree.Name, accountTree.Description)
-        {
+            this.Active = accountTree.Active;
+            this.Code = accountTree.Code;
+            this.Description = accountTree.Description;
+            this.Id = accountTree.Id;
+            this.Name = accountTree.Name;
         }
     }
 }

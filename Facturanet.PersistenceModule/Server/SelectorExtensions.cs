@@ -23,7 +23,7 @@ namespace Facturanet.Server
          * */
 
         public static EntityType GetEntity<EntityType>(this Selector<EntityType> selector, PersistenceContext context)
-            where EntityType : Entity, new()
+            where EntityType : Entities.Base.Entity, new()
         {
             if (selector.Multiple)
                 throw new Exception("El selector especificado es múltiple por lo tanto debuelve un arreglo sde entidades");

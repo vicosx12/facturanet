@@ -74,10 +74,6 @@
     <Compile Include="Entities\Invoice.cs" />
     <Compile Include="Entities\InvoiceItem.cs" />
     <Compile Include="Entities\Product.cs" />
-    <Compile Include="Lines\ILineAccountTree.cs" />
-    <Compile Include="Lines\ILineProduct.cs" />
-    <Compile Include="Lines\ILineCustomer.cs" />
-    <Compile Include="Lines\ILineInvoice.cs" />
     <Compile Include="Infrastructure\SystemInfoRequest.cs" />
     <Compile Include="Infrastructure\SystemInfoResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -97,6 +93,9 @@
     <Compile Include="Server\Response.cs" />
     <Compile Include="Server\Selector.cs" />
     <Compile Include="Tdo\AccountTreesListItem.cs" />
+    <Compile Include="Tdo\ProductsListItem.cs" />
+    <Compile Include="Tdo\CustomersListItem.cs" />
+    <Compile Include="Tdo\ITdo.cs" />
     <Compile Include="Tdo\InvoicesListItem.cs" />
     <Compile Include="Test\GenerateTestDataRequest.cs" />
     <Compile Include="Test\GenerateTestDataResponse.cs" />
