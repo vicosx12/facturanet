@@ -98,10 +98,6 @@
     <None Include="app.config" />
     <None Include="Properties\DataSources\Facturanet.Entities.AccountTree.datasource" />
     <None Include="Properties\DataSources\Facturanet.Entities.ContableConfiguration.datasource" />
-    <None Include="Properties\DataSources\Facturanet.Lines.ILineAccountTree.datasource" />
-    <None Include="Properties\DataSources\Facturanet.Lines.ILineCustomer.datasource" />
-    <None Include="Properties\DataSources\Facturanet.Lines.ILineInvoice.datasource" />
-    <None Include="Properties\DataSources\Facturanet.Lines.ILineProduct.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
