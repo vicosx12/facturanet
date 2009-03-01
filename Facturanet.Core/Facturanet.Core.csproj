@@ -95,7 +95,7 @@
     <Compile Include="DTOs\AccountTreesListItem.cs" />
     <Compile Include="DTOs\ProductsListItem.cs" />
     <Compile Include="DTOs\CustomersListItem.cs" />
-    <Compile Include="DTOs\ITdo.cs" />
+    <Compile Include="DTOs\IDTO.cs" />
     <Compile Include="DTOs\InvoicesListItem.cs" />
     <Compile Include="Test\GenerateTestDataRequest.cs" />
     <Compile Include="Test\GenerateTestDataResponse.cs" />

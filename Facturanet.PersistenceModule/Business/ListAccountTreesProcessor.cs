@@ -7,6 +7,8 @@ using Facturanet.Business;
 using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
+using Facturanet.NHUtil;
+
 
 namespace Facturanet.Business
 {
@@ -14,11 +16,10 @@ namespace Facturanet.Business
     {
         protected override ListAccountTreesResponse RunInContext(ListAccountTreesRequest request, PersistenceContext context)
         {
-            IList<DTOs.AccountTreesListItem> list = context.Session
-                .CreateQuery("select new AccountTreesListItem(accountTree) from AccountTree accountTree")
-                .SetReadOnly(true)
-                .List<DTOs.AccountTreesListItem>();
-            return new ListAccountTreesResponse() { Items = list.ToArray<DTOs.AccountTreesListItem>() };
+            List<DTOs.AccountTreesListItem> list = context.Session
+                .CreateQuery("select accountTree from AccountTree accountTree")
+                .DTOList<DTOs.AccountTreesListItem>("CopyFromAccountTree");
+            return new ListAccountTreesResponse() { Items = list };
         }
     }
 }
