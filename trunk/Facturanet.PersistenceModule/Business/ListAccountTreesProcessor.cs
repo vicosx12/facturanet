@@ -16,10 +16,12 @@ namespace Facturanet.Business
     {
         protected override ListAccountTreesResponse RunInContext(ListAccountTreesRequest request, PersistenceContext context)
         {
-            List<DTOs.AccountTreesListItem> list = context.Session
+            var response = new ListAccountTreesResponse();
+            response.Items = new List<Facturanet.DTOs.AccountTreesListItem>(context.Session
                 .CreateQuery("select accountTree from AccountTree accountTree")
-                .DTOList<DTOs.AccountTreesListItem>("CopyFromAccountTree");
-            return new ListAccountTreesResponse() { Items = list };
+                .ToDTOEnumerable<DTOs.AccountTreesListItem>("CopyFromAccountTree"));
+
+            return response;
         }
     }
 }

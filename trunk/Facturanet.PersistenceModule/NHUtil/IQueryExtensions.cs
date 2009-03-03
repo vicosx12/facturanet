@@ -8,20 +8,20 @@ namespace Facturanet.NHUtil
 {
     public static class IQueryExtensions
     {
-        public static List<T> DTOList<T>(this IQuery query, string[] positionalAliases)
+        public static IEnumerable<T> ToDTOEnumerable<T>(this IQuery query, string[] positionalAliases)
             where T : new()
         {
             return
-                (List<T>) query
+                query
                 .SetResultTransformer(new PositionalToBeanResultTransformerGeneric<T>(positionalAliases))
                 .SetReadOnly(true)
-                .List<T>();
+                .Enumerable<T>();
         }
 
-        public static List<T> DTOList<T>(this IQuery query, string positionalAliases)
+        public static IEnumerable<T> ToDTOEnumerable<T>(this IQuery query, string positionalAliases)
             where T : new()
         {
-            return query.DTOList<T>(positionalAliases.Split(','));
+            return query.ToDTOEnumerable<T>(positionalAliases.Split(','));
         }
     }
 }

@@ -84,6 +84,7 @@ namespace Facturanet.WinformsClient.Forms
         private void button2_Click(object sender, EventArgs e)
         {
             list[0].Active = !list[0].Active;
+            ((DTOs.IDiscartableChanges)list[1]).DiscardChanges();
         }
     }
 }

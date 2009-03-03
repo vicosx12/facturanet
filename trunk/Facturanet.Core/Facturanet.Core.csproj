@@ -65,6 +65,8 @@
     <Compile Include="Business\ListCustomersResponse.cs" />
     <Compile Include="Business\ListProductsRequest.cs" />
     <Compile Include="Business\ListProductsResponse.cs" />
+    <Compile Include="DTOs\CloneUtil.cs" />
+    <Compile Include="DTOs\IEditableDTO.cs" />
     <Compile Include="DTOs\DTOException.cs" />
     <Compile Include="Entities\ContableAccount.cs" />
     <Compile Include="Entities\ContableConfiguration.cs" />
