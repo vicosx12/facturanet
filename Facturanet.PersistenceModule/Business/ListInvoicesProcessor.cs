@@ -19,11 +19,13 @@ namespace Facturanet.Business
             //Esto obtiene todas las facturas con sus items y realiza la suma en .net, 
             //después se podría optimizar trayendo la suma desde la db, pero 
             //repetimos el código en .net y en las consultas
-            List<DTOs.InvoicesListItem> list = context.Session
-                .GetNamedQuery("InvoicesList")
-                .DTOList<DTOs.InvoicesListItem>("CopyFromInvoice");
 
-            return new ListInvoicesResponse() { Items = list };
+            var response = new ListInvoicesResponse();
+            response.Items = new List<DTOs.InvoicesListItem>(context.Session
+                .GetNamedQuery("InvoicesList")
+                .ToDTOEnumerable<DTOs.InvoicesListItem>("CopyFromInvoice"));
+
+            return response;
         }
 
     }

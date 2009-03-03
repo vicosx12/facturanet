@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.ComponentModel;
+using Facturanet.DTOs;
 
 namespace Facturanet.WinformsClient
 {
@@ -16,9 +17,15 @@ namespace Facturanet.WinformsClient
             : base()
         {
             //this.AllowNew = true;
-            if (list != null) 
+            if (list != null)
                 foreach (var item in list)
+                {
+                    if (item as DTOs.IDiscartableChanges != null)
+                    {
+                        ((DTOs.IDiscartableChanges)item).IDiscartableChangesActive = true;
+                    }
                     Add(item);
+                }
         }
 
         /*
