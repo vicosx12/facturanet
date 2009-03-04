@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using Facturanet.Entities;
 using Facturanet.Business;
+using Facturanet.DTOs;
 
 namespace Facturanet.WinformsClient.Forms
 {
@@ -16,7 +17,7 @@ namespace Facturanet.WinformsClient.Forms
         //private IList<Lines.ILineAccountTree> list;
         /***/
         //private FacturanetBindingList<Lines.ILineAccountTree, Entities.AccountTree> list;
-        private FacturanetBindingList<DTOs.AccountTreesListItem> list;
+        private FacturanetBindingList<AccountTreesListItem> list;
         
         public AccountTreesForm()
         {
@@ -31,7 +32,7 @@ namespace Facturanet.WinformsClient.Forms
         {
             var request = new ListAccountTreesRequest();
             var response = request.Run();
-            list = new FacturanetBindingList<Facturanet.DTOs.AccountTreesListItem>(response.Items);
+            list = new FacturanetBindingList<AccountTreesListItem>(response.Items);
             list.ListChanged += new ListChangedEventHandler(list_ListChanged);
             //ACA ME QUEDE
             listBindingSource.DataSource = list;
@@ -84,7 +85,7 @@ namespace Facturanet.WinformsClient.Forms
         private void button2_Click(object sender, EventArgs e)
         {
             list[0].Active = !list[0].Active;
-            ((DTOs.IDiscartableChanges)list[1]).DiscardChanges();
+            ((IDiscartableChanges)list[1]).DiscardChanges();
         }
     }
 }

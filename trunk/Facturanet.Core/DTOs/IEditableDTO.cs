@@ -12,12 +12,13 @@ namespace Facturanet.DTOs
 {
     public interface IEditableDTO : 
         IDTO, 
-        IBackupable,
+        //IBackupable,
         IDiscartableChanges,
         INotifyPropertyChanged, 
         INotifyPropertyChanging, 
-        IEditableObject, 
-        ICloneable
+        //ICloneable,
+        IEditableObject
+        
     {
     }
 
