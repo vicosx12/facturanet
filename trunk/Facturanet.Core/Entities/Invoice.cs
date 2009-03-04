@@ -38,28 +38,28 @@ namespace Facturanet.Entities
         public override string EnterpriseCode 
         {
             get { return Enterprise.Code; }
-            set { throw new DTOs.DTOException(); }
+            set { throw new UI.UIObjectImplementationException(); }
         }
 
         [IgnoreDataMember]
         public override string CustomerCode 
         {
             get { return Customer.Code; }
-            set { throw new DTOs.DTOException(); }
+            set { throw new UI.UIObjectImplementationException(); }
         }
 
         [IgnoreDataMember]
         public override string CustomerName 
         {
             get { return Customer.Name; }
-            set { throw new DTOs.DTOException(); }
+            set { throw new UI.UIObjectImplementationException(); }
         }
 
         [IgnoreDataMember]
         public override double Total 
         {
             get { return Items.Sum(i => i.Total); }
-            set { throw new DTOs.DTOException(); }
+            set { throw new UI.UIObjectImplementationException(); }
         }
     }
 }

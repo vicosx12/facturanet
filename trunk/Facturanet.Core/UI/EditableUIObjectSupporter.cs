@@ -6,12 +6,15 @@ using System.Collections;
 using System.Runtime.Serialization;
 using System.ComponentModel;
 
-namespace Facturanet.DTOs
+namespace Facturanet.UI
 {
-    internal class EditableSupporter : ICloneable, IBackupable, INotifyPropertyChanging, INotifyPropertyChanged, IDiscartableChanges
+    internal class EditableUIObjectSupporter : IEditableUIObjectSupporter
     {
         private Hashtable data = new Hashtable();
 
+        /// <summary>
+        /// Gets the value of a property. If the property is not defined returns the default value of the type.
+        /// </summary>
         public T GetData<T>(string propertyName)
         {
             if (!data.Contains(propertyName))
@@ -20,6 +23,13 @@ namespace Facturanet.DTOs
                 return (T)data[propertyName];
         }
 
+        /// <summary>
+        /// Sets the value of a property. If the property exists override the previous value.
+        /// </summary>
+        /// <remarks>
+        /// Raises PropertyChangingEvent, PropertyChangedEvent and if DiscartableChangesControl is 
+        /// enabled mantains a backup.
+        /// </remarks>
         public void SetData<T>(string propertyName, T value)
         {
             if (
@@ -29,7 +39,7 @@ namespace Facturanet.DTOs
             {
                 OnPropertyChanging(new PropertyChangingEventArgs(propertyName));
 
-                if (IDiscartableChangesActive && !IsDirty)
+                if (DiscartableChangesControl && !IsDirty)
                     backupDiscardChanges = ((IBackupable)this).Backup();
 
                 if (value == null || value.Equals(default(T)))
@@ -40,34 +50,32 @@ namespace Facturanet.DTOs
             }
         }
 
-        #region ICloneable Implementation
-
-        public object Clone()
-        {
-            EditableSupporter clon = new EditableSupporter();
-            clon.Restore(data);
-            return clon;
-        }
-
-        #endregion
-
         #region IBackupable Implementation
 
+        /// <summary>
+        /// Returns a object with the backup of current data.
+        /// </summary>
         public object Backup()
         {
             return data.Clone();
         }
 
+        /// <summary>
+        /// Replace current data with the backup data.
+        /// </summary>
         public void Restore(object backupData)
         {
             Hashtable backup = (Hashtable)backupData;
             data = (Hashtable)backup.Clone();
         }
 
-        public ValueChangedCollection GetDifferences(object backupData)
+        /// <summary>
+        /// Returns the diferences between current and backupData.
+        /// </summary>
+        public ValueChangedDescriptorCollection GetDifferences(object backupData)
         {
             Hashtable backup = (Hashtable)backupData;
-            ValueChangedCollection changes = new ValueChangedCollection();
+            ValueChangedDescriptorCollection changes = new ValueChangedDescriptorCollection();
 
             foreach (string key in data.Keys)
             {
@@ -88,8 +96,15 @@ namespace Facturanet.DTOs
 
         #region INotifyPropertyChanging Implementation
 
+        /// <summary>
+        /// Raises when property value is changing.
+        /// </summary>
         public event PropertyChangingEventHandler PropertyChanging;
 
+        /// <summary>
+        /// Raises the <see cref="E:PropertyChanging"/> event.
+        /// </summary>
+        /// <param name="e">The <see cref="System.ComponentModel.PropertyChangingEventArgs"/> instance containing the event data.</param>
         protected virtual void OnPropertyChanging(PropertyChangingEventArgs e)
         {
             if (PropertyChanging != null)
@@ -100,8 +115,15 @@ namespace Facturanet.DTOs
 
         #region INotifyPropertyChanged Implementation
 
+        /// <summary>
+        /// Raises when property value is changed.
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// Raises the <see cref="E:PropertyChanged"/> event.
+        /// </summary>
+        /// <param name="e">The <see cref="System.ComponentModel.PropertyChangedEventArgs"/> instance containing the event data.</param>
         protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
         {
             if (PropertyChanged != null)
@@ -114,23 +136,38 @@ namespace Facturanet.DTOs
 
         private object backupDiscardChanges = null;
 
-        public bool IDiscartableChangesActive { get; set; }
+        /// <summary>
+        /// Gets or sets a value indicating whether the object allow discard changes manually.
+        /// </summary>
+        public bool DiscartableChangesControl { get; set; }
 
+        /// <summary>
+        /// Gets a value indicating whether this instance has changes.
+        /// </summary>
+        /// <remarks>
+        /// To use this, DiscartableChangesControl has to be true.
+        /// </remarks>
         public bool IsDirty
         {
             get
             {
-                if (!IDiscartableChangesActive)
-                    throw new ApplicationException("Discartable Changes Monitoring is not active.");
+                if (!DiscartableChangesControl)
+                    throw new ApplicationException("Discartable Changes Control is not active.");
                 else
                     return backupDiscardChanges != null;
             }
         }
 
+        /// <summary>
+        /// Discards the changes.
+        /// </summary>
+        /// <remarks>
+        /// To use this, DiscartableChangesControl has to be true.
+        /// </remarks>
         public void DiscardChanges()
         {
-            if (!IDiscartableChangesActive)
-                throw new ApplicationException("Discartable Changes Monitoring is not active.");
+            if (!DiscartableChangesControl)
+                throw new ApplicationException("Discartable Changes Control is not active.");
             else
             {
                 OnPropertyChanging(new PropertyChangingEventArgs(""));
@@ -140,36 +177,55 @@ namespace Facturanet.DTOs
             }
         }
 
+        /// <summary>
+        /// Accepts the changes.
+        /// </summary>
+        /// <remarks>
+        /// To use this, DiscartableChangesControl has to be true.
+        /// </remarks>
         public void AcceptChanges()
         {
-            if (!IDiscartableChangesActive)
-                throw new ApplicationException("Discartable Changes Monitoring is not active.");
+            if (!DiscartableChangesControl)
+                throw new ApplicationException("Discartable Changes Control is not active.");
             else
             {
                 backupDiscardChanges = null;
             }
         }
 
-        public ValueChangedCollection GetChanges()
+        /// <summary>
+        /// Gets the changes respect the original version.
+        /// </summary>
+        /// <remarks>
+        /// To use this, DiscartableChangesControl has to be true.
+        /// </remarks>
+        public ValueChangedDescriptorCollection GetChanges()
         {
-            if (!IDiscartableChangesActive)
-                throw new ApplicationException("Discartable Changes Monitoring is not active.");
+            if (!DiscartableChangesControl)
+                throw new ApplicationException("Discartable Changes Control is not active.");
             else
                 return GetDifferences(backupDiscardChanges);
         }
         
         #endregion
-
+        
         #region IEditableObject Implementation
 
         private object backupIEditable = null;
 
+        /// <summary>
+        /// Starts the object edition.
+        /// </summary>
         public void BeginEdit()
         {
             if (backupIEditable == null)
                 backupIEditable = Backup();
         }
 
+
+        /// <summary>
+        /// Cancel the changes maked from the last call to <see cref="M:System.ComponentModel.IEditableObject.BeginEdit"/>.
+        /// </summary>
         public void CancelEdit()
         {
             if (backupIEditable != null)
@@ -179,6 +235,9 @@ namespace Facturanet.DTOs
             }
         }
 
+        /// <summary>
+        /// Acepts the changes maked.
+        /// </summary>
         public void EndEdit()
         {
             if (backupIEditable != null)

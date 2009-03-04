@@ -8,9 +8,9 @@ using System.Runtime.Serialization;
 using System.ComponentModel;
 
 
-namespace Facturanet.DTOs
+namespace Facturanet.UI
 {
-    public class AccountTreesListItem : Entities.Base.AccountTreeBase, IEditableDTO
+    public class AccountTreesListItem : Entities.Base.AccountTreeBase, IEditableUIObject
     {
         public override bool Active
         {
@@ -58,9 +58,9 @@ namespace Facturanet.DTOs
 
         #endregion
 
-        #region IEditableDTO Implementation
+        #region IEditableUIObject Implementation
 
-        private EditableSupporter editableData = new EditableSupporter();
+        private IEditableUIObjectSupporter editableData = new EditableUIObjectSupporter();
 
         public event PropertyChangingEventHandler PropertyChanging
         {
@@ -75,10 +75,10 @@ namespace Facturanet.DTOs
         }
 
         [IgnoreDataMember]
-        public bool IDiscartableChangesActive
+        public bool DiscartableChangesControl
         {
-            get { return editableData.IDiscartableChangesActive; }
-            set { editableData.IDiscartableChangesActive = value; }
+            get { return editableData.DiscartableChangesControl; }
+            set { editableData.DiscartableChangesControl = value; }
         }
 
         public bool IsDirty
@@ -96,7 +96,7 @@ namespace Facturanet.DTOs
             editableData.AcceptChanges();
         }
 
-        public ValueChangedCollection GetChanges()
+        public ValueChangedDescriptorCollection GetChanges()
         {
             return editableData.GetChanges();
         }

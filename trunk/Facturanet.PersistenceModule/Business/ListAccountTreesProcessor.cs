@@ -17,9 +17,9 @@ namespace Facturanet.Business
         protected override ListAccountTreesResponse RunInContext(ListAccountTreesRequest request, PersistenceContext context)
         {
             var response = new ListAccountTreesResponse();
-            response.Items = new List<Facturanet.DTOs.AccountTreesListItem>(context.Session
+            response.Items = new List<Facturanet.UI.AccountTreesListItem>(context.Session
                 .CreateQuery("select accountTree from AccountTree accountTree")
-                .ToDTOEnumerable<DTOs.AccountTreesListItem>("CopyFromAccountTree"));
+                .ToDTOEnumerable<UI.AccountTreesListItem>("CopyFromAccountTree"));
 
             return response;
         }

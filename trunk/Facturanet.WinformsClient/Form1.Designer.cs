@@ -296,7 +296,7 @@
             // 
             // invoicesListItemBindingSource
             // 
-            this.invoicesListItemBindingSource.DataSource = typeof(Facturanet.DTOs.InvoicesListItem);
+            this.invoicesListItemBindingSource.DataSource = typeof(Facturanet.UI.InvoicesListItem);
             // 
             // idDataGridViewTextBoxColumn1
             // 
@@ -312,7 +312,7 @@
             // 
             // clienteBindingSource
             // 
-            this.clienteBindingSource.DataSource = typeof(Facturanet.DTOs.CustomersListItem);
+            this.clienteBindingSource.DataSource = typeof(Facturanet.UI.CustomersListItem);
             this.clienteBindingSource.CurrentChanged += new System.EventHandler(this.clienteBindingSource_CurrentChanged);
             // 
             // idDataGridViewTextBoxColumn
@@ -335,7 +335,7 @@
             // 
             // articuloBindingSource
             // 
-            this.articuloBindingSource.DataSource = typeof(Facturanet.DTOs.ProductsListItem);
+            this.articuloBindingSource.DataSource = typeof(Facturanet.UI.ProductsListItem);
             // 
             // enterpriseCodeDataGridViewTextBoxColumn
             // 

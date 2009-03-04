@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Facturanet.DTOs
+namespace Facturanet.UI
 {
-    public class DTOException : ApplicationException
+    public class UIObjectImplementationException : ApplicationException
     {
         public override string Message
         {

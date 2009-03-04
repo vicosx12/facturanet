@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using Facturanet.Entities;
 
-namespace Facturanet.DTOs
+namespace Facturanet.UI
 {
-    public class CustomersListItem : Entities.Base.CustomerBase, DTOs.IDTO
+    public class CustomersListItem : Entities.Base.CustomerBase, UI.IUIObject
     {   
     }
 }
