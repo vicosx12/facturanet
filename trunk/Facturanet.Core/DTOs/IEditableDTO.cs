@@ -12,13 +12,10 @@ namespace Facturanet.DTOs
 {
     public interface IEditableDTO : 
         IDTO, 
-        //IBackupable,
         IDiscartableChanges,
         INotifyPropertyChanged, 
         INotifyPropertyChanging, 
-        //ICloneable,
         IEditableObject
-        
     {
     }
 
@@ -26,13 +23,14 @@ namespace Facturanet.DTOs
     {
         object Backup();
         void Restore(object backupData);
-        bool HasDifferences(object backupData);
+        ValueChangedCollection GetDifferences(object backupData);
     }
 
     public interface IDiscartableChanges
     {
         bool IDiscartableChangesActive { get; set; }
         bool IsDirty { get; }
+        ValueChangedCollection GetChanges();
         void DiscardChanges();
         void AcceptChanges();
     }

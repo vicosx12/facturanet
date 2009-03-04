@@ -65,6 +65,7 @@
     <Compile Include="Business\ListCustomersResponse.cs" />
     <Compile Include="Business\ListProductsRequest.cs" />
     <Compile Include="Business\ListProductsResponse.cs" />
+    <Compile Include="DTOs\ValueChanged.cs" />
     <Compile Include="DTOs\EditableSupporter.cs" />
     <Compile Include="DTOs\FacturanetBindingList.cs" />
     <Compile Include="DTOs\IEditableDTO.cs" />
