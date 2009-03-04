@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using Facturanet.Entities;
 
-namespace Facturanet.DTOs
+namespace Facturanet.UI
 {
-    public class InvoicesListItem : Entities.Base.InvoiceBase, DTOs.IDTO
+    public class InvoicesListItem : Entities.Base.InvoiceBase, UI.IUIObject
     {
         public override string EnterpriseCode { get; set; }
 

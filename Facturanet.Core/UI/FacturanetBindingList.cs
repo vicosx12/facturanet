@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel;
 
-namespace Facturanet.DTOs
+namespace Facturanet.UI
 {
     public class FacturanetBindingList<T> : BindingList<T>
     {
@@ -21,9 +21,9 @@ namespace Facturanet.DTOs
 
         protected override void InsertItem(int index, T item)
         {
-            var aux = item as DTOs.IDiscartableChanges;
+            var aux = item as UI.IDiscartableChanges;
             if (aux != null)
-                aux.IDiscartableChangesActive = true;
+                aux.DiscartableChangesControl = true;
 
             base.InsertItem(index, item);
         }

@@ -9,7 +9,7 @@ namespace Facturanet.Business
 {
     [DataContract]
     [KnownType(typeof(Entities.Customer))]
-    public class ListCustomersResponse : ListResponse<DTOs.CustomersListItem>
+    public class ListCustomersResponse : ListResponse<UI.CustomersListItem>
     {
     }
 }

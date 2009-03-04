@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using Facturanet.Entities;
 using Facturanet.Business;
-using Facturanet.DTOs;
+using Facturanet.UI;
 
 namespace Facturanet.WinformsClient.Forms
 {

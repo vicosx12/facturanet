@@ -21,9 +21,9 @@ namespace Facturanet.Business
             //repetimos el código en .net y en las consultas
 
             var response = new ListInvoicesResponse();
-            response.Items = new List<DTOs.InvoicesListItem>(context.Session
+            response.Items = new List<UI.InvoicesListItem>(context.Session
                 .GetNamedQuery("InvoicesList")
-                .ToDTOEnumerable<DTOs.InvoicesListItem>("CopyFromInvoice"));
+                .ToDTOEnumerable<UI.InvoicesListItem>("CopyFromInvoice"));
 
             return response;
         }
