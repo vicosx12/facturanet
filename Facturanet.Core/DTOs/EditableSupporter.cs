@@ -22,14 +22,17 @@ namespace Facturanet.DTOs
 
         public void SetData<T>(string propertyName, T value)
         {
-            if (!value.Equals(GetData<T>(propertyName)))
+            if (
+                (value == null && GetData<T>(propertyName) != null)
+                || (value != null && !value.Equals(GetData<T>(propertyName)))
+                )
             {
                 OnPropertyChanging(new PropertyChangingEventArgs(propertyName));
 
                 if (IDiscartableChangesActive && !IsDirty)
                     backupDiscardChanges = ((IBackupable)this).Backup();
 
-                if (value.Equals(default(T)))
+                if (value == null || value.Equals(default(T)))
                     data.Remove(propertyName);
                 else
                     data[propertyName] = value;
@@ -61,21 +64,24 @@ namespace Facturanet.DTOs
             data = (Hashtable)backup.Clone();
         }
 
-        public bool HasDifferences(object backupData)
+        public ValueChangedCollection GetDifferences(object backupData)
         {
             Hashtable backup = (Hashtable)backupData;
-            if (backup.Count != data.Count)
-                return true;
+            ValueChangedCollection changes = new ValueChangedCollection();
 
-            foreach (object key in data.Keys)
+            foreach (string key in data.Keys)
             {
-                if (!backup.Contains(key))
-                    return true;
+                if (!backup.ContainsKey(key))
+                    changes.Add(key, null, data[key]);
                 else if (!backup[key].Equals(data[key]))
-                    return true;
+                    changes.Add(key, backup[key], data[key]);
             }
 
-            return false;
+            foreach (string key in backup.Keys)
+                if (!data.ContainsKey(key))
+                    changes.Add(key, backup[key], null);
+
+            return changes;
         }
 
         #endregion
@@ -115,7 +121,7 @@ namespace Facturanet.DTOs
             get
             {
                 if (!IDiscartableChangesActive)
-                    throw new ApplicationException("Discartable Changes is not active.");
+                    throw new ApplicationException("Discartable Changes Monitoring is not active.");
                 else
                     return backupDiscardChanges != null;
             }
@@ -124,7 +130,7 @@ namespace Facturanet.DTOs
         public void DiscardChanges()
         {
             if (!IDiscartableChangesActive)
-                throw new ApplicationException("Discartable Changes is not active.");
+                throw new ApplicationException("Discartable Changes Monitoring is not active.");
             else
             {
                 OnPropertyChanging(new PropertyChangingEventArgs(""));
@@ -137,16 +143,25 @@ namespace Facturanet.DTOs
         public void AcceptChanges()
         {
             if (!IDiscartableChangesActive)
-                throw new ApplicationException("Discartable Changes is not active.");
+                throw new ApplicationException("Discartable Changes Monitoring is not active.");
             else
             {
                 backupDiscardChanges = null;
             }
         }
 
+        public ValueChangedCollection GetChanges()
+        {
+            if (!IDiscartableChangesActive)
+                throw new ApplicationException("Discartable Changes Monitoring is not active.");
+            else
+                return GetDifferences(backupDiscardChanges);
+        }
+        
         #endregion
 
         #region IEditableObject Implementation
+
         private object backupIEditable = null;
 
         public void BeginEdit()
@@ -169,7 +184,7 @@ namespace Facturanet.DTOs
             if (backupIEditable != null)
                 backupIEditable = null;
         }
-        #endregion
 
+        #endregion
     }
 }

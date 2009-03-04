@@ -75,25 +75,30 @@ namespace Facturanet.DTOs
         }
 
         [IgnoreDataMember]
-        bool IDiscartableChanges.IDiscartableChangesActive
+        public bool IDiscartableChangesActive
         {
             get { return editableData.IDiscartableChangesActive; }
             set { editableData.IDiscartableChangesActive = value; }
         }
 
-        bool IDiscartableChanges.IsDirty
+        public bool IsDirty
         {
             get { return editableData.IsDirty; }
         }
 
-        void IDiscartableChanges.DiscardChanges()
+        public void DiscardChanges()
         {
             editableData.DiscardChanges();
         }
 
-        void IDiscartableChanges.AcceptChanges()
+        public void AcceptChanges()
         {
             editableData.AcceptChanges();
+        }
+
+        public ValueChangedCollection GetChanges()
+        {
+            return editableData.GetChanges();
         }
 
         void IEditableObject.BeginEdit()
