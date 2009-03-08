@@ -17,10 +17,19 @@ namespace Facturanet.Business
         protected override ListAccountTreesResponse RunInContext(ListAccountTreesRequest request, PersistenceContext context)
         {
             var response = new ListAccountTreesResponse();
-            response.Items = new List<Facturanet.UI.AccountTreesListItem>(context.Session
-                .CreateQuery("select accountTree from AccountTree accountTree")
-                .ToDTOEnumerable<UI.AccountTreesListItem>("CopyFromAccountTree"));
 
+            response.Items = context.Session
+                .CreateQuery(@"
+select 
+    accountTree.Active, 
+    accountTree.Code, 
+    accountTree.Description, 
+    accountTree.Id, 
+    accountTree.Name 
+from 
+    AccountTree accountTree")
+                .ToDTOEnumerable<UI.AccountTreesListItem>("Active, Code, Description, Id, Name")
+                .ToList();
             return response;
         }
     }

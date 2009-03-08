@@ -44,6 +44,7 @@ namespace Facturanet.UI
 
         #region PositionalToBeanResultTransformerGeneric Support
 
+        /*
         public Entities.Base.AccountTreeBase CopyFromAccountTree
         {
             set
@@ -53,8 +54,9 @@ namespace Facturanet.UI
                 Description = value.Description;
                 Id = value.Id;
                 Name = value.Name;
-            }
+            } 
         }
+         * */
 
         #endregion
 

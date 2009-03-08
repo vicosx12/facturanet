@@ -79,6 +79,7 @@
     <Compile Include="Business\ListProductsProcessor.cs" />
     <Compile Include="Infrastructure\SystemInfoProcessor.cs" />
     <Compile Include="NHUtil\IQueryExtensions.cs" />
+    <Compile Include="NHUtil\PositionalToBeanResultTransformer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server\CompositeProcessor.cs" />
     <Compile Include="Server\PersistenceEmptyResponseProcessor.cs" />
@@ -88,7 +89,6 @@
     <Compile Include="Server\NHibernateHelper.cs" />
     <Compile Include="Server\SelectorExtensions.cs" />
     <Compile Include="Test\GenerateTestDataProcessor.cs" />
-    <Compile Include="NHUtil\PositionalToBeanResultTransformerGeneric.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="NHMappings\Customer.hbm.xml" />
