@@ -27,5 +27,14 @@ namespace Facturanet.UI
 
             base.InsertItem(index, item);
         }
+
+        protected override void OnListChanged(ListChangedEventArgs e)
+        {
+            Console.WriteLine("*");
+            Console.WriteLine(e.ListChangedType);
+            Console.WriteLine(e.PropertyDescriptor == null ? "no prop" : e.PropertyDescriptor.Name); 
+            Console.WriteLine("*");
+            base.OnListChanged(e);
+        }
     }
 }
