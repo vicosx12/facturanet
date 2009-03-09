@@ -43,8 +43,7 @@ namespace Facturanet.NHUtil
         public static IEnumerable<T> ToDTOEnumerable<T>(this IQuery query, string[] positionalAliases)
             where T : new()
         {
-            return
-                query
+            return query
                 .SetResultTransformer(new PositionalToBeanResultTransformer(typeof(T),positionalAliases))
                 .SetReadOnly(true)
                 .Enumerable<T>();

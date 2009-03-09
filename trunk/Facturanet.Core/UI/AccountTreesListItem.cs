@@ -42,23 +42,6 @@ namespace Facturanet.UI
             set { editableData.SetData("Name", value); }
         }
 
-        #region PositionalToBeanResultTransformerGeneric Support
-
-        /*
-        public Entities.Base.AccountTreeBase CopyFromAccountTree
-        {
-            set
-            {
-                Active = value.Active;
-                Code = value.Code;
-                Description = value.Description;
-                Id = value.Id;
-                Name = value.Name;
-            } 
-        }
-         * */
-
-        #endregion
 
         #region IEditableUIObject Implementation
 
