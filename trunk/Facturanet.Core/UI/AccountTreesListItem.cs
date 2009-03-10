@@ -42,8 +42,16 @@ namespace Facturanet.UI
             set { editableData.SetData("Name", value); }
         }
 
+        public AccountTreesListItem()
+        {
+            IsNew = true;
+        }
 
         #region IEditableUIObject Implementation
+
+        public bool IsDeleted { set; get; }
+
+        public bool IsNew { set; get; }
 
         private IEditableUIObjectSupporter editableData = new EditableUIObjectSupporter();
 

@@ -28,7 +28,16 @@ select
     accountTree.Name 
 from 
     AccountTree accountTree")
-                .ToDTOEnumerable<UI.AccountTreesListItem>("Active, Code, Description, Id, Name")
+                //.ToDTOEnumerable<UI.AccountTreesListItem>("Active, Code, Description, Id, Name")
+                .ToDTOEnumerable<UI.AccountTreesListItem>(tuple => 
+                    new UI.AccountTreesListItem() 
+                    {
+                        Active = (bool)tuple[0],
+                        Code = (string)tuple[1],
+                        Description = (string)tuple[2],
+                        Id = (Guid)tuple[3],
+                        Name = (string)tuple[4]
+                    })
                 .ToList();
             return response;
         }

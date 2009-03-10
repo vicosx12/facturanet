@@ -4,8 +4,6 @@ using System.Linq;
 using System.Text;
 using NHibernate;
 using NHibernate.Transform;
-using uNhAddIns.Transform;
-
 
 namespace Facturanet.NHUtil
 {
@@ -40,21 +38,63 @@ namespace Facturanet.NHUtil
         }
         */
 
-        public static IEnumerable<T> ToDTOEnumerable<T>(this IQuery query, string[] positionalAliases)
+        public static IEnumerable<T> ToDTOEnumerable<T>(this IQuery query, string[] positionalAliases, params object[] constants)
             where T : new()
         {
+            if (IsIEditableUIObject<T>())
+            {
+                var positionalAliasestmp = new List<string>(positionalAliases);
+                var constantstmp = new List<object>(constants);
+
+                if (!positionalAliasestmp.Contains("IsNew"))
+                {
+                    positionalAliasestmp.Add("IsNew");
+                    constantstmp.Add(false);
+                }
+
+                positionalAliases = positionalAliasestmp.ToArray();
+                constants = constantstmp.ToArray();
+            }
+
             return query
-                .SetResultTransformer(new PositionalToBeanResultTransformer(typeof(T),positionalAliases))
+                .SetResultTransformer(new PositionalToBeanResultTransformer(typeof(T), positionalAliases, constants))
                 .SetReadOnly(true)
                 .Enumerable<T>();
         }
 
-        public static IEnumerable<T> ToDTOEnumerable<T>(this IQuery query, string positionalAliases)
+        public static IEnumerable<T> ToDTOEnumerable<T>(this IQuery query, string positionalAliases, params object[] constants)
             where T : new()
         {
             return query.ToDTOEnumerable<T>(
                 (from item in positionalAliases.Split(',') select item.Trim())
-                .ToArray());
+                .ToArray(), constants);
+        }
+
+        private static bool IsIEditableUIObject<T>()
+        {
+            return (typeof(T).GetInterfaces().Contains(typeof(UI.IEditableUIObject)));
+        }
+
+        public static IEnumerable<T> ToDTOEnumerable<T>(this IQuery query, Func<object[], T> transformation)
+        {
+            Func<object[], T> realtransformation;
+
+            if (IsIEditableUIObject<T>())
+            {
+                realtransformation = tuple =>
+                {
+                    UI.IEditableUIObject o = (UI.IEditableUIObject)transformation(tuple);
+                    o.IsNew = false;
+                    return (T)o;
+                };
+            }
+            else
+                realtransformation = transformation;
+
+            return query
+                .SetResultTransformer(new GenericResultTransformer<T>(realtransformation))
+                .SetReadOnly(true)
+                .Enumerable<T>();
         }
     }
 }

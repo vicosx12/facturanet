@@ -27,6 +27,8 @@ namespace Facturanet.UI
         INotifyPropertyChanging,
         IEditableObject
     {
+        bool IsDeleted { set; get; }
+        bool IsNew { set; get; }
     }
 
     /// <summary>
