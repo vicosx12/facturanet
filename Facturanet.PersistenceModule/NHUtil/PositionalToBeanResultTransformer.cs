@@ -4,9 +4,8 @@ using NHibernate;
 using NHibernate.Properties;
 using NHibernate.Transform;
 using System.Reflection;
-//using uNhAddIns.Extensions;
 
-namespace uNhAddIns.Transform
+namespace Facturanet.NHUtil
 {
     /// <summary>
     /// Result transformer that allows to transform a result to 
@@ -31,6 +30,7 @@ namespace uNhAddIns.Transform
     {
         private readonly Type resultClass;
         private readonly string[] positionalAliases;
+        private readonly object[] constants;
         private ISetter[] setters;
         private readonly IPropertyAccessor propertyAccessor;
 
@@ -60,6 +60,12 @@ namespace uNhAddIns.Transform
             AssignSetters();
         }
 
+        public PositionalToBeanResultTransformer(Type resultClass, string[] positionalAliases, params object[] constants)
+            : this(resultClass, positionalAliases)
+        {
+            this.constants = constants;
+        }
+
         private void AssignSetters()
         {
             setters = new ISetter[positionalAliases.Length];
@@ -82,23 +88,28 @@ namespace uNhAddIns.Transform
 
         public object TransformTuple(object[] tuple, string[] aliases)
         {
+            if (tuple.Length + (constants == null ? 0 : constants.Length) != setters.Length)
+                throw new IndexOutOfRangeException("The setters lenght differs from the sum of tuple lenght and constants lenght");
             var result = Activator.CreateInstance(resultClass);
-            //resultClass.cre
-            //var result = ReflectionExtensions.Instantiate<object>(resultClass);
-            try
+
+            for (int i = 0; i < tuple.Length; i++)
             {
-                for (int i = 0; i < setters.Length; i++)
+                if (setters[i] != null)
                 {
-                    if (setters[i] != null)
-                    {
-                        setters[i].Set(result, tuple[i]);
-                    }
+                    setters[i].Set(result, tuple[i]);
                 }
             }
-            catch (IndexOutOfRangeException)
-            {
-                throw new HibernateException("Tuple have less scalars then trasformer class: " + resultClass.FullName);
-            }
+
+            if (constants != null)
+                for (int i = 0; i < constants.Length; i++)
+                {
+                    int i_ = i + tuple.Length;
+                    if (setters[i_] != null)
+                    {
+                        setters[i_].Set(result, constants[i]);
+                    }
+                }
+
 
             return result;
         }

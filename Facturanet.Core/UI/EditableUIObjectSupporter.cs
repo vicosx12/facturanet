@@ -203,6 +203,8 @@ namespace Facturanet.UI
         {
             if (!DiscartableChangesControl)
                 throw new ApplicationException("Discartable Changes Control is not active.");
+            else if (backupDiscardChanges == null)
+                return ValueChangedDescriptorCollection.Empty;
             else
                 return GetDifferences(backupDiscardChanges);
         }

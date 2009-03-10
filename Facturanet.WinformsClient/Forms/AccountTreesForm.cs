@@ -88,5 +88,13 @@ namespace Facturanet.WinformsClient.Forms
             //((IDiscartableChanges)list[1]).DiscardChanges();
             Console.WriteLine(list[1].GetChanges());
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Console.WriteLine("aca va el código variable");
+            list.OrderBy
+(l => l.Code);
+            Console.WriteLine("aca va terminó el código variable");
+        }
     }
 }

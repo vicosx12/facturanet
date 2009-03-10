@@ -78,6 +78,7 @@
     <Compile Include="Business\ListCustomersProcessor.cs" />
     <Compile Include="Business\ListProductsProcessor.cs" />
     <Compile Include="Infrastructure\SystemInfoProcessor.cs" />
+    <Compile Include="NHUtil\GenericResultTransformer.cs" />
     <Compile Include="NHUtil\IQueryExtensions.cs" />
     <Compile Include="NHUtil\PositionalToBeanResultTransformer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

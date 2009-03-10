@@ -65,6 +65,7 @@
     <Compile Include="Business\ListCustomersResponse.cs" />
     <Compile Include="Business\ListProductsRequest.cs" />
     <Compile Include="Business\ListProductsResponse.cs" />
+    <Compile Include="UI\PropertyComparer.cs" />
     <Compile Include="UI\ValueChangedDescriptor.cs" />
     <Compile Include="UI\EditableUIObjectSupporter.cs" />
     <Compile Include="UI\FacturanetBindingList.cs" />

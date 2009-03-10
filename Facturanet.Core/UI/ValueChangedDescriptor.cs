@@ -61,6 +61,11 @@ namespace Facturanet.UI
     /// </summary>
     public class ValueChangedDescriptorCollection : KeyedCollection<string, ValueChangedDescriptor>
     {
+        static public ValueChangedDescriptorCollection Empty
+        {
+            get { return new ValueChangedDescriptorCollection(); }
+        }
+
         protected override string GetKeyForItem(ValueChangedDescriptor item)
         {
             return item.PropertyName;
