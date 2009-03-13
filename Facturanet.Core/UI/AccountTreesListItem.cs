@@ -18,32 +18,32 @@ namespace Facturanet.UI
     {
         public override bool Active
         {
-            get { return editableData.GetData<bool>("Active"); }
-            set { editableData.SetData("Active", value); }
+            get { return EditableData.GetData<bool>("Active"); }
+            set { EditableData.SetData("Active", value); }
         }
 
         public override string Description
         {
-            get { return editableData.GetData<string>("Description"); }
-            set { editableData.SetData("Description", value); }
+            get { return EditableData.GetData<string>("Description"); }
+            set { EditableData.SetData("Description", value); }
         }
 
         public override string Code
         {
-            get { return editableData.GetData<string>("Code"); }
-            set { editableData.SetData("Code", value); }
+            get { return EditableData.GetData<string>("Code"); }
+            set { EditableData.SetData("Code", value); }
         }
 
         public override Guid Id
         {
-            get { return editableData.GetData<Guid>("Id"); }
-            set { editableData.SetData("Id", value); }
+            get { return EditableData.GetData<Guid>("Id"); }
+            set { EditableData.SetData("Id", value); }
         }
 
         public override string Name
         {
-            get { return editableData.GetData<string>("Name"); }
-            set { editableData.SetData("Name", value); }
+            get { return EditableData.GetData<string>("Name"); }
+            set { EditableData.SetData("Name", value); }
         }
 
         public AccountTreesListItem()
@@ -59,60 +59,69 @@ namespace Facturanet.UI
 
         public bool IsNew { set; get; }
 
-        private IEditableUIObjectSupporter editableData = new EditableUIObjectSupporter();
+        private IEditableUIObjectSupporter _editableData;
+        private IEditableUIObjectSupporter EditableData
+        {
+            get
+            {
+                if (_editableData == null)
+                    _editableData = new EditableUIObjectSupporter(this);
+                return _editableData;
+            }
+        }
 
         public event PropertyChangingEventHandler PropertyChanging
         {
-            add { editableData.PropertyChanging += value; }
-            remove { editableData.PropertyChanging -= value; }
+            add { EditableData.PropertyChanging += value; }
+            remove { EditableData.PropertyChanging -= value; }
         }
 
         public event PropertyChangedEventHandler PropertyChanged
         {
-            add { editableData.PropertyChanged += value; }
-            remove { editableData.PropertyChanged -= value; }
+            add { EditableData.PropertyChanged += value; }
+            remove { EditableData.PropertyChanged -= value; }
         }
 
         [IgnoreDataMember]
         public bool DiscartableChangesControl
         {
-            get { return editableData.DiscartableChangesControl; }
-            set { editableData.DiscartableChangesControl = value; }
+            get { return EditableData.DiscartableChangesControl; }
+            set { EditableData.DiscartableChangesControl = value; }
         }
 
         public bool IsDirty
         {
-            get { return editableData.IsDirty; }
+            get { return EditableData.IsDirty; }
         }
 
         public void DiscardChanges()
         {
-            editableData.DiscardChanges();
+            EditableData.DiscardChanges();
         }
 
         public void AcceptChanges()
         {
-            editableData.AcceptChanges();
+            EditableData.AcceptChanges();
         }
 
         public ValueChangedDescriptorCollection GetChanges()
         {
-            return editableData.GetChanges();
+            return EditableData.GetChanges();
         }
 
         void IEditableObject.BeginEdit()
         {
-            editableData.BeginEdit();
+            EditableData.BeginEdit();
         }
 
         void IEditableObject.CancelEdit()
         {
-            editableData.CancelEdit();
+            EditableData.CancelEdit();
         }
 
         void IEditableObject.EndEdit()
         {
-            editableData.EndEdit();
+            EditableData.EndEdit();
         }
 
         #endregion
