@@ -10,7 +10,11 @@ using System.ComponentModel;
 
 namespace Facturanet.UI
 {
-    public class AccountTreesListItem : Entities.Base.AccountTreeBase, IEditableUIObject
+    public class AccountTreesListItem : 
+        Entities.Base.AccountTreeBase, 
+        IEditableUIObject,
+        ICreableUIObject,
+        IDeletableUIObject
     {
         public override bool Active
         {
@@ -45,6 +49,8 @@ namespace Facturanet.UI
         public AccountTreesListItem()
         {
             IsNew = true;
+            Active = true;
+            IsDeleted = false;
         }
 
         #region IEditableUIObject Implementation
