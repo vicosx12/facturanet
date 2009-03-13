@@ -9,18 +9,47 @@ namespace Facturanet.UI
 {
     public class FacturanetBindingList<T> : BindingList<T>
     {
-        //Aca podría llevar un registro de los items que se eliminaron
-        //por ahí puedo usar un delegado que me obtenga los indices de los que se van eliminando
         private List<T> deletedItems;
-        private List<T> insertedItems;
-        private List<T> updatedItems;
         private bool typeIsDiscartableChanges;
         private bool typeIsCreable;
         private bool typeIsDeletable;
 
+        /// <summary>
+        /// Returns the deleted items in the FacturanetBindingList
+        /// </summary>
         public IEnumerable<T> GetDeletedItems()
         {
             return deletedItems.AsEnumerable();
+        }
+
+        /// <summary>
+        /// Returns the updated items in the FacturanetBindingList
+        /// </summary>
+        public IEnumerable<T> GetUpdatedItems()
+        {
+            if (typeIsDiscartableChanges)
+                foreach (T item in this)
+                {
+                    if ((item as UI.IDiscartableChanges).IsDirty && (!typeIsCreable || !(item as UI.ICreableUIObject).IsNew))
+                        yield return item;
+                }
+            else
+                throw new NotSupportedException("T don't implement UI.IDiscartableChanges.");
+        }
+
+        /// <summary>
+        /// Returns the inserted items in the FacturanetBindingList
+        /// </summary>
+        public IEnumerable<T> GetInsertedItems()
+        {
+            if (typeIsCreable)
+                foreach (T item in this)
+                {
+                    if ((item as UI.ICreableUIObject).IsNew)
+                        yield return item;
+                }
+            else
+                throw new NotSupportedException("T don't implement UI.ICreableUIObject.");
         }
 
         public FacturanetBindingList(IList<T> list)
@@ -42,25 +71,13 @@ namespace Facturanet.UI
                     Add(item);
 
             deletedItems = new List<T>();
-            insertedItems = new List<T>();
-            updatedItems = new List<T>();
         }
 
         protected override void InsertItem(int index, T item)
         {
             if (typeIsDiscartableChanges)
                 (item as UI.IDiscartableChanges).DiscartableChangesControl = true;
-
-            if (insertedItems != null && (!typeIsCreable || (item as UI.ICreableUIObject).IsNew))
-                insertedItems.Add(item);
-
             base.InsertItem(index, item);
-        }
-
-        protected override void OnListChanged(ListChangedEventArgs e)
-        {
-            base.OnListChanged(e);
-            Console.WriteLine("******" + e.ListChangedType);
         }
 
         protected override void RemoveItem(int index)

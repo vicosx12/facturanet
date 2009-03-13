@@ -99,6 +99,9 @@ namespace Facturanet.WinformsClient.Forms
 
         private void button4_Click(object sender, EventArgs e)
         {
+            Console.WriteLine(list.GetDeletedItems().Count());
+            Console.WriteLine(list.GetUpdatedItems().Count());
+            Console.WriteLine(list.GetInsertedItems().Count());
         }
 
         private void button5_Click(object sender, EventArgs e)
