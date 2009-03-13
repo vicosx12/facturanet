@@ -105,6 +105,7 @@
     <Compile Include="Test\GenerateTestDataRequest.cs" />
     <Compile Include="Test\GenerateTestDataResponse.cs" />
     <Compile Include="Util\IdentifierHelper.cs" />
+    <Compile Include="Util\ObjectExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Application\" />

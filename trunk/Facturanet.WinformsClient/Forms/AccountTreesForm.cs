@@ -36,6 +36,8 @@ namespace Facturanet.WinformsClient.Forms
             list.ListChanged += new ListChangedEventHandler(list_ListChanged);
             //ACA ME QUEDE
             listBindingSource.DataSource = list;
+            //listDataGridView.DataSource = list;
+            //listBindingNavigator.BindingSource = list;
         }
 
         void col_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -84,9 +86,7 @@ namespace Facturanet.WinformsClient.Forms
 
         private void button2_Click(object sender, EventArgs e)
         {
-            list[0].Active = !list[0].Active;
-            //((IDiscartableChanges)list[1]).DiscardChanges();
-            Console.WriteLine(list[1].GetChanges());
+            //obtengo los modificados, los creados y los eliminados
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -95,6 +95,34 @@ namespace Facturanet.WinformsClient.Forms
             list.OrderBy
 (l => l.Code);
             Console.WriteLine("aca va terminó el código variable");
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            this.listBindingSource.RemoveCurrent();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            Console.WriteLine(listBindingSource.AllowRemove);
+            Console.WriteLine(listBindingSource.Count);
+            Console.WriteLine(listBindingSource.Current);
+        }
+
+        private void bindingNavigatorDeleteItem_Click(object sender, EventArgs e)
+        {
+            Console.WriteLine("clieckkkkkkkkkkkk");
+        }
+
+        private void bindingNavigatorDeleteItem_EnabledChanged(object sender, EventArgs e)
+        {
+            Console.WriteLine("enableddddddddd");
+            var tsi = (ToolStripItem) sender;
+            tsi.Enabled = tsi.Enabled && listBindingSource.Current != null;
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.ComponentModel;
+using Facturanet.Util;
 
 namespace Facturanet.UI
 {
@@ -10,6 +11,7 @@ namespace Facturanet.UI
     {
         //Aca podría llevar un registro de los items que se eliminaron
         //por ahí puedo usar un delegado que me obtenga los indices de los que se van eliminando
+        private List<T> eliminados = new List<T>();
 
         public FacturanetBindingList(IList<T> list)
             : base()
@@ -21,11 +23,28 @@ namespace Facturanet.UI
 
         protected override void InsertItem(int index, T item)
         {
-            var aux = item as UI.IDiscartableChanges;
-            if (aux != null)
-                aux.DiscartableChangesControl = true;
+            item.DoIfItIs<UI.IDiscartableChanges>(discartablechanges =>
+                discartablechanges.DiscartableChangesControl = true);
 
             base.InsertItem(index, item);
+        }
+
+        protected override void RemoveItem(int index)
+        {
+            if (index >= 0 && index < this.Count)
+            {
+                //TODO: hacer que se permita agrega o quitar dependiendo de la interface
+                var item = this[index];
+                item.DoIfItIs<UI.IDeletableUIObject>(deletable =>
+                {
+                    deletable.IsDeleted = true;
+                    var creable = deletable as UI.ICreableUIObject;
+                    if (creable == null || !creable.IsNew)
+                        eliminados.Add(item);
+                });
+
+                base.RemoveItem(index);
+            }
         }
 
         #region Sorting //From http://code.google.com/p/banshee32/trunk/banshee32/Control/SearchableSortableBindingList.cs

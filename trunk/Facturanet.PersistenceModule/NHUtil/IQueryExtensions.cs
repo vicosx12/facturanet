@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using NHibernate;
 using NHibernate.Transform;
+using Facturanet.Util;
 
 namespace Facturanet.NHUtil
 {
@@ -41,7 +42,7 @@ namespace Facturanet.NHUtil
         public static IEnumerable<T> ToDTOEnumerable<T>(this IQuery query, string[] positionalAliases, params object[] constants)
             where T : new()
         {
-            if (IsIEditableUIObject<T>())
+            if (typeof(T).ImplementsInterface<UI.ICreableUIObject>())
             {
                 var positionalAliasestmp = new List<string>(positionalAliases);
                 var constantstmp = new List<object>(constants);
@@ -70,22 +71,17 @@ namespace Facturanet.NHUtil
                 .ToArray(), constants);
         }
 
-        private static bool IsIEditableUIObject<T>()
-        {
-            return (typeof(T).GetInterfaces().Contains(typeof(UI.IEditableUIObject)));
-        }
-
         public static IEnumerable<T> ToDTOEnumerable<T>(this IQuery query, Func<object[], T> transformation)
         {
             Func<object[], T> realtransformation;
 
-            if (IsIEditableUIObject<T>())
+            if (typeof(T).ImplementsInterface<UI.ICreableUIObject>())
             {
                 realtransformation = tuple =>
                 {
-                    UI.IEditableUIObject o = (UI.IEditableUIObject)transformation(tuple);
-                    o.IsNew = false;
-                    return (T)o;
+                    UI.ICreableUIObject creable = (UI.ICreableUIObject)transformation(tuple);
+                    creable.IsNew = false;
+                    return (T)creable;
                 };
             }
             else
