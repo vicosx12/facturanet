@@ -11,37 +11,72 @@ namespace Facturanet.UI
     {
         //Aca podría llevar un registro de los items que se eliminaron
         //por ahí puedo usar un delegado que me obtenga los indices de los que se van eliminando
-        private List<T> eliminados = new List<T>();
+        private List<T> deletedItems;
+        private List<T> insertedItems;
+        private List<T> updatedItems;
+        private bool typeIsDiscartableChanges;
+        private bool typeIsCreable;
+        private bool typeIsDeletable;
+
+        public IEnumerable<T> GetDeletedItems()
+        {
+            return deletedItems.AsEnumerable();
+        }
 
         public FacturanetBindingList(IList<T> list)
             : base()
         {
+            Type type = typeof(T);
+            typeIsDiscartableChanges = type.ImplementsInterface<UI.IDiscartableChanges>();
+            typeIsCreable = type.ImplementsInterface<UI.ICreableUIObject>();
+            typeIsDeletable = type.ImplementsInterface<UI.IDeletableUIObject>();
+            if (typeIsDiscartableChanges)
+            {
+                AllowEdit = true;
+                AllowNew = typeIsCreable;
+                AllowRemove = typeIsDeletable;
+            }
+
             if (list != null)
                 foreach (var item in list)
                     Add(item);
+
+            deletedItems = new List<T>();
+            insertedItems = new List<T>();
+            updatedItems = new List<T>();
         }
 
         protected override void InsertItem(int index, T item)
         {
-            item.DoIfItIs<UI.IDiscartableChanges>(discartablechanges =>
-                discartablechanges.DiscartableChangesControl = true);
+            if (typeIsDiscartableChanges)
+                (item as UI.IDiscartableChanges).DiscartableChangesControl = true;
+
+            if (insertedItems != null && (!typeIsCreable || (item as UI.ICreableUIObject).IsNew))
+                insertedItems.Add(item);
 
             base.InsertItem(index, item);
+        }
+
+        protected override void OnListChanged(ListChangedEventArgs e)
+        {
+            base.OnListChanged(e);
+            Console.WriteLine("******" + e.ListChangedType);
         }
 
         protected override void RemoveItem(int index)
         {
             if (index >= 0 && index < this.Count)
             {
-                //TODO: hacer que se permita agrega o quitar dependiendo de la interface
                 var item = this[index];
-                item.DoIfItIs<UI.IDeletableUIObject>(deletable =>
+
+                if (typeIsDeletable)
                 {
+                    UI.IDeletableUIObject deletable = item as UI.IDeletableUIObject;
                     deletable.IsDeleted = true;
-                    var creable = deletable as UI.ICreableUIObject;
-                    if (creable == null || !creable.IsNew)
-                        eliminados.Add(item);
-                });
+                }
+
+                if (!typeIsCreable || !(item as UI.ICreableUIObject).IsNew)
+                    deletedItems.Add(item);
 
                 base.RemoveItem(index);
             }

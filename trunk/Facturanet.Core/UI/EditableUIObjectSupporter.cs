@@ -11,6 +11,12 @@ namespace Facturanet.UI
     internal class EditableUIObjectSupporter : IEditableUIObjectSupporter
     {
         private Hashtable data = new Hashtable();
+        private object supportedObject;
+
+        public EditableUIObjectSupporter(object supportedObject)
+        {
+            this.supportedObject = supportedObject;
+        }
 
         /// <summary>
         /// Gets the value of a property. If the property is not defined returns the default value of the type.
@@ -108,7 +114,7 @@ namespace Facturanet.UI
         protected virtual void OnPropertyChanging(PropertyChangingEventArgs e)
         {
             if (PropertyChanging != null)
-                PropertyChanging(this, e);
+                PropertyChanging(supportedObject, e);
         }
 
         #endregion
@@ -127,7 +133,7 @@ namespace Facturanet.UI
         protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
         {
             if (PropertyChanged != null)
-                PropertyChanged(this, e);
+                PropertyChanged(supportedObject, e);
         }
 
         #endregion
