@@ -21,22 +21,24 @@ namespace Facturanet.Business
             response.Items = context.Session
                 .CreateQuery(@"
 select 
+    accountTree.Id, 
+    accountTree.Version, 
     accountTree.Active, 
     accountTree.Code, 
-    accountTree.Description, 
-    accountTree.Id, 
-    accountTree.Name 
+    accountTree.Name,
+    accountTree.Description
 from 
     AccountTree accountTree")
                 //.ToDTOEnumerable<UI.AccountTreesListItem>("Active, Code, Description, Id, Name")
                 .ToDTOEnumerable<UI.AccountTreesListItem>(tuple => 
                     new UI.AccountTreesListItem() 
                     {
-                        Active = (bool)tuple[0],
-                        Code = (string)tuple[1],
-                        Description = (string)tuple[2],
-                        Id = (Guid)tuple[3],
-                        Name = (string)tuple[4]
+                        Id = (Guid)tuple[0],
+                        Version = (int)tuple[1],
+                        Active = (bool)tuple[2],
+                        Code = (string)tuple[3],
+                        Name = (string)tuple[4],
+                        Description = (string)tuple[5]
                     })
                 .ToList();
             return response;

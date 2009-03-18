@@ -5,7 +5,7 @@ using System.Text;
 using System.Data;
 using System.Globalization;
 
-namespace HotelMigrator
+namespace Facturanet.DbMigration
 {
     public abstract class FacturanetMigration : Migration
     {
@@ -94,6 +94,11 @@ namespace HotelMigrator
         public Column CColPercent(string name, decimal defaultvalue)
         {
             return new Column(name, DbType.Decimal, ColumnProperty.NotNull, defaultvalue.ToString("G", CultureInfo.InvariantCulture));
+        }
+
+        public Column CColVersion()
+        {
+            return new Column("Version", DbType.Int32, ColumnProperty.NotNull, 0);
         }
 
         public void AddColumn(Column column)

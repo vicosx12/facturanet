@@ -2,7 +2,6 @@
 using Migrator.Framework;
 using System.Data;
 using Facturanet.Util;
-using HotelMigrator;
 
 namespace Facturanet.DbMigration.Migrations
 {

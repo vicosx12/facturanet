@@ -11,6 +11,20 @@ namespace Facturanet.Entities.Base
         public virtual bool Active { get; set; }
         public virtual string Name { get; set; }
         public virtual string Description { get; set; }
+
+        public override Validation.ValidationResult GetValidationResult(Validation.Level exceptionOverLevel)
+        {
+            var result = base.GetValidationResult(exceptionOverLevel);
+
+            if (Code == null || Code == string.Empty)
+                result.Add(exceptionOverLevel, "Code", Validation.Level.Error, "NULLEMPTY", "This field cant't be null or empty");
+            if (Name == null || Name == string.Empty)
+                result.Add(exceptionOverLevel, "Name", Validation.Level.Error, "NULLEMPTY", "This field cant't be null or empty");
+            if (Description == null || Description == string.Empty)
+                result.Add(exceptionOverLevel, "Description", Validation.Level.Error, "NULLEMPTY", "This field cant't be null or empty");
+            
+            return result;
+        }
     }
 }
 

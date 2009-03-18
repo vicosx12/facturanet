@@ -9,9 +9,8 @@ namespace Facturanet.Server
 {
     [DataContract]
     [KnownType("GetKnownTypes")]
-    public abstract class Request
+    public abstract class Request : Validation.IValidable
     {
-
         static private Type[] knownTypesCache = null;
         static Type[] GetKnownTypes()
         {
@@ -30,6 +29,14 @@ namespace Facturanet.Server
             IProcessor processor = FacturanetProcessorFactory.Instance.CreateProcessor(this.GetType());
             return processor.Run(this, context);
         }
+
+        #region Implement IValidable
+        public virtual Validation.ValidationResult GetValidationResult(Validation.Level exceptionOverLevel)
+        {
+            return Validation.ValidationResult.Create(this);
+        }
+        #endregion
+
 #if DEBUG
         public Response RunMock()
         {
