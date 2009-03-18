@@ -27,11 +27,8 @@ namespace Facturanet.UI
         INotifyPropertyChanging,
         IEditableObject
     {
-    }
-
-    public interface ICreableUIObject : IUIObject
-    {
-        bool IsNew { set; get; }
+        bool IsNew { get; }
+        int Version { get; }
     }
 
     public interface IDeletableUIObject : IUIObject

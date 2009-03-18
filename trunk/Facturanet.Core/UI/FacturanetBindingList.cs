@@ -10,8 +10,8 @@ namespace Facturanet.UI
     public class FacturanetBindingList<T> : BindingList<T>
     {
         private List<T> deletedItems;
-        private bool typeIsDiscartableChanges;
-        private bool typeIsCreable;
+        private bool typeIsUIObject;
+        private bool typeIsEditable;
         private bool typeIsDeletable;
 
         /// <summary>
@@ -27,11 +27,11 @@ namespace Facturanet.UI
         /// </summary>
         public IEnumerable<T> GetUpdatedItems()
         {
-            if (typeIsDiscartableChanges)
-                foreach (T item in this)
+            if (typeIsEditable)
+                foreach (UI.IEditableUIObject item in this)
                 {
-                    if ((item as UI.IDiscartableChanges).IsDirty && (!typeIsCreable || !(item as UI.ICreableUIObject).IsNew))
-                        yield return item;
+                    if (!item.IsNew && item.IsDirty)
+                        yield return (T)item;
                 }
             else
                 throw new NotSupportedException("T don't implement UI.IDiscartableChanges.");
@@ -42,11 +42,11 @@ namespace Facturanet.UI
         /// </summary>
         public IEnumerable<T> GetInsertedItems()
         {
-            if (typeIsCreable)
-                foreach (T item in this)
+            if (typeIsEditable)
+                foreach (UI.IEditableUIObject item in this)
                 {
-                    if ((item as UI.ICreableUIObject).IsNew)
-                        yield return item;
+                    if (item.IsNew)
+                        yield return (T)item;
                 }
             else
                 throw new NotSupportedException("T don't implement UI.ICreableUIObject.");
@@ -56,14 +56,14 @@ namespace Facturanet.UI
             : base()
         {
             Type type = typeof(T);
-            typeIsDiscartableChanges = type.ImplementsInterface<UI.IDiscartableChanges>();
-            typeIsCreable = type.ImplementsInterface<UI.ICreableUIObject>();
+            typeIsUIObject = type.ImplementsInterface<UI.IUIObject>();
+            typeIsEditable = type.ImplementsInterface<UI.IEditableUIObject>();
             typeIsDeletable = type.ImplementsInterface<UI.IDeletableUIObject>();
-            if (typeIsDiscartableChanges)
+            if (typeIsUIObject)
             {
-                AllowEdit = true;
-                AllowNew = typeIsCreable;
+                AllowEdit = typeIsEditable;
                 AllowRemove = typeIsDeletable;
+                AllowNew = AllowRemove;
             }
 
             if (list != null)
@@ -75,7 +75,7 @@ namespace Facturanet.UI
 
         protected override void InsertItem(int index, T item)
         {
-            if (typeIsDiscartableChanges)
+            if (typeIsEditable)
                 (item as UI.IDiscartableChanges).DiscartableChangesControl = true;
             base.InsertItem(index, item);
         }
@@ -92,7 +92,7 @@ namespace Facturanet.UI
                     deletable.IsDeleted = true;
                 }
 
-                if (!typeIsCreable || !(item as UI.ICreableUIObject).IsNew)
+                if (!typeIsEditable || !(item as IEditableUIObject).IsNew)
                     deletedItems.Add(item);
 
                 base.RemoveItem(index);

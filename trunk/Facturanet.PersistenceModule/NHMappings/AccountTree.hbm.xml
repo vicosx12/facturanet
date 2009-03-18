@@ -2,8 +2,9 @@
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Facturanet.Core" namespace="Facturanet.Entities">
   <class name="AccountTree">
     <id name="Id" type="Guid">
-      <generator class="guid.comb"/>
+      <generator class="assigned"/>
     </id>
+    <version name="Version" unsaved-value="0"/>
     <property name="Code" />
     <property name="Active" />
     <property name="Name" />

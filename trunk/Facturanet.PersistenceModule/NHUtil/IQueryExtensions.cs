@@ -42,21 +42,6 @@ namespace Facturanet.NHUtil
         public static IEnumerable<T> ToDTOEnumerable<T>(this IQuery query, string[] positionalAliases, params object[] constants)
             where T : new()
         {
-            if (typeof(T).ImplementsInterface<UI.ICreableUIObject>())
-            {
-                var positionalAliasestmp = new List<string>(positionalAliases);
-                var constantstmp = new List<object>(constants);
-
-                if (!positionalAliasestmp.Contains("IsNew"))
-                {
-                    positionalAliasestmp.Add("IsNew");
-                    constantstmp.Add(false);
-                }
-
-                positionalAliases = positionalAliasestmp.ToArray();
-                constants = constantstmp.ToArray();
-            }
-
             return query
                 .SetResultTransformer(new PositionalToBeanResultTransformer(typeof(T), positionalAliases, constants))
                 .SetReadOnly(true)
@@ -73,22 +58,8 @@ namespace Facturanet.NHUtil
 
         public static IEnumerable<T> ToDTOEnumerable<T>(this IQuery query, Func<object[], T> transformation)
         {
-            Func<object[], T> realtransformation;
-
-            if (typeof(T).ImplementsInterface<UI.ICreableUIObject>())
-            {
-                realtransformation = tuple =>
-                {
-                    UI.ICreableUIObject creable = (UI.ICreableUIObject)transformation(tuple);
-                    creable.IsNew = false;
-                    return (T)creable;
-                };
-            }
-            else
-                realtransformation = transformation;
-
             return query
-                .SetResultTransformer(new GenericResultTransformer<T>(realtransformation))
+                .SetResultTransformer(new GenericResultTransformer<T>(transformation))
                 .SetReadOnly(true)
                 .Enumerable<T>();
         }

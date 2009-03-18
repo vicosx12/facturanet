@@ -9,14 +9,12 @@ using System.Windows.Forms;
 using Facturanet.Entities;
 using Facturanet.Business;
 using Facturanet.UI;
+using Facturanet.Validation;
 
 namespace Facturanet.WinformsClient.Forms
 {
     public partial class AccountTreesForm : Form
     {
-        //private IList<Lines.ILineAccountTree> list;
-        /***/
-        //private FacturanetBindingList<Lines.ILineAccountTree, Entities.AccountTree> list;
         private FacturanetBindingList<AccountTreesListItem> list;
         
         public AccountTreesForm()
@@ -86,15 +84,44 @@ namespace Facturanet.WinformsClient.Forms
 
         private void button2_Click(object sender, EventArgs e)
         {
-            //obtengo los modificados, los creados y los eliminados
+            var request = new Business.UpdateAccountTreeListRequest(
+                list.GetInsertedItems(),
+                list.GetUpdatedItems(),
+                list.GetDeletedItems());
+
+            if (request.IsValid())
+                request.Run();
+            else
+            {
+                Validation.ValidationResultBase results = request.GetValidationResult();
+
+                if (results.Level == Validation.Level.Empty)
+                    Console.WriteLine("Sin errores");
+                else
+                    Console.WriteLine("Maximo error: {0}", results.Level);
+
+                Console.WriteLine("Cantidad de propiedades con errores: {0}", results.Length);
+
+                MessageBox.Show(results.GetResultText());
+            }
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            Console.WriteLine("aca va el código variable");
-            list.OrderBy
-(l => l.Code);
-            Console.WriteLine("aca va terminó el código variable");
+            Console.WriteLine();
+            Console.WriteLine(list[0].IsValid() ? "IS VALID" : "IS NOT VALID");
+
+            Validation.ValidationResultBase results = list[0].GetValidationResult();
+
+            if (results.Level == Validation.Level.Empty)
+                Console.WriteLine("Sin errores");
+            else
+                Console.WriteLine("Maximo error: {0}", results.Level);
+
+            Console.WriteLine("Cantidad de propiedades con errores: {0}", results.Length);
+            
+            foreach (var item in results)
+                Console.WriteLine(item);
         }
 
         private void button4_Click(object sender, EventArgs e)

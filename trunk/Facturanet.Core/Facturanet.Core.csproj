@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business\UpdateAccountTreeListRequest.cs" />
     <Compile Include="Business\CreateAccountTreeRequest.cs" />
     <Compile Include="Business\ListAccountTreesRequest.cs" />
     <Compile Include="Business\ListAccountTreesResponse.cs" />
@@ -65,6 +66,11 @@
     <Compile Include="Business\ListCustomersResponse.cs" />
     <Compile Include="Business\ListProductsRequest.cs" />
     <Compile Include="Business\ListProductsResponse.cs" />
+    <Compile Include="Validation\PropertyValidationResult.cs" />
+    <Compile Include="Validation\ValidationResultItem.cs" />
+    <Compile Include="Validation\ValidationResult.cs" />
+    <Compile Include="Validation\ValidationException.cs" />
+    <Compile Include="Validation\IValidable.cs" />
     <Compile Include="UI\PropertyComparer.cs" />
     <Compile Include="UI\ValueChangedDescriptor.cs" />
     <Compile Include="UI\EditableUIObjectSupporter.cs" />
@@ -106,6 +112,8 @@
     <Compile Include="Test\GenerateTestDataResponse.cs" />
     <Compile Include="Util\IdentifierHelper.cs" />
     <Compile Include="Util\ObjectExtensions.cs" />
+    <Compile Include="Validation\ValidationResultBase.cs" />
+    <Compile Include="Validation\Level.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Application\" />
