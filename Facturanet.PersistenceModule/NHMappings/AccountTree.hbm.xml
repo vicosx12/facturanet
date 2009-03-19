@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="Facturanet.Core" namespace="Facturanet.Entities">
-  <class name="AccountTree">
+  <class name="AccountTree" where="IsDeleted is null">
     <id name="Id" type="Guid">
       <generator class="assigned"/>
     </id>
@@ -9,8 +9,11 @@
     <property name="Active" />
     <property name="Name" />
     <property name="Description" />
+    
+    <property name="IsDeleted" type="Guid"/>
+    
 
-<!--
+    <!--
     <list name="Accounts" cascade="all-delete-orphan" inverse="true">
       <key column="IdAccountTree"/>
       <index column="Id"/>

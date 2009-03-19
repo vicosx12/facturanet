@@ -11,6 +11,7 @@ namespace Facturanet.Entities.Base
         public virtual bool Active { get; set; }
         public virtual string Name { get; set; }
         public virtual string Description { get; set; }
+        public virtual Guid? IsDeleted { get; set; }
 
         public override Validation.ValidationResult GetValidationResult(Validation.Level exceptionOverLevel)
         {
@@ -39,6 +40,16 @@ namespace Facturanet.Entities
             account.AccountTree = this;
             if (!Accounts.Contains(account))
                 Accounts.Add(account);
+        }
+
+        public override Facturanet.Validation.ValidationResult GetValidationResult(Facturanet.Validation.Level exceptionOverLevel)
+        {
+            var result = base.GetValidationResult(exceptionOverLevel);
+
+            foreach (ContableAccount account in Accounts)
+                result.Add(exceptionOverLevel, "Accounts", account.Id, account.GetValidationResult(exceptionOverLevel));
+                
+            return result;
         }
     }
 }

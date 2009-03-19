@@ -15,7 +15,7 @@ namespace Facturanet.UI
         public override string CustomerName { get; set; }
 
         public override double Total { get; set; }
-
+        
         public Entities.Base.InvoiceBase CopyFromInvoice
         {
             set
