@@ -41,6 +41,11 @@ namespace Facturanet.DbMigration
             return new Column("id", DbType.Guid, ColumnProperty.PrimaryKey);
         }
 
+        public Column CColIsDeleted()
+        {
+            return new Column("IsDeleted", DbType.Guid, ColumnProperty.Null);
+        }
+
         public Column CColActive()
         {
             return new Column("Active", DbType.Boolean, 1, ColumnProperty.NotNull, true);

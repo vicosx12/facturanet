@@ -30,10 +30,9 @@ select
 from 
     AccountTree accountTree")
                 //.ToDTOEnumerable<UI.AccountTreesListItem>("Active, Code, Description, Id, Name")
-                .ToDTOEnumerable<UI.AccountTreesListItem>(tuple => 
-                    new UI.AccountTreesListItem() 
+                .ToDTOEnumerable<UI.AccountTreesListItem>(tuple =>
+                    new UI.AccountTreesListItem((Guid)tuple[0]) 
                     {
-                        Id = (Guid)tuple[0],
                         Version = (int)tuple[1],
                         Active = (bool)tuple[2],
                         Code = (string)tuple[3],

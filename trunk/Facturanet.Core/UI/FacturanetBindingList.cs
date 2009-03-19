@@ -89,7 +89,7 @@ namespace Facturanet.UI
                 if (typeIsDeletable)
                 {
                     UI.IDeletableUIObject deletable = item as UI.IDeletableUIObject;
-                    deletable.IsDeleted = true;
+                    deletable.IsDeleted = deletable.Id;
                 }
 
                 if (!typeIsEditable || !(item as IEditableUIObject).IsNew)

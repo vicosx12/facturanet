@@ -33,7 +33,8 @@ namespace Facturanet.UI
 
     public interface IDeletableUIObject : IUIObject
     {
-        bool IsDeleted { set; get; }
+        Guid Id { get; }
+        Guid? IsDeleted { set; get; }
     }
 
     /// <summary>

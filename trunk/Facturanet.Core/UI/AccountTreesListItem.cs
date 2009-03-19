@@ -13,15 +13,8 @@ namespace Facturanet.UI
     public class AccountTreesListItem : 
         Entities.Base.AccountTreeBase, 
         IEditableUIObject,
-        /*ICreableUIObject,*/
         IDeletableUIObject
     {
-        public override int Version
-        {
-            get { return EditableData.GetData<int>("Version"); }
-            set { EditableData.SetData("Version", value); }
-        }
-
         public override bool Active
         {
             get { return EditableData.GetData<bool>("Active"); }
@@ -40,12 +33,6 @@ namespace Facturanet.UI
             set { EditableData.SetData("Code", value); }
         }
 
-        public override Guid Id
-        {
-            get { return EditableData.GetData<Guid>("Id"); }
-            set { EditableData.SetData("Id", value); }
-        }
-
         public override string Name
         {
             get { return EditableData.GetData<string>("Name"); }
@@ -55,12 +42,15 @@ namespace Facturanet.UI
         public AccountTreesListItem()
         {
             Active = true;
-            IsDeleted = false;
+            IsDeleted = Id;
         }
 
+        public AccountTreesListItem(Guid id) : this()
+        {
+            Id = id;
+        }
+        
         #region IEditableUIObject Implementation
-
-        public bool IsDeleted { set; get; }
 
         public bool IsNew 
         {

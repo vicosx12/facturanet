@@ -13,8 +13,8 @@ namespace Facturanet.DbMigration.Migrations
             Database.AddTable("AccountTree", new Column[]
             {
                 new Column("Id", DbType.Guid, ColumnProperty.PrimaryKey),
-                new Column("Code", DbType.String, 30, ColumnProperty.NotNull | ColumnProperty.Unique),
-                new Column("Name", DbType.String, 50, ColumnProperty.NotNull | ColumnProperty.Unique),
+                new Column("Code", DbType.String, 30, ColumnProperty.NotNull),
+                new Column("Name", DbType.String, 50, ColumnProperty.NotNull),
                 new Column("Description", DbType.String, 255, ColumnProperty.NotNull),
                 new Column("Active", DbType.Boolean, 1, ColumnProperty.NotNull, true)
             });

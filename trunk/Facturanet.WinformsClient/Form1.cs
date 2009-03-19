@@ -209,7 +209,7 @@ namespace Facturanet.WinformsClient
 
         private void btnEditAccountTrees_Click(object sender, EventArgs e)
         {
-            var f = new Forms.AccountTreesForm();
+            var f = new Forms.AccountTreesABM();
             f.Show();
         }
     }

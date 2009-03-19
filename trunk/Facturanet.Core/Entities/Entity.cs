@@ -12,7 +12,7 @@ namespace Facturanet.Entities.Base
     public abstract class Entity : Validation.IValidable
     {
         [DataMember]
-        public virtual Guid Id { get; set; }
+        public virtual Guid Id { get; protected set; }
 
         [DataMember]
         public virtual int Version { get; set; }
@@ -25,6 +25,9 @@ namespace Facturanet.Entities.Base
             return knownTypesCache;
         }
 
+        /// <summary>
+        /// Constructor para nuevos objetos
+        /// </summary>
         public Entity()
         {
             Id = Util.IdentifierHelper.GenerateComb();
