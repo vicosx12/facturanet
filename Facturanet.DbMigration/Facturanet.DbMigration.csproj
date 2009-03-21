@@ -51,6 +51,8 @@
     <Compile Include="20090128\181800_InsertAccountTreeTestData.cs" />
     <Compile Include="20090314\133900_VersionFieldToEntitiesTables.cs" />
     <Compile Include="20090319\192400_AddIsDeletedFieldToAccountTreeTable.cs" />
+    <Compile Include="20090320\170900_AddIsDeletedFieldToContableAccountTable.cs" />
+    <Compile Include="20090321\100300_ModifyIsDeletedFields.cs" />
     <Compile Include="FacturanetMigration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

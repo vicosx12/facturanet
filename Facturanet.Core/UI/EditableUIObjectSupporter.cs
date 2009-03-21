@@ -15,6 +15,16 @@ namespace Facturanet.UI
 
         public EditableUIObjectSupporter(object supportedObject)
         {
+            SetSupportedObject(supportedObject);
+        }
+
+        public EditableUIObjectSupporter()
+        {
+            SetSupportedObject(null);
+        }
+
+        public void SetSupportedObject(object supportedObject)
+        {
             this.supportedObject = supportedObject;
         }
 
@@ -45,7 +55,7 @@ namespace Facturanet.UI
             {
                 OnPropertyChanging(new PropertyChangingEventArgs(propertyName));
 
-                if (DiscartableChangesControl && !IsDirty)
+                if (DiscartableChangesControl && !IsDirty())
                     backupDiscardChanges = ((IBackupable)this).Backup();
 
                 if (value == null || value.Equals(default(T)))
@@ -71,8 +81,10 @@ namespace Facturanet.UI
         /// </summary>
         public void Restore(object backupData)
         {
+            OnPropertyChanging(new PropertyChangingEventArgs(""));
             Hashtable backup = (Hashtable)backupData;
             data = (Hashtable)backup.Clone();
+            OnPropertyChanged(new PropertyChangedEventArgs(""));
         }
 
         /// <summary>
@@ -147,21 +159,31 @@ namespace Facturanet.UI
         /// </summary>
         public bool DiscartableChangesControl { get; set; }
 
+
+        public bool IsDirty()
+        {
+            return IsDirty(false);
+        }
+
         /// <summary>
         /// Gets a value indicating whether this instance has changes.
         /// </summary>
         /// <remarks>
         /// To use this, DiscartableChangesControl has to be true.
         /// </remarks>
-        public bool IsDirty
+        public bool IsDirty(bool byValues)
         {
-            get
-            {
-                if (!DiscartableChangesControl)
-                    throw new ApplicationException("Discartable Changes Control is not active.");
-                else
-                    return backupDiscardChanges != null;
-            }
+            if (!DiscartableChangesControl)
+                throw new ApplicationException("Discartable Changes Control is not active.");
+            
+            if (backupDiscardChanges == null)
+                return false;
+
+            if (!byValues)
+                return true;
+
+            else
+                return GetChanges().Count > 0;
         }
 
         /// <summary>
@@ -210,7 +232,7 @@ namespace Facturanet.UI
             if (!DiscartableChangesControl)
                 throw new ApplicationException("Discartable Changes Control is not active.");
             else if (backupDiscardChanges == null)
-                return ValueChangedDescriptorCollection.Empty;
+                return ValueChangedDescriptorCollection.CreateEmpty();
             else
                 return GetDifferences(backupDiscardChanges);
         }

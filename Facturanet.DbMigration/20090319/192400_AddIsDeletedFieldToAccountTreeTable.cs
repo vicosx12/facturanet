@@ -15,16 +15,12 @@ namespace Facturanet.DbMigration.Migrations
             //Database.RemoveConstraint("AccountTree", "UQ__AccountTree__15502E78");
             Database.AddUniqueConstraint("UQ__AccountTree__Code", "AccountTree", new string[] { "Code", "IsDeleted" });
             Database.AddUniqueConstraint("UQ__AccountTree__Name", "AccountTree", new string[] { "Name", "IsDeleted" });
-            /*
-            Database.ChangeColumn("AccountTree", new Column("Code", DbType.String, 30, ColumnProperty.NotNull));
-            Database.ChangeColumn("AccountTree", new Column("Name", DbType.String, 50, ColumnProperty.NotNull));
-             * */
         }
 
         public override void Down()
         {
-            //Database.ChangeColumn("AccountTree", new Column("Code", DbType.String, 30, ColumnProperty.NotNull | ColumnProperty.Unique));
-            //Database.ChangeColumn("AccountTree", new Column("Name", DbType.String, 50, ColumnProperty.NotNull | ColumnProperty.Unique));
+            Database.RemoveConstraint("AccountTree", "UQ__AccountTree__Code");
+            Database.RemoveConstraint("AccountTree", "UQ__AccountTree__Name");
             Database.RemoveColumn("AccountTree", "IsDeleted");
         }
     }

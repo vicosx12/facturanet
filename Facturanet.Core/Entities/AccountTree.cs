@@ -7,11 +7,26 @@ namespace Facturanet.Entities.Base
 {
     public abstract class AccountTreeBase : Entity
     {
+        public AccountTreeBase()
+        {
+            Active = true;
+        }
+
         public virtual string Code { get; set; }
         public virtual bool Active { get; set; }
         public virtual string Name { get; set; }
         public virtual string Description { get; set; }
-        public virtual Guid? IsDeleted { get; set; }
+        public virtual Guid? DeletedMark { get; set; }
+
+        public virtual bool IsDeleted()
+        {
+            return DeletedMark.HasValue;
+        }
+
+        public virtual void MarkAsDelete()
+        {
+            DeletedMark = Id;
+        }
 
         public override Validation.ValidationResult GetValidationResult(Validation.Level exceptionOverLevel)
         {

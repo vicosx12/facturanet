@@ -53,7 +53,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FacturanetBindingNavigator.cs">
+    <Compile Include="Controls\AccountTreeListItemTreenode.cs" />
+    <Compile Include="Controls\FacturanetGenericTreenode.cs" />
+    <Compile Include="Util\FacturanetBaseTreenode.cs">
+    </Compile>
+    <Compile Include="Util\BindingSourceExtensions.cs" />
+    <Compile Include="Controls\AccountTreeListItemEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\AccountTreeListItemEditor.Designer.cs">
+      <DependentUpon>AccountTreeListItemEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Util\FacturanetBaseEditorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Util\FacturanetBindingNavigator.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Form1.cs">
@@ -82,8 +96,16 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Controls\AccountTreeListItemEditor.resx">
+      <DependentUpon>AccountTreeListItemEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AccountTreeEdition.resx">
+      <DependentUpon>AccountTreeEdition.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AccountTreesABM.resx">
@@ -107,6 +129,8 @@
     <None Include="Properties\DataSources\Facturanet.DTOs.InvoicesListItem.datasource" />
     <None Include="Properties\DataSources\Facturanet.Entities.AccountTree.datasource" />
     <None Include="Properties\DataSources\Facturanet.Entities.ContableConfiguration.datasource" />
+    <None Include="Properties\DataSources\Facturanet.UI.AccountTreesListItem.datasource" />
+    <None Include="Properties\DataSources\Facturanet.UI.ContableAccount.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

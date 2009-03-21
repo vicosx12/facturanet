@@ -6,10 +6,10 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Facturanet.Entities;
 using Facturanet.Business;
 using Facturanet.UI;
 using Facturanet.Validation;
+using Facturanet.WinformsClient.Util;
 
 namespace Facturanet.WinformsClient.Forms
 {
@@ -68,9 +68,17 @@ namespace Facturanet.WinformsClient.Forms
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            //Aca me quede
-            //if(listBindingSource.Current 
-            //var w = new AccountTreeEdition(
+            var tree = listBindingSource.GetCurrent<AccountTreesListItem>();
+
+            if (tree == null)
+                MessageBox.Show("You have to select an item to edit");
+            else if (tree.IsNew())
+                MessageBox.Show("The item is new, you have to save changes to edit");
+            else
+            {
+                var f = new Forms.AccountTreeEdition(tree.Id);
+                f.Show();
+            }
         }
     }
 }

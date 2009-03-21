@@ -30,7 +30,7 @@ namespace Facturanet.UI
             if (typeIsEditable)
                 foreach (UI.IEditableUIObject item in this)
                 {
-                    if (!item.IsNew && item.IsDirty)
+                    if (!item.IsNew() && item.IsDirty())
                         yield return (T)item;
                 }
             else
@@ -45,7 +45,7 @@ namespace Facturanet.UI
             if (typeIsEditable)
                 foreach (UI.IEditableUIObject item in this)
                 {
-                    if (item.IsNew)
+                    if (item.IsNew())
                         yield return (T)item;
                 }
             else
@@ -89,10 +89,10 @@ namespace Facturanet.UI
                 if (typeIsDeletable)
                 {
                     UI.IDeletableUIObject deletable = item as UI.IDeletableUIObject;
-                    deletable.IsDeleted = deletable.Id;
+                    deletable.MarkAsDelete();
                 }
 
-                if (!typeIsEditable || !(item as IEditableUIObject).IsNew)
+                if (!typeIsEditable || !(item as IEditableUIObject).IsNew())
                     deletedItems.Add(item);
 
                 base.RemoveItem(index);

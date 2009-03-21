@@ -15,19 +15,16 @@ namespace Facturanet.Business
     {
         protected override void RunInContextEmptyResponse(UpdateAccountTreeListRequest request, PersistenceContext context)
         {
-            //Creo los nuevos elementos
-            foreach (UI.AccountTreesListItem ui in request.CreatedItems)
+            foreach (Guid id in request.DeletedIds)
             {
-                AccountTree entity = new AccountTree()
-                {
-                    Active = ui.Active,
-                    Code = ui.Code,
-                    Description = ui.Description,
-                    Name = ui.Name
-                };
-                context.Session.Save(entity, ui.Id);
+                //AccountTree entity = context.Session.Load<AccountTree>(id);
+                //context.Session.Delete(entity);
+                AccountTree entity = context.Session.Load<AccountTree>(id);
+                entity.MarkAsDelete();
             }
-            
+
+            context.Session.Flush();
+
             //Modifico los elementos modificados
             foreach (UI.AccountTreesListItem ui in request.UpdatedItems)
             {
@@ -48,17 +45,25 @@ namespace Facturanet.Business
                 entity.Code = ui.Code;
                 entity.Description = ui.Description;
                 entity.Name = ui.Name;
+            }
 
+            context.Session.Flush();
 
+            //Creo los nuevos elementos
+            foreach (UI.AccountTreesListItem ui in request.CreatedItems)
+            {
+                AccountTree entity = new AccountTree()
+                {
+                    Active = ui.Active,
+                    Code = ui.Code,
+                    Description = ui.Description,
+                    Name = ui.Name
+                };
+                context.Session.Save(entity, ui.Id);
             }
             
-            foreach (Guid id in request.DeletedIds)
-            {
-                //AccountTree entity = context.Session.Load<AccountTree>(id);
-                //context.Session.Delete(entity);
-                AccountTree entity = context.Session.Load<AccountTree>(id);
-                entity.IsDeleted = id;
-            }
+
+            
             //TODO: cuando pueda ver las consultas que hace a la db me fijo 
             //si vale la pena optimizarlo.
         }

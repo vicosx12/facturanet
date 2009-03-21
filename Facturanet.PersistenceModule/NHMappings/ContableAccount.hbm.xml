@@ -13,7 +13,14 @@
     <property name="Description" />
     <property name="Imputable" />
 
+    <many-to-one name="ParentAccount" column="IdParentAccount"/>
+
     <many-to-one name="AccountTree" column="IdAccountTree" />
+
+    <set name="Subaccounts" cascade="all-delete-orphan" inverse="true">
+      <key column="IdParentAccount"/>
+      <one-to-many class="ContableAccount"/>
+    </set>
 
   </class>
 </hibernate-mapping>
