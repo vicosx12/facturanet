@@ -54,7 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\AccountTreeListItemTreenode.cs" />
-    <Compile Include="Controls\FacturanetGenericTreenode.cs" />
+    <Compile Include="Util\FacturanetGenericTreenode.cs" />
     <Compile Include="Util\FacturanetBaseTreenode.cs">
     </Compile>
     <Compile Include="Util\BindingSourceExtensions.cs" />
