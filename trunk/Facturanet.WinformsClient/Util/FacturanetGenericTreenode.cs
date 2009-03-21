@@ -9,17 +9,17 @@ using System.Windows.Forms;
 using Facturanet.Util;
 using Facturanet.UI;
 
-namespace Facturanet.WinformsClient.Controls
+namespace Facturanet.WinformsClient.Util
 {
-    public class GenericTreenode<T> : Util.FacturanetBaseTreenode<T>
+    public class FacturanetGenericTreenode<T> : Util.FacturanetBaseTreenode<T>
         where T : class, new()
     {
-        public GenericTreenode(T asociatedObject)
+        public FacturanetGenericTreenode(T asociatedObject)
             : base(asociatedObject)
         {
         }
 
-        public GenericTreenode()
+        public FacturanetGenericTreenode()
             : base()
         {
         }
