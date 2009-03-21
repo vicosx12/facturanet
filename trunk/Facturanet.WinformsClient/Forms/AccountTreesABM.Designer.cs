@@ -52,7 +52,7 @@
             this.fdgdfgToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fdgfdgToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dfgdfgfToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.listBindingNavigator = new Facturanet.WinformsClient.FacturanetBindingNavigator(this.components);
+            this.listBindingNavigator = new Facturanet.WinformsClient.Util.FacturanetBindingNavigator(this.components);
             this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
             this.bindingNavigatorDeleteItem = new System.Windows.Forms.ToolStripButton();
@@ -540,7 +540,7 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn activeDataGridViewCheckBoxColumn;
         private System.Windows.Forms.BindingSource listBindingSource;
         private System.Windows.Forms.Button button1;
-        private FacturanetBindingNavigator listBindingNavigator;
+        private Util.FacturanetBindingNavigator listBindingNavigator;
         private System.Windows.Forms.ToolStripButton bindingNavigatorAddNewItem;
         private System.Windows.Forms.ToolStripLabel bindingNavigatorCountItem;
         private System.Windows.Forms.ToolStripButton bindingNavigatorDeleteItem;

@@ -27,14 +27,15 @@ namespace Facturanet.UI
         INotifyPropertyChanging,
         IEditableObject
     {
-        bool IsNew { get; }
+        bool IsNew();
         int Version { get; }
     }
 
     public interface IDeletableUIObject : IUIObject
     {
         Guid Id { get; }
-        Guid? IsDeleted { set; get; }
+        bool IsDeleted();
+        void MarkAsDelete();
     }
 
     /// <summary>
@@ -47,7 +48,7 @@ namespace Facturanet.UI
         INotifyPropertyChanged,
         IEditableObject
     {
-
+        void SetSupportedObject(object supportedObject);
         /// <summary>
         /// Gets the value of a property. If the property is not defined returns the default value of the type.
         /// </summary>
@@ -100,7 +101,9 @@ namespace Facturanet.UI
         /// <remarks>
         /// To use this, DiscartableChangesControl has to be true.
         /// </remarks>
-        bool IsDirty { get; }
+        bool IsDirty();
+
+        bool IsDirty(bool byValues);
 
         /// <summary>
         /// Discards the changes.

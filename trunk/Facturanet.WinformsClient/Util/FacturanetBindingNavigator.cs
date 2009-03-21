@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Facturanet.WinformsClient
+namespace Facturanet.WinformsClient.Util
 {
     public class FacturanetBindingNavigator : BindingNavigator
     {

@@ -10,36 +10,39 @@ using System.ComponentModel;
 
 namespace Facturanet.UI
 {
-    public class AccountTreesListItem : 
-        Entities.Base.AccountTreeBase, 
-        IEditableUIObject,
-        IDeletableUIObject
+    public class ContableAccount :
+        Entities.Base.ContableAccountBase,
+        IEditableUIObject
     {
-
         #region Constructors
-        public AccountTreesListItem()
+
+        public ContableAccount()
         {
             EditableData.SetSupportedObject(this);
         }
 
-        public AccountTreesListItem(Guid id)
+        public ContableAccount(Guid id)
             : this()
         {
             Id = id;
         }
+
         #endregion
 
+        //public List<UI.ContableAccount> Subaccounts { get; set; }
+
         #region Editable properties
+
+        public virtual Guid? ParentAccountId
+        {
+            get { return EditableData.GetData<Guid?>("ParentAccountId"); }
+            set { EditableData.SetData("ParentAccountId", value); }
+        }
+
         public override bool Active
         {
             get { return EditableData.GetData<bool>("Active"); }
             set { EditableData.SetData("Active", value); }
-        }
-
-        public override string Description
-        {
-            get { return EditableData.GetData<string>("Description"); }
-            set { EditableData.SetData("Description", value); }
         }
 
         public override string Code
@@ -48,16 +51,22 @@ namespace Facturanet.UI
             set { EditableData.SetData("Code", value); }
         }
 
+        public override string Description
+        {
+            get { return EditableData.GetData<string>("Description"); }
+            set { EditableData.SetData("Description", value); }
+        }
+
         public override string Name
         {
             get { return EditableData.GetData<string>("Name"); }
             set { EditableData.SetData("Name", value); }
         }
 
-        public override Guid? DeletedMark
+        public override bool Imputable
         {
-            get { return EditableData.GetData<Guid?>("DeletedMark"); }
-            set { EditableData.SetData("DeletedMark", value); }
+            get { return EditableData.GetData<bool>("Imputable"); }
+            set { EditableData.SetData("Imputable", value); }
         }
 
         #endregion
@@ -95,9 +104,9 @@ namespace Facturanet.UI
             return EditableData.IsDirty();
         }
 
-        public bool IsDirty(bool byValues)
+        public bool IsDirty(bool byValue)
         {
-            return EditableData.IsDirty(byValues);
+            return EditableData.IsDirty(byValue);
         }
 
         public void DiscardChanges()
