@@ -36,8 +36,9 @@
             this.button5 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
-            this.accountTreeListItemEditor1 = new Facturanet.WinformsClient.Controls.AccountTreeListItemEditor();
             this.contableAccountEditor1 = new Facturanet.WinformsClient.Controls.ContableAccountEditor();
+            this.accountTreeListItemEditor1 = new Facturanet.WinformsClient.Controls.AccountTreeListItemEditor();
+            this.button6 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -127,15 +128,6 @@
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
-            // accountTreeListItemEditor1
-            // 
-            this.accountTreeListItemEditor1.EditableObject = null;
-            this.accountTreeListItemEditor1.Location = new System.Drawing.Point(3, 4);
-            this.accountTreeListItemEditor1.Name = "accountTreeListItemEditor1";
-            this.accountTreeListItemEditor1.Size = new System.Drawing.Size(225, 80);
-            this.accountTreeListItemEditor1.TabIndex = 0;
-            this.accountTreeListItemEditor1.Visible = false;
-            // 
             // contableAccountEditor1
             // 
             this.contableAccountEditor1.EditableObject = null;
@@ -143,12 +135,34 @@
             this.contableAccountEditor1.Name = "contableAccountEditor1";
             this.contableAccountEditor1.Size = new System.Drawing.Size(197, 85);
             this.contableAccountEditor1.TabIndex = 4;
+            this.contableAccountEditor1.TypedEditableObject = null;
+            // 
+            // accountTreeListItemEditor1
+            // 
+            this.accountTreeListItemEditor1.EditableObject = null;
+            this.accountTreeListItemEditor1.Location = new System.Drawing.Point(3, 4);
+            this.accountTreeListItemEditor1.Name = "accountTreeListItemEditor1";
+            this.accountTreeListItemEditor1.Size = new System.Drawing.Size(225, 80);
+            this.accountTreeListItemEditor1.TabIndex = 0;
+            this.accountTreeListItemEditor1.TypedEditableObject = null;
+            this.accountTreeListItemEditor1.Visible = false;
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(373, 11);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(75, 23);
+            this.button6.TabIndex = 5;
+            this.button6.Text = "button6";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // AccountTreeEdition
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(591, 379);
+            this.Controls.Add(this.button6);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -174,5 +188,6 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
         private Facturanet.WinformsClient.Controls.ContableAccountEditor contableAccountEditor1;
+        private System.Windows.Forms.Button button6;
     }
 }

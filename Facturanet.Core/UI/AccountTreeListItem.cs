@@ -15,7 +15,6 @@ namespace Facturanet.UI
         IEditableUIObject,
         IDeletableUIObject
     {
-
         #region Constructors
         public AccountTreeListItem()
         {
@@ -27,6 +26,37 @@ namespace Facturanet.UI
         {
             Id = id;
         }
+
+        #endregion
+
+        #region Entities.AccountTree interaction
+
+        public AccountTreeListItem(Entities.AccountTree entity)
+            : this(entity.Id)
+        {
+            CopyFrom(entity);
+        }
+
+        public void CopyFrom(Entities.AccountTree entity)
+        {
+            Active = entity.Active;
+            Code = entity.Code;
+            DeletedMark = entity.DeletedMark;
+            Description = entity.Description;
+            Name = entity.Name;
+            Version = entity.Version;
+        }
+
+        public void CopyTo(Entities.AccountTree entity)
+        {
+            entity.Active = Active;
+            entity.Code = Code;
+            entity.DeletedMark = DeletedMark;
+            entity.Description = Description;
+            entity.Name = Name;
+            entity.Version = Version;
+        }
+
         #endregion
 
         #region Editable properties

@@ -12,15 +12,10 @@ using Facturanet.UI;
 namespace Facturanet.WinformsClient.Util
 {
     public class FacturanetGenericTreenode<T> : Util.FacturanetBaseTreenode<T>
-        where T : class, new()
+        where T : class
     {
         public FacturanetGenericTreenode(T asociatedObject)
             : base(asociatedObject)
-        {
-        }
-
-        public FacturanetGenericTreenode()
-            : base()
         {
         }
 

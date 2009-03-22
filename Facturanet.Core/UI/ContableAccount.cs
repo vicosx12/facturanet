@@ -29,6 +29,43 @@ namespace Facturanet.UI
 
         #endregion
 
+        #region Entities.ContableAccount Interaction
+
+        public ContableAccount(Entities.ContableAccount entity)
+            : this(entity.Id)
+        {
+            CopyFrom(entity);
+        }
+
+        public void CopyFrom(Entities.ContableAccount entity)
+        {
+            Active = entity.Active;
+            Code = entity.Code;
+            Description = entity.Description;
+            Name = entity.Name;
+            Version = entity.Version;
+            Imputable = entity.Imputable;
+            ParentAccountId = entity.ParentAccount == null
+                            ? null
+                            : (Guid?)entity.ParentAccount.Id;
+        }
+
+        /// <summary>
+        /// Warning, ParentAccountId have not effects
+        /// </summary>
+        /// <param name="entity"></param>
+        public void CopyTo(Entities.ContableAccount entity)
+        {
+            entity.Active = Active;
+            entity.Code = Code;
+            entity.Description = Description;
+            entity.Name = Name;
+            entity.Version = Version;
+            entity.Imputable = Imputable;
+        }
+
+        #endregion
+
         //public List<UI.ContableAccount> Subaccounts { get; set; }
 
         #region Editable properties

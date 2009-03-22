@@ -18,11 +18,6 @@ namespace Facturanet.WinformsClient.Controls
         {
         }
 
-        public AccountTreeListItemTreenode()
-            : base()
-        {
-        }
-
         protected override string GetNodeName()
         {
             return TypedAsociatedObject.Id.ToString();

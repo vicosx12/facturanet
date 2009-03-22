@@ -103,5 +103,14 @@ namespace Facturanet.WinformsClient.Forms
             if (editor != null)
                 editor.CancelEdit();
         }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            var parent = treeView1.SelectedNode;
+            var account = new ContableAccount();
+            var node = new ContableAccountTreenode(account);
+            parent.Nodes.Add(node);
+            treeView1.SelectedNode = node;
+        }
     }
 }
