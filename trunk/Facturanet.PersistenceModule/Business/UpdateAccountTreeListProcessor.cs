@@ -26,7 +26,7 @@ namespace Facturanet.Business
             context.Session.Flush();
 
             //Modifico los elementos modificados
-            foreach (UI.AccountTreesListItem ui in request.UpdatedItems)
+            foreach (UI.AccountTreeListItem ui in request.UpdatedItems)
             {
                 //TODO: si aca tuviera los valores originales podría verificar que los valores originales sean iguales o los actuales en la db.
                 AccountTree entity = context.Session.Load<AccountTree>(ui.Id);
@@ -50,7 +50,7 @@ namespace Facturanet.Business
             context.Session.Flush();
 
             //Creo los nuevos elementos
-            foreach (UI.AccountTreesListItem ui in request.CreatedItems)
+            foreach (UI.AccountTreeListItem ui in request.CreatedItems)
             {
                 AccountTree entity = new AccountTree()
                 {

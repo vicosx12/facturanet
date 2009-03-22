@@ -33,7 +33,7 @@ namespace Facturanet.WinformsClient.Util
             if (GetNodeNameFunc == null)
                 return string.Empty;
             else
-                return GetNodeNameFunc(AsociatedObject);
+                return GetNodeNameFunc(TypedAsociatedObject);
         }
 
         protected override string GetNodeText()
@@ -41,7 +41,7 @@ namespace Facturanet.WinformsClient.Util
             if (GetNodeTextFunc == null)
                 return string.Empty;
             else
-                return GetNodeTextFunc(AsociatedObject);
+                return GetNodeTextFunc(TypedAsociatedObject);
         }
 
         protected override string GetNodeToolTipText()
@@ -49,7 +49,7 @@ namespace Facturanet.WinformsClient.Util
             if (GetNodeToolTipTextFunc == null)
                 return string.Empty;
             else
-                return GetNodeToolTipTextFunc(AsociatedObject);
+                return GetNodeToolTipTextFunc(TypedAsociatedObject);
         }
     }
 }

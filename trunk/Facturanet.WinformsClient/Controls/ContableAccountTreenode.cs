@@ -11,14 +11,14 @@ using Facturanet.UI;
 
 namespace Facturanet.WinformsClient.Controls
 {
-    public class AccountTreeListItemTreenode : Util.FacturanetBaseTreenode<AccountTreeListItem>
+    public class ContableAccountTreenode : Util.FacturanetBaseTreenode<ContableAccount>
     {
-        public AccountTreeListItemTreenode(AccountTreeListItem asociatedObject)
+        public ContableAccountTreenode(ContableAccount asociatedObject)
             : base(asociatedObject)
         {
         }
 
-        public AccountTreeListItemTreenode()
+        public ContableAccountTreenode()
             : base()
         {
         }

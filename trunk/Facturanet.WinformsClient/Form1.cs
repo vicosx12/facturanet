@@ -104,7 +104,7 @@ namespace Facturanet.WinformsClient
 
         private void button2_Click(object sender, EventArgs e)
         {
-            UI.AccountTreesListItem a = new Facturanet.UI.AccountTreesListItem();
+            UI.AccountTreeListItem a = new Facturanet.UI.AccountTreeListItem();
             /*
             GenerateTestDataRequest r = new GenerateTestDataRequest();
             try

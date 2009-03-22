@@ -107,7 +107,7 @@
     <Compile Include="Server\Request.cs" />
     <Compile Include="Server\Response.cs" />
     <Compile Include="Server\Selector.cs" />
-    <Compile Include="UI\AccountTreesListItem.cs" />
+    <Compile Include="UI\AccountTreeListItem.cs" />
     <Compile Include="UI\ProductsListItem.cs" />
     <Compile Include="UI\CustomersListItem.cs" />
     <Compile Include="UI\InvoicesListItem.cs" />

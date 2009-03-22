@@ -54,6 +54,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\AccountTreeListItemTreenode.cs" />
+    <Compile Include="Controls\ContableAccountEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ContableAccountEditor.Designer.cs">
+      <DependentUpon>ContableAccountEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ContableAccountTreenode.cs" />
     <Compile Include="Util\FacturanetGenericTreenode.cs" />
     <Compile Include="Util\FacturanetBaseTreenode.cs">
     </Compile>
@@ -98,6 +105,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Controls\AccountTreeListItemEditor.resx">
       <DependentUpon>AccountTreeListItemEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ContableAccountEditor.resx">
+      <DependentUpon>ContableAccountEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">

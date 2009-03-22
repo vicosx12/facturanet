@@ -10,19 +10,19 @@ using System.ComponentModel;
 
 namespace Facturanet.UI
 {
-    public class AccountTreesListItem : 
+    public class AccountTreeListItem : 
         Entities.Base.AccountTreeBase, 
         IEditableUIObject,
         IDeletableUIObject
     {
 
         #region Constructors
-        public AccountTreesListItem()
+        public AccountTreeListItem()
         {
             EditableData.SetSupportedObject(this);
         }
 
-        public AccountTreesListItem(Guid id)
+        public AccountTreeListItem(Guid id)
             : this()
         {
             Id = id;

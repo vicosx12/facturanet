@@ -53,7 +53,7 @@ namespace Facturanet.Business
                 .UniqueResult<Entities.AccountTree>();
 
             response.AccountTreeHeader =
-                new UI.AccountTreesListItem(tree.Id)
+                new UI.AccountTreeListItem(tree.Id)
                 {
                     Active = tree.Active,
                     Code = tree.Code,
