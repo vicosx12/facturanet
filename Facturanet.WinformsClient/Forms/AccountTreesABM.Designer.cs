@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AccountTreesABM));
             this.button1 = new System.Windows.Forms.Button();
-            this.btnSaveList = new System.Windows.Forms.Button();
+            this.btnSave = new System.Windows.Forms.Button();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
@@ -99,15 +99,15 @@
             this.button1.Text = "button1";
             this.button1.UseVisualStyleBackColor = true;
             // 
-            // btnSaveList
+            // btnSave
             // 
-            this.btnSaveList.Location = new System.Drawing.Point(6, 41);
-            this.btnSaveList.Name = "btnSaveList";
-            this.btnSaveList.Size = new System.Drawing.Size(75, 23);
-            this.btnSaveList.TabIndex = 3;
-            this.btnSaveList.Text = "&Save List";
-            this.btnSaveList.UseVisualStyleBackColor = true;
-            this.btnSaveList.Click += new System.EventHandler(this.btnSaveList_Click);
+            this.btnSave.Location = new System.Drawing.Point(6, 41);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(75, 23);
+            this.btnSave.TabIndex = 3;
+            this.btnSave.Text = "&Save";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // toolStripContainer1
             // 
@@ -190,6 +190,7 @@
             this.idDataGridViewTextBoxColumn.DataPropertyName = "Id";
             this.idDataGridViewTextBoxColumn.HeaderText = "Id";
             this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
+            this.idDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // codeDataGridViewTextBoxColumn
             // 
@@ -223,7 +224,7 @@
             // 
             this.panel1.Controls.Add(this.btnEdit);
             this.panel1.Controls.Add(this.btnRefresh);
-            this.panel1.Controls.Add(this.btnSaveList);
+            this.panel1.Controls.Add(this.btnSave);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel1.Location = new System.Drawing.Point(587, 0);
             this.panel1.Name = "panel1";
@@ -553,7 +554,7 @@
         private System.Windows.Forms.ToolStripButton bindingNavigatorMoveLastItem;
         private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator2;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
-        private System.Windows.Forms.Button btnSaveList;
+        private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.ToolStripContainer toolStripContainer1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem vdgdfgToolStripMenuItem;
