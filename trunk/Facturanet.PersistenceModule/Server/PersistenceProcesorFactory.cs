@@ -34,6 +34,8 @@ namespace Facturanet.Server
                 processor = new Business.UpdateAccountTreeListProcessor();
             else if (requestType == typeof(Business.GetCompleteAccountTreeRequest))
                 processor = new Business.GetCompleteAccountTreeProcessor();
+            else if (requestType == typeof(Business.UpdateCompleteAccountTreeRequest))
+                processor = new Business.UpdateCompleteAccountTreeProcessor();
             else processor = null;
 
             return processor;

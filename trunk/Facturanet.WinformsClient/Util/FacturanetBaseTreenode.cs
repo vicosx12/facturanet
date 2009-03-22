@@ -14,6 +14,7 @@ namespace Facturanet.WinformsClient.Util
     {
         object AsociatedObject { get; }
         void RefreshData();
+        TreeNodeCollection Nodes { get; }
     }
 
     public abstract class FacturanetBaseTreenode<T> : TreeNode, IFacturanetTreenode
@@ -46,6 +47,7 @@ namespace Facturanet.WinformsClient.Util
             if (typeIsEditable)
             {
                 var editable = asociatedObject as UI.IEditableUIObject;
+                editable.DiscartableChangesControl = true;
                 editable.PropertyChanged += new PropertyChangedEventHandler(editable_PropertyChanged);
             }
 

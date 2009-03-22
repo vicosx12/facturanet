@@ -34,9 +34,14 @@ namespace Facturanet.Validation
             Add(exceptionOverLevel, propertyName, index, propertyValidationResult);
         }
 
-        internal void Add(Level exceptionOverLevel, string propertyName, object index, ValidationResultBase propertyResult)
+        public void Add(Level exceptionOverLevel, string propertyName, ValidationResultBase propertyResult)
         {
-            //solo admite un error por propiedad
+            Add(exceptionOverLevel, propertyName, null, propertyResult);
+        }
+
+        public void Add(Level exceptionOverLevel, string propertyName, object index, ValidationResultBase propertyResult)
+        {
+            //solo admite un error por propiedad/index
             if (propertyResult.Level > Level.Empty)
             {
                 string name = (index == null)

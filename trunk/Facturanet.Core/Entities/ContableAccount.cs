@@ -35,5 +35,19 @@ namespace Facturanet.Entities
             if (!Subaccounts.Contains(subaccount))
                 Subaccounts.Add(subaccount);
         }
+
+        #region Constructors
+
+        public ContableAccount()
+        {
+        }
+
+        public ContableAccount(Guid id)
+            : this()
+        {
+            Id = id;
+        }
+
+        #endregion
     }
 }

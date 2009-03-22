@@ -34,7 +34,7 @@ namespace Facturanet.WinformsClient.Forms
             listBindingSource.DataSource = list;
         }
 
-        private void btnSaveList_Click(object sender, EventArgs e)
+        private void btnSave_Click(object sender, EventArgs e)
         {
             var request = new Business.UpdateAccountTreeListRequest(
                 list.GetInsertedItems(),

@@ -14,17 +14,132 @@ namespace Facturanet.WinformsClient.Forms
 {
     public partial class AccountTreeEdition : Form
     {
+        AccountTreeListItem accountTreeHeader = null;
+        AccountTreeListItemTreenode rootNode = null;
+
         public AccountTreeEdition()
         {
             InitializeComponent();
         }
 
-        private AccountTreeListItemTreenode GenerateTree(AccountTreeListItem tree, IEnumerable<ContableAccount> accounts)
+        public AccountTreeEdition(Guid accountTreeId)
+            : this()
         {
-            AccountTreeListItemTreenode root = new AccountTreeListItemTreenode(tree);
+            RefreshTree(accountTreeId);
+        }
+
+        private Util.IFacturanetEditorControl GetNodeEditor(TreeNode node)
+        {
+            if (node == null)
+                return null;
+            if (node is AccountTreeListItemTreenode)
+                return accountTreeListItemEditor1;
+            else if (node is ContableAccountTreenode)
+                return contableAccountEditor1;
+            else
+                return null;
+        }
+
+        private TreeNode previousNode = null;
+
+        private enum Mode
+        {
+            Browsing,
+            Editing,
+            Creating
+        }
+        private Mode mode;
+        private void SetMode(Mode newMode)
+        {
+            if (newMode != mode)
+            {
+                switch (newMode)
+                {
+                    case Mode.Browsing :
+                        treeView1.Enabled = true;
+                        btnNewChild.Enabled = true;
+                        btnNewBrother.Enabled = true;
+                        btnBeginEdit.Enabled = true;
+                        btnEndEdit.Enabled = false;
+                        btnCancelEdit.Enabled = false;
+                        break;
+                    case Mode.Editing :
+                    case Mode.Creating :
+                        treeView1.Enabled = false;
+                        btnNewChild.Enabled = false;
+                        btnNewBrother.Enabled = false;
+                        btnBeginEdit.Enabled = false;
+                        btnEndEdit.Enabled = true;
+                        btnCancelEdit.Enabled = true;
+                        break;
+                }
+                mode = newMode;
+            }
+        }
+
+
+        private void BeginEdit()
+        {
+            var editor = GetNodeEditor(treeView1.SelectedNode);
+            if (editor != null)
+            {
+                SetMode(Mode.Editing);
+                editor.BeginEdit();
+            }
+        }
+
+        private void EndEdit()
+        {
+            var editor = GetNodeEditor(treeView1.SelectedNode);
+            if (editor != null)
+            {
+                editor.EndEdit();
+                SetMode(Mode.Browsing);
+            }
+        }
+
+        private void CancelEdit()
+        {
+            var editor = GetNodeEditor(treeView1.SelectedNode);
+            if (editor != null)
+            {
+                editor.CancelEdit();
+                if (mode == Mode.Creating)
+                {
+                    var node = treeView1.SelectedNode;
+                    treeView1.SelectedNode = previousNode;
+                    node.Remove();
+                }
+                SetMode(Mode.Browsing);
+            }
+        }
+
+        private void BeginNewAccount(bool child)
+        {
+            if (treeView1.SelectedNode != null)
+            {
+                var parent = child 
+                    ? treeView1.SelectedNode
+                    : treeView1.SelectedNode.Parent;
+                if (parent != null)
+                {
+                    var account = new ContableAccount();
+                    var node = new ContableAccountTreenode(account);
+                    parent.Nodes.Add(node);
+                    treeView1.SelectedNode = node;
+                    var editor = GetNodeEditor(treeView1.SelectedNode);
+                    SetMode(Mode.Creating);
+                    editor.BeginEdit();
+                }
+            }
+        }
+
+        private AccountTreeListItemTreenode GenerateTree(AccountTreeListItem accountTreeHeader, IEnumerable<ContableAccount> accounts)
+        {
+            AccountTreeListItemTreenode rootNode = new AccountTreeListItemTreenode(accountTreeHeader);
 
             Dictionary<Guid, ContableAccountTreenode> aux = new Dictionary<Guid, ContableAccountTreenode>();
-            
+
             foreach (ContableAccount account in accounts)
                 aux.Add(
                     account.Id,
@@ -40,22 +155,53 @@ namespace Facturanet.WinformsClient.Forms
                     parentNode.Nodes.Add(accountNode);
                 }
                 else
-                    root.Nodes.Add(auxItem.Value);
+                    rootNode.Nodes.Add(auxItem.Value);
             }
 
-            return root;
+            return rootNode;
         }
 
-        public AccountTreeEdition(Guid accountTreeId)
-            : this()
+        private void RefreshTree()
         {
+            RefreshTree(accountTreeHeader.Id);
+        }
+        
+        private void RefreshTree(Guid id)
+        {
+            treeView1.Nodes.Clear();
             var request = new Business.GetCompleteAccountTreeRequest();
-            request.AccountTreeId = accountTreeId;
+            request.AccountTreeId = id;
             var response = request.Run();
+            accountTreeHeader = response.AccountTreeHeader;
+            rootNode = GenerateTree(accountTreeHeader, response.Items);
+            treeView1.Nodes.Add(rootNode);
+            treeView1.ExpandAll();
+        }
 
-            this.treeView1.Nodes.Add(GenerateTree(response.AccountTreeHeader, response.Items));
+        private void btnBeginEdit_Click(object sender, EventArgs e)
+        {
+            BeginEdit();
+        }
 
-            this.treeView1.ExpandAll();
+        private void btnEndEdit_Click(object sender, EventArgs e)
+        {
+            EndEdit();
+        }
+
+        private void btnCancelEdit_Click(object sender, EventArgs e)
+        {
+            CancelEdit();
+        }
+
+        private void btnNewChild_Click(object sender, EventArgs e)
+        {
+            BeginNewAccount(true);
+        }
+
+
+        private void btnNewBrother_Click(object sender, EventArgs e)
+        {
+            BeginNewAccount(false);
         }
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
@@ -70,47 +216,94 @@ namespace Facturanet.WinformsClient.Forms
             editor.Visible = true;
         }
 
-        private Util.IFacturanetEditorControl GetNodeEditor(TreeNode node)
+        private void treeView1_BeforeSelect(object sender, TreeViewCancelEventArgs e)
         {
-            if (node == null)
-                return null;
-            if (node is AccountTreeListItemTreenode)
-                return accountTreeListItemEditor1;
-            else if (node is ContableAccountTreenode)
-                return contableAccountEditor1;
+            previousNode = treeView1.SelectedNode;
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            RefreshTree();
+        }
+
+        /*
+        public IEnumerable<ContableAccount> ChangedAccounts(Util.IFacturanetTreenode node)
+        {
+            ContableAccountTreenode accountNode = node as ContableAccountTreenode;
+            if (accountNode != null && accountNode.TypedAsociatedObject.IsDirty() && !accountNode.TypedAsociatedObject.IsNew()) 
+                yield return accountNode.TypedAsociatedObject;
+
+            foreach (Util.IFacturanetTreenode subnode in node.Nodes)
+                foreach (ContableAccount account in ChangedAccounts(subnode))
+                    yield return account;
+        }
+        */
+
+        private void ProcessTree(
+            Util.IFacturanetTreenode node,
+            Guid? parentId,
+            List<ContableAccount> updatedAccounts, 
+            List<ContableAccount> createdAccounts)
+        {
+            ContableAccountTreenode accountNode = node as ContableAccountTreenode;
+            ContableAccount account = null;
+            if (accountNode != null)
+            {
+                account = accountNode.TypedAsociatedObject;
+
+                if (account.ParentAccountId != parentId)
+                    account.ParentAccountId = parentId;
+
+                if (account.IsNew())
+                    createdAccounts.Add(account);
+                else if (account.IsDirty())
+                    updatedAccounts.Add(account);
+            }
+
+            foreach (Util.IFacturanetTreenode subnode in node.Nodes)
+                ProcessTree(
+                    subnode,
+                    account == null 
+                        ? null
+                        : (Guid?)account.Id,
+                    updatedAccounts, 
+                    createdAccounts);
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            var request = new Business.UpdateCompleteAccountTreeRequest(accountTreeHeader.Id);
+
+            if (accountTreeHeader.IsDirty())
+                request.AccountTreeHeader = accountTreeHeader;
+
+            List<ContableAccount> updatedAccounts = new List<ContableAccount>();
+            List<ContableAccount> createdAccounts = new List<ContableAccount>();
+            ProcessTree(rootNode, null, updatedAccounts, createdAccounts);
+
+            request.UpdatedAccounts = updatedAccounts.ToArray();
+            request.CreatedAccounts = createdAccounts.ToArray();
+
+            
+            if (request.IsValid())
+            {
+                request.Run();
+                RefreshTree();
+            }
             else
-                return null;
-        }
+            {
+                Validation.ValidationResultBase results = request.GetValidationResult();
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-            var editor = GetNodeEditor(treeView1.SelectedNode);
+                if (results.Level == Validation.Level.Empty)
+                    Console.WriteLine("Sin errores");
+                else
+                    Console.WriteLine("Máximo error: {0}", results.Level);
 
-            if (editor != null)
-                editor.BeginEdit();
-        }
+                Console.WriteLine("Cantidad de propiedades con errores: {0}", results.Length);
 
-        private void button4_Click(object sender, EventArgs e)
-        {
-            var editor = GetNodeEditor(treeView1.SelectedNode);
-            if (editor != null)
-                editor.EndEdit();
-        }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-            var editor = GetNodeEditor(treeView1.SelectedNode);
-            if (editor != null)
-                editor.CancelEdit();
-        }
-
-        private void button6_Click(object sender, EventArgs e)
-        {
-            var parent = treeView1.SelectedNode;
-            var account = new ContableAccount();
-            var node = new ContableAccountTreenode(account);
-            parent.Nodes.Add(node);
-            treeView1.SelectedNode = node;
+                MessageBox.Show(results.GetResultText());
+            }
+            
         }
     }
 }

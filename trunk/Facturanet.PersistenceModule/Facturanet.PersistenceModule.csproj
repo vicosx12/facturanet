@@ -72,6 +72,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business\UpdateCompleteAccountTreeProcessor.cs" />
     <Compile Include="Business\GetCompleteAccountTreeProcessor.cs" />
     <Compile Include="Business\UpdateAccountTreeListProcessor.cs" />
     <Compile Include="Business\CreateAccountTreeProcessor.cs" />

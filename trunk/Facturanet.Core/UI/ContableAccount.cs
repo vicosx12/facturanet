@@ -66,8 +66,8 @@ namespace Facturanet.UI
 
         #endregion
 
-        //public List<UI.ContableAccount> Subaccounts { get; set; }
-
+        //public virtual Guid? ParentAccountId { get; set; }
+        
         #region Editable properties
 
         public virtual Guid? ParentAccountId

@@ -9,11 +9,13 @@ using System.Windows.Forms;
 
 namespace Facturanet.WinformsClient.Util
 {
-    public interface IFacturanetEditorControl : IEditableObject
+    public interface IFacturanetEditorControl 
     {
         object EditableObject { get; set; }
-        bool AutoEdit { get; set; }
         bool Visible { get; set; }
+        void BeginEdit();
+        void CancelEdit();
+        void EndEdit();
     }
 
     [DockingAttribute(DockingBehavior.Ask)]
@@ -49,8 +51,6 @@ namespace Facturanet.WinformsClient.Util
                     else
                     {
                         bindingSource.DataSource = editableObject;
-                        if (AutoEdit)
-                            BeginEdit();
                     }
                 }
             }
@@ -61,9 +61,6 @@ namespace Facturanet.WinformsClient.Util
             get { return editableObject; }
             set { EditableObject = value; }
         }
-
-        [DefaultValue(false)]
-        public bool AutoEdit { get; set; }
 
         private void SetReadOnly(bool value)
         {
@@ -84,6 +81,7 @@ namespace Facturanet.WinformsClient.Util
 
         public void EndEdit()
         {
+            //Acá se podría hacer una validación
             SetReadOnly(true);
             editableObject.EndEdit();
         }
