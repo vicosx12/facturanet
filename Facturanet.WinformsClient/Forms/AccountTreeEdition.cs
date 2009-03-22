@@ -118,14 +118,20 @@ namespace Facturanet.WinformsClient.Forms
         {
             if (treeView1.SelectedNode != null)
             {
-                var parent = child 
-                    ? treeView1.SelectedNode
-                    : treeView1.SelectedNode.Parent;
-                if (parent != null)
+                var parentNode = child 
+                    ? (Util.IFacturanetTreenode)treeView1.SelectedNode
+                    : (Util.IFacturanetTreenode)treeView1.SelectedNode.Parent;
+                if (parentNode != null)
                 {
                     var account = new ContableAccount();
                     var node = new ContableAccountTreenode(account);
-                    parent.Nodes.Add(node);
+
+                    var parent = parentNode.AsociatedObject as ContableAccount;
+                    account.ParentAccountId = parent == null
+                        ? null
+                        : (Guid?)parent.Id;
+
+                    parentNode.Nodes.Add(node);
                     treeView1.SelectedNode = node;
                     var editor = GetNodeEditor(treeView1.SelectedNode);
                     SetMode(Mode.Creating);
@@ -226,19 +232,6 @@ namespace Facturanet.WinformsClient.Forms
             RefreshTree();
         }
 
-        /*
-        public IEnumerable<ContableAccount> ChangedAccounts(Util.IFacturanetTreenode node)
-        {
-            ContableAccountTreenode accountNode = node as ContableAccountTreenode;
-            if (accountNode != null && accountNode.TypedAsociatedObject.IsDirty() && !accountNode.TypedAsociatedObject.IsNew()) 
-                yield return accountNode.TypedAsociatedObject;
-
-            foreach (Util.IFacturanetTreenode subnode in node.Nodes)
-                foreach (ContableAccount account in ChangedAccounts(subnode))
-                    yield return account;
-        }
-        */
-
         private void ProcessTree(
             Util.IFacturanetTreenode node,
             Guid? parentId,
@@ -250,9 +243,6 @@ namespace Facturanet.WinformsClient.Forms
             if (accountNode != null)
             {
                 account = accountNode.TypedAsociatedObject;
-
-                if (account.ParentAccountId != parentId)
-                    account.ParentAccountId = parentId;
 
                 if (account.IsNew())
                     createdAccounts.Add(account);
