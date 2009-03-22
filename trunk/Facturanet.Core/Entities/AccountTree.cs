@@ -50,6 +50,20 @@ namespace Facturanet.Entities
     {
         public virtual Iesi.Collections.Generic.ISet<ContableAccount> Accounts { get; set; }
         
+        #region Constructors
+
+        public AccountTree()
+        {
+        }
+
+        public AccountTree(Guid id)
+            : this()
+        {
+            Id = id;
+        }
+
+        #endregion
+
         public virtual void AddAccount(ContableAccount account)
         {
             account.AccountTree = this;

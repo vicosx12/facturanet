@@ -17,7 +17,7 @@ namespace Facturanet.WinformsClient.Util
     }
 
     public abstract class FacturanetBaseTreenode<T> : TreeNode, IFacturanetTreenode
-        where T : class, new()
+        where T : class
     {
         private bool typeIsUIObject;
         private bool typeIsEditable;
@@ -50,11 +50,6 @@ namespace Facturanet.WinformsClient.Util
             }
 
             RefreshData();
-        }
-
-        public FacturanetBaseTreenode()
-            : this(new T())
-        {
         }
 
         void editable_PropertyChanged(object sender, PropertyChangedEventArgs e)

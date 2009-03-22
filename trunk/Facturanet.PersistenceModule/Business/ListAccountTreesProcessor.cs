@@ -21,6 +21,17 @@ namespace Facturanet.Business
             response.Items = context.Session
                 .CreateQuery(@"
 select 
+    accountTree
+from 
+    AccountTree accountTree")
+                .ToDTOEnumerable<UI.AccountTreeListItem>(tuple =>
+                    new UI.AccountTreeListItem((Entities.AccountTree)tuple[0]))
+                .ToList();
+
+            /*-*
+            response.Items = context.Session
+                .CreateQuery(@"
+select 
     accountTree.Id, 
     accountTree.Version, 
     accountTree.Active, 
@@ -40,6 +51,7 @@ from
                         Description = (string)tuple[5]
                     })
                 .ToList();
+             */
             return response;
         }
     }

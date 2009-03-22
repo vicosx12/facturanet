@@ -17,8 +17,6 @@ namespace Facturanet.Business
         {
             foreach (Guid id in request.DeletedIds)
             {
-                //AccountTree entity = context.Session.Load<AccountTree>(id);
-                //context.Session.Delete(entity);
                 AccountTree entity = context.Session.Load<AccountTree>(id);
                 entity.MarkAsDelete();
             }
@@ -28,23 +26,19 @@ namespace Facturanet.Business
             //Modifico los elementos modificados
             foreach (UI.AccountTreeListItem ui in request.UpdatedItems)
             {
-                //TODO: si aca tuviera los valores originales podría verificar que los valores originales sean iguales o los actuales en la db.
                 AccountTree entity = context.Session.Load<AccountTree>(ui.Id);
-
-                //Esto no sirve porque nhibernate usa un numero de version obtenido en el load:
-                //entity.Version = ui.Version; 
                 /*
-                //Esta es la forma de implementar el control de concurrencia 
-                //optimista, pero es mas ineficiente. Así que por ahora no lo voy
-                //a usar.
-                 * 
                 if (entity.Version != ui.Version)
                     throw new StaleObjectStateException("AccountTree", ui.Id);
                 */
+
+                ui.CopyTo(entity);
+                /*-*
                 entity.Active = ui.Active;
                 entity.Code = ui.Code;
                 entity.Description = ui.Description;
                 entity.Name = ui.Name;
+                */
             }
 
             context.Session.Flush();
@@ -52,6 +46,10 @@ namespace Facturanet.Business
             //Creo los nuevos elementos
             foreach (UI.AccountTreeListItem ui in request.CreatedItems)
             {
+                AccountTree entity = new AccountTree(ui.Id);
+                ui.CopyTo(entity);
+                context.Session.Save(entity);
+                /*-*
                 AccountTree entity = new AccountTree()
                 {
                     Active = ui.Active,
@@ -60,12 +58,8 @@ namespace Facturanet.Business
                     Name = ui.Name
                 };
                 context.Session.Save(entity, ui.Id);
+                */
             }
-            
-
-            
-            //TODO: cuando pueda ver las consultas que hace a la db me fijo 
-            //si vale la pena optimizarlo.
         }
     }
 }

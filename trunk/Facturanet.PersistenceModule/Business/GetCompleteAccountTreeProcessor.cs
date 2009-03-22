@@ -15,32 +15,7 @@ namespace Facturanet.Business
 {
     internal class GetCompleteAccountTreeProcessor : PersistenceProcessor<GetCompleteAccountTreeRequest, GetCompleteAccountTreeResponse>
     {
-        #region si fuera una arbol de cuentas
-        /*
-        private List<UI.ContableAccount> EntityListToUIList(IEnumerable<Entities.ContableAccount> accounts)
-        {
-            var list = new List<UI.ContableAccount>();
 
-            foreach (var sub in accounts)
-            {
-                UI.ContableAccount uiSub = new UI.ContableAccount(sub.Id)
-                {
-                    Active = sub.Active,
-                    Code = sub.Code,
-                    Description = sub.Description,
-                    Imputable = sub.Imputable,
-                    Name = sub.Name,
-                    Version = sub.Version
-                };
-                uiSub.Subaccounts = EntityListToUIList(sub.Subaccounts);
-
-                list.Add(uiSub);
-            }
-
-            return list;
-        }
-        */
-        #endregion
         protected override GetCompleteAccountTreeResponse RunInContext(GetCompleteAccountTreeRequest request, PersistenceContext context)
         {
             
@@ -53,6 +28,8 @@ namespace Facturanet.Business
                 .UniqueResult<Entities.AccountTree>();
 
             response.AccountTreeHeader =
+                new UI.AccountTreeListItem(tree);
+                /*-*
                 new UI.AccountTreeListItem(tree.Id)
                 {
                     Active = tree.Active,
@@ -61,12 +38,13 @@ namespace Facturanet.Business
                     Name = tree.Name,
                     Version = tree.Version
                 };
-
+                */
             response.Items = new List<Facturanet.UI.ContableAccount>();
 
             foreach (var entity in tree.Accounts)
             {
-                response.Items.Add(
+                response.Items.Add(new UI.ContableAccount(entity)
+                    /*-*
                     new UI.ContableAccount(entity.Id)
                     {
                         Active = entity.Active,
@@ -78,40 +56,9 @@ namespace Facturanet.Business
                             ? null
                             : (Guid?)entity.ParentAccount.Id,
                         Version = entity.Version
-                    });
+                    }*/
+                       );
             }
-
-            #region si fuera un arbol de cuentas
-
-            var rootAccounts =
-                from account in tree.Accounts
-                where account.ParentAccount == null
-                select account;
-
-            #region Otras formas
-            //Opcion 1: Obtener el tree sin FetchMode:
-            //Entities.AccountTree tree = context.Session.Load<Entities.AccountTree>(request.AccountTreeId);
-            //Opcion 2: Hacer el select de los nulls, pero no se como traer todo
-            /*
-            var rootAccounts = context.Session
-                .CreateQuery(@"
-                    select 
-                        account
-                    from
-                        AccountTree as tree
-                        join tree.Accounts as account
-                    where
-                        account.ParentAccount is null
-                        and tree.Id = :AccountTreeId
-                    ")
-                .SetGuid("AccountTreeId", request.AccountTreeId)
-                .Enumerable<Entities.ContableAccount>();
-            */
-            #endregion
-            /*
-            response.Items = EntityListToUIList(rootAccounts);
-            */
-            #endregion
 
             return response;
         }

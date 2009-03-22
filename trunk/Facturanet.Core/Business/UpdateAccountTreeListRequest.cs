@@ -46,10 +46,20 @@ namespace Facturanet.Business
         public override Facturanet.Validation.ValidationResult GetValidationResult(Facturanet.Validation.Level exceptionOverLevel)
         {
             var result = base.GetValidationResult(exceptionOverLevel);
-            for (int i = 0; i < CreatedItems.Count(); i++)
-                result.Add(exceptionOverLevel, "CreatedItems", i, CreatedItems[i].GetValidationResult(exceptionOverLevel));
-            for (int i = 0; i < UpdatedItems.Count(); i++)
-                result.Add(exceptionOverLevel, "UpdatedItems", i, UpdatedItems[i].GetValidationResult(exceptionOverLevel));
+
+            if (CreatedItems.Length == 0
+                && UpdatedItems.Length == 0
+                && DeletedIds.Length == 0)
+            {
+                result.Add(exceptionOverLevel, "{GENERAL}", Validation.Level.Info, "NOACTION", "This request will not do any action");
+            }
+            else
+            {
+               for (int i = 0; i < CreatedItems.Length; i++)
+                   result.Add(exceptionOverLevel, "CreatedItems", i, CreatedItems[i].GetValidationResult(exceptionOverLevel));
+                for (int i = 0; i < UpdatedItems.Length; i++)
+                    result.Add(exceptionOverLevel, "UpdatedItems", i, UpdatedItems[i].GetValidationResult(exceptionOverLevel));
+            }
             return result;
         }
         
