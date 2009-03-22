@@ -217,7 +217,7 @@
             // 
             // listBindingSource
             // 
-            this.listBindingSource.DataSource = typeof(Facturanet.UI.AccountTreesListItem);
+            this.listBindingSource.DataSource = typeof(Facturanet.UI.AccountTreeListItem);
             // 
             // panel1
             // 

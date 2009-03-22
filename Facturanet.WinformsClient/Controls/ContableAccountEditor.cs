@@ -1,25 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 using System.Data;
-using System.Linq;
+using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
 namespace Facturanet.WinformsClient.Controls
 {
     [ToolboxItem(true)]
-    public partial class AccountTreeListItemEditor : AccountTreeListItemEditorBase
+    public partial class ContableAccountEditor : ContableAccountEditorBase
     {
-        public AccountTreeListItemEditor()
+        public ContableAccountEditor()
         {
             InitializeComponent();
         }
     }
 
-    public class AccountTreeListItemEditorBase : Util.FacturanetBaseEditorControl<UI.AccountTreeListItem>
+    public class ContableAccountEditorBase : Util.FacturanetBaseEditorControl<UI.ContableAccount>
     {
     }
-
 }

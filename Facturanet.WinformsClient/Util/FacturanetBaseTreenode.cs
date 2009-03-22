@@ -10,15 +10,29 @@ using Facturanet.Util;
 
 namespace Facturanet.WinformsClient.Util
 {
-    public abstract class FacturanetBaseTreenode<T> : TreeNode
+    public interface IFacturanetTreenode
+    {
+        object AsociatedObject { get; }
+        void RefreshData();
+    }
+
+    public abstract class FacturanetBaseTreenode<T> : TreeNode, IFacturanetTreenode
         where T : class, new()
     {
         private bool typeIsUIObject;
         private bool typeIsEditable;
         private bool typeIsDeletable;
 
-        public T AsociatedObject { get; private set; }
+        private T asociatedObject = null;
+        public object AsociatedObject
+        {
+            get { return asociatedObject; }
+        }
 
+        public T TypedAsociatedObject
+        {
+            get { return asociatedObject; }
+        }
 
         public FacturanetBaseTreenode(T asociatedObject)
             : base()
@@ -27,11 +41,11 @@ namespace Facturanet.WinformsClient.Util
             typeIsUIObject = type.ImplementsInterface<UI.IUIObject>();
             typeIsEditable = type.ImplementsInterface<UI.IEditableUIObject>();
             typeIsDeletable = type.ImplementsInterface<UI.IDeletableUIObject>();
-            AsociatedObject = asociatedObject;
+            this.asociatedObject = asociatedObject;
 
             if (typeIsEditable)
             {
-                var editable = AsociatedObject as UI.IEditableUIObject;
+                var editable = asociatedObject as UI.IEditableUIObject;
                 editable.PropertyChanged += new PropertyChangedEventHandler(editable_PropertyChanged);
             }
 

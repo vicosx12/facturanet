@@ -18,12 +18,12 @@ namespace Facturanet.Business
         public Guid[] DeletedIds { get; set; }
 
         [DataMember]
-        public UI.AccountTreesListItem[] UpdatedItems { get; set; }
+        public UI.AccountTreeListItem[] UpdatedItems { get; set; }
 
         [DataMember]
-        public UI.AccountTreesListItem[] CreatedItems { get; set; }
+        public UI.AccountTreeListItem[] CreatedItems { get; set; }
 
-        public UpdateAccountTreeListRequest(UI.AccountTreesListItem[] createdItems, UI.AccountTreesListItem[] updatedItems, Guid[] deletedIds)
+        public UpdateAccountTreeListRequest(UI.AccountTreeListItem[] createdItems, UI.AccountTreeListItem[] updatedItems, Guid[] deletedIds)
         {
             CreatedItems = createdItems;
             UpdatedItems = updatedItems;
@@ -31,9 +31,9 @@ namespace Facturanet.Business
         }
 
         public UpdateAccountTreeListRequest(
-            IEnumerable<UI.AccountTreesListItem> createdItems, 
-            IEnumerable<UI.AccountTreesListItem> updatedItems, 
-            IEnumerable<UI.AccountTreesListItem> deletedItems)
+            IEnumerable<UI.AccountTreeListItem> createdItems, 
+            IEnumerable<UI.AccountTreeListItem> updatedItems, 
+            IEnumerable<UI.AccountTreeListItem> deletedItems)
             : this(
                 createdItems.ToArray(),
                 updatedItems.ToArray(),

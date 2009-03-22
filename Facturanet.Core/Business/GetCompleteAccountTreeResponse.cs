@@ -12,6 +12,6 @@ namespace Facturanet.Business
     public class GetCompleteAccountTreeResponse : ListResponse<UI.ContableAccount>
     {
         [DataMember]
-        public UI.AccountTreesListItem AccountTreeHeader { get; set; }
+        public UI.AccountTreeListItem AccountTreeHeader { get; set; }
     }
 }

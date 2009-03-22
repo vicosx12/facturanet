@@ -15,7 +15,7 @@ namespace Facturanet.WinformsClient.Forms
 {
     public partial class AccountTreesABM : Form
     {
-        private FacturanetBindingList<AccountTreesListItem> list;
+        private FacturanetBindingList<AccountTreeListItem> list;
         
         public AccountTreesABM()
         {
@@ -30,7 +30,7 @@ namespace Facturanet.WinformsClient.Forms
         {
             var request = new ListAccountTreesRequest();
             var response = request.Run();
-            list = new FacturanetBindingList<AccountTreesListItem>(response.Items);
+            list = new FacturanetBindingList<AccountTreeListItem>(response.Items);
             listBindingSource.DataSource = list;
         }
 
@@ -68,7 +68,7 @@ namespace Facturanet.WinformsClient.Forms
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            var tree = listBindingSource.GetCurrent<AccountTreesListItem>();
+            var tree = listBindingSource.GetCurrent<AccountTreeListItem>();
 
             if (tree == null)
                 MessageBox.Show("You have to select an item to edit");

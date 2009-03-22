@@ -9,10 +9,17 @@ using System.Windows.Forms;
 
 namespace Facturanet.WinformsClient.Util
 {
+    public interface IFacturanetEditorControl : IEditableObject
+    {
+        object EditableObject { get; set; }
+        bool AutoEdit { get; set; }
+        bool Visible { get; set; }
+    }
+
     [DockingAttribute(DockingBehavior.Ask)]
     [ToolboxItem(false)]
-    public abstract class FacturanetBaseEditorControl<T> : UserControl
-        where T : class, UI.IEditableUIObject
+    public abstract class FacturanetBaseEditorControl<T> : UserControl, IFacturanetEditorControl
+        where T : class, IEditableObject
     {
         public FacturanetBaseEditorControl()
         {
@@ -49,6 +56,11 @@ namespace Facturanet.WinformsClient.Util
             }
         }
 
+        public T TypedEditableObject
+        {
+            get { return editableObject; }
+            set { EditableObject = value; }
+        }
 
         [DefaultValue(false)]
         public bool AutoEdit { get; set; }

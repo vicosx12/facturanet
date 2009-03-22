@@ -19,81 +19,89 @@ namespace Facturanet.WinformsClient.Forms
             InitializeComponent();
         }
 
-        private void AddChilds(TreeNode nodo, IEnumerable<ContableAccount> subaccounts)
+        private AccountTreeListItemTreenode GenerateTree(AccountTreeListItem tree, IEnumerable<ContableAccount> accounts)
         {
-            /*
-            foreach (var sub in subaccounts)
+            AccountTreeListItemTreenode root = new AccountTreeListItemTreenode(tree);
+
+            Dictionary<Guid, ContableAccountTreenode> aux = new Dictionary<Guid, ContableAccountTreenode>();
+            
+            foreach (ContableAccount account in accounts)
+                aux.Add(
+                    account.Id,
+                    new ContableAccountTreenode(account));
+
+            foreach (var auxItem in aux)
             {
-                TreeNode subNode = new TreeNode(string.Format("{0} - {1}", sub.Code, sub.Name));
-                subNode.ToolTipText = sub.Description;
-                subNode.Tag = sub;
-                sub.DiscartableChangesControl = true;
-                AddChilds(subNode, sub.Subaccounts);
-                nodo.Nodes.Add(subNode);
+                var accountNode = auxItem.Value;
+                Guid? parentId = accountNode.TypedAsociatedObject.ParentAccountId;
+                if (parentId.HasValue)
+                {
+                    var parentNode = aux[parentId.Value];
+                    parentNode.Nodes.Add(accountNode);
+                }
+                else
+                    root.Nodes.Add(auxItem.Value);
             }
-             * */
+
+            return root;
         }
 
         public AccountTreeEdition(Guid accountTreeId)
             : this()
         {
-            //hacer un treenode especializado
             var request = new Business.GetCompleteAccountTreeRequest();
             request.AccountTreeId = accountTreeId;
             var response = request.Run();
 
-            AccountTreeListItemTreenode root = new AccountTreeListItemTreenode(response.AccountTreeHeader);
-            treeView1.Nodes.Add(root);
-            /*
-            TreeNode root = treeView1.Nodes.Add(
-                response.AccountTreeHeader.Id.ToString(),
-                string.Format("{0} - {1}", response.AccountTreeHeader.Code, response.AccountTreeHeader.Name));
-            root.ToolTipText = response.AccountTreeHeader.Description;
-            root.Tag = response.AccountTreeHeader;
-             
-            response.AccountTreeHeader.DiscartableChangesControl = true;
-             * * */
-            /*
-            AddChilds(root, response.Items);
-            
-            //accountTreeListItemEditior1.EditableObject = response.AccountTreeHeader;
-             */
-
+            this.treeView1.Nodes.Add(GenerateTree(response.AccountTreeHeader, response.Items));
 
             this.treeView1.ExpandAll();
         }
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            AccountTreeListItemTreenode accountTreeListItemTreenode = e.Node as AccountTreeListItemTreenode;
-            if (accountTreeListItemTreenode != null)
-            {
-                accountTreeListItemEditor1.EditableObject = accountTreeListItemTreenode.AsociatedObject;
-                accountTreeListItemEditor1.Visible = true;
-            }
+            accountTreeListItemEditor1.Visible = false;
+            contableAccountEditor1.Visible = false;
+
+            var editor = GetNodeEditor(e.Node);
+            var node = e.Node as Util.IFacturanetTreenode;
+
+            editor.EditableObject = node.AsociatedObject;
+            editor.Visible = true;
+        }
+
+        private Util.IFacturanetEditorControl GetNodeEditor(TreeNode node)
+        {
+            if (node == null)
+                return null;
+            if (node is AccountTreeListItemTreenode)
+                return accountTreeListItemEditor1;
+            else if (node is ContableAccountTreenode)
+                return contableAccountEditor1;
             else
-            {
-                accountTreeListItemEditor1.Visible = false;
-                accountTreeListItemEditor1.EditableObject = null;
-            }
+                return null;
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            if (accountTreeListItemEditor1.Visible)
-                accountTreeListItemEditor1.BeginEdit();
+            var editor = GetNodeEditor(treeView1.SelectedNode);
+
+            if (editor != null)
+                editor.BeginEdit();
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            if (accountTreeListItemEditor1.Visible)
-                accountTreeListItemEditor1.EndEdit();
+            var editor = GetNodeEditor(treeView1.SelectedNode);
+            if (editor != null)
+                editor.EndEdit();
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            if (accountTreeListItemEditor1.Visible)
-                accountTreeListItemEditor1.CancelEdit();
+            var editor = GetNodeEditor(treeView1.SelectedNode);
+            if (editor != null)
+                editor.CancelEdit();
         }
     }
 }
