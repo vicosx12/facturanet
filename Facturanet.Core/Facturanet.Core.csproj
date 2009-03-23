@@ -71,6 +71,7 @@
     <Compile Include="Business\ListProductsResponse.cs" />
     <Compile Include="UI\ContableAccount.cs" />
     <Compile Include="UI\TreeOrderPair.cs" />
+    <Compile Include="Util\TypeExtensions.cs" />
     <Compile Include="Validation\PropertyValidationResult.cs" />
     <Compile Include="Validation\ValidationResultItem.cs" />
     <Compile Include="Validation\ValidationResult.cs" />

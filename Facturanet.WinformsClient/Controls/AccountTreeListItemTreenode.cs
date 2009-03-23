@@ -11,29 +11,34 @@ using Facturanet.UI;
 
 namespace Facturanet.WinformsClient.Controls
 {
-    public class AccountTreeListItemTreenode : Util.FacturanetBaseTreenode<AccountTreeListItem>
+    public class AccountTreeListItemTreenode : Util.FacturanetTreenode
     {
-        public AccountTreeListItemTreenode(AccountTreeListItem asociatedObject)
-            : base(asociatedObject)
+        public AccountTreeListItemTreenode(AccountTreeListItem data)
+            : base(data)
         {
+        }
+
+        public AccountTreeListItem AccountTreeListItem
+        {
+            get { return (AccountTreeListItem)Data; }
         }
 
         protected override string GetNodeName()
         {
-            return TypedAsociatedObject.Id.ToString();
+            return AccountTreeListItem.Id.ToString();
         }
 
         protected override string GetNodeText()
         {
             return string.Format(
-                "{0} - {1}",
-                TypedAsociatedObject.Code,
-                TypedAsociatedObject.Name);
+                "[{0}] {1}",
+                AccountTreeListItem.Code,
+                AccountTreeListItem.Name);
         }
 
         protected override string GetNodeToolTipText()
         {
-            return TypedAsociatedObject.Description;
+            return AccountTreeListItem.Description;
         }
     }
 }

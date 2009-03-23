@@ -11,29 +11,35 @@ using Facturanet.UI;
 
 namespace Facturanet.WinformsClient.Controls
 {
-    public class ContableAccountTreenode : Util.FacturanetBaseTreenode<ContableAccount>
+    public class ContableAccountTreenode : Util.FacturanetTreenode
     {
-        public ContableAccountTreenode(ContableAccount asociatedObject)
-            : base(asociatedObject)
+        public ContableAccountTreenode(ContableAccount data)
+            : base(data)
         {
+        }
+
+
+        public ContableAccount ContableAccount 
+        {
+            get { return (ContableAccount)Data; }
         }
 
         protected override string GetNodeName()
         {
-            return TypedAsociatedObject.Id.ToString();
+            return ContableAccount.Id.ToString();
         }
 
         protected override string GetNodeText()
         {
             return string.Format(
-                "{0} - {1}",
-                TypedAsociatedObject.Code,
-                TypedAsociatedObject.Name);
+                "[{0}] {1}",
+                ContableAccount.Code,
+                ContableAccount.Name);
         }
 
         protected override string GetNodeToolTipText()
         {
-            return TypedAsociatedObject.Description;
+            return ContableAccount.Description;
         }
     }
 }

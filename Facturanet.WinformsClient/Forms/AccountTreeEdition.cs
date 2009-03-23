@@ -9,6 +9,8 @@ using System.Windows.Forms;
 using Facturanet.UI;
 using Facturanet.Validation;
 using Facturanet.WinformsClient.Controls;
+using Facturanet.Util;
+using Facturanet.WinformsClient.Util;
 
 namespace Facturanet.WinformsClient.Forms
 {
@@ -28,7 +30,7 @@ namespace Facturanet.WinformsClient.Forms
             RefreshTree(accountTreeId);
         }
 
-        private Util.IFacturanetEditorControl GetNodeEditor(TreeNode node)
+        private Util.FacturanetEditorControl GetNodeEditor(TreeNode node)
         {
             if (node == null)
                 return null;
@@ -118,16 +120,17 @@ namespace Facturanet.WinformsClient.Forms
         {
             if (treeView1.SelectedNode != null)
             {
-                var parentNode = child 
-                    ? (Util.IFacturanetTreenode)treeView1.SelectedNode
-                    : (Util.IFacturanetTreenode)treeView1.SelectedNode.Parent;
+                var parentNode = child
+                    ? (FacturanetTreenode)treeView1.SelectedNode
+                    : (FacturanetTreenode)treeView1.SelectedNode.Parent;
+
                 if (parentNode != null)
                 {
                     var account = new ContableAccount();
                     var node = new ContableAccountTreenode(account);
 
-                    //TODO: Esto tal vez podría ser código del ContableAccountTreenode junto con el que pone el padre con el dragandrop
-                    var parent = parentNode.AsociatedObject as ContableAccount;
+                    //¿No puedo hacer que el nodo se entere de que le cambió el padre?
+                    var parent = parentNode.Data as ContableAccount;
                     account.ParentAccountId = parent == null
                         ? null
                         : (Guid?)parent.Id;
@@ -155,7 +158,7 @@ namespace Facturanet.WinformsClient.Forms
             foreach (var auxItem in aux)
             {
                 var accountNode = auxItem.Value;
-                Guid? parentId = accountNode.TypedAsociatedObject.ParentAccountId;
+                Guid? parentId = accountNode.ContableAccount.ParentAccountId;
                 if (parentId.HasValue)
                 {
                     var parentNode = aux[parentId.Value];
@@ -217,9 +220,9 @@ namespace Facturanet.WinformsClient.Forms
             contableAccountEditor1.Visible = false;
 
             var editor = GetNodeEditor(e.Node);
-            var node = e.Node as Util.IFacturanetTreenode;
+            var node = e.Node as Util.FacturanetTreenode;
 
-            editor.EditableObject = node.AsociatedObject;
+            editor.EditableObject = node.Data;
             editor.Visible = true;
         }
 
@@ -233,34 +236,6 @@ namespace Facturanet.WinformsClient.Forms
             RefreshTree();
         }
 
-        private void ProcessTree(
-            Util.IFacturanetTreenode node,
-            Guid? parentId,
-            List<ContableAccount> updatedAccounts, 
-            List<ContableAccount> createdAccounts)
-        {
-            ContableAccountTreenode accountNode = node as ContableAccountTreenode;
-            ContableAccount account = null;
-            if (accountNode != null)
-            {
-                account = accountNode.TypedAsociatedObject;
-
-                if (account.IsNew())
-                    createdAccounts.Add(account);
-                else if (account.IsDirty())
-                    updatedAccounts.Add(account);
-            }
-
-            foreach (Util.IFacturanetTreenode subnode in node.Nodes)
-                ProcessTree(
-                    subnode,
-                    account == null 
-                        ? null
-                        : (Guid?)account.Id,
-                    updatedAccounts, 
-                    createdAccounts);
-        }
-
         private void btnSave_Click(object sender, EventArgs e)
         {
             var request = new Business.UpdateCompleteAccountTreeRequest(accountTreeHeader.Id);
@@ -270,7 +245,19 @@ namespace Facturanet.WinformsClient.Forms
 
             List<ContableAccount> updatedAccounts = new List<ContableAccount>();
             List<ContableAccount> createdAccounts = new List<ContableAccount>();
-            ProcessTree(rootNode, null, updatedAccounts, createdAccounts);
+
+            foreach (TreeNode node in rootNode.Nodes.Backtracking())
+            {
+                ContableAccountTreenode contableAccountTreenode = node as ContableAccountTreenode;
+                if (contableAccountTreenode != null)
+                {
+                    ContableAccount account = contableAccountTreenode.ContableAccount;
+                    if (account.IsNew())
+                        createdAccounts.Add(account);
+                    else if (account.IsDirty())
+                        updatedAccounts.Add(account);
+                }
+            }
 
             request.UpdatedAccounts = updatedAccounts.ToArray();
             request.CreatedAccounts = createdAccounts.ToArray();
@@ -295,6 +282,54 @@ namespace Facturanet.WinformsClient.Forms
                 MessageBox.Show(results.GetResultText());
             }
             
+        }
+
+        private void treeView1_ItemDrag(object sender, ItemDragEventArgs e)
+        {
+            ContableAccountTreenode contableAccountTreenode = e.Item as ContableAccountTreenode;
+            if (contableAccountTreenode != null)
+            {
+                treeView1.DoDragDrop(contableAccountTreenode, DragDropEffects.Move);
+            }
+        }
+
+        private void treeView1_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.Move;
+        }
+
+        private void treeView1_DragDrop(object sender, DragEventArgs e)
+        {
+            Point pt = ((TreeView)sender).PointToClient(new Point(e.X, e.Y));
+            TreeNode DestinationNode = ((TreeView)sender).GetNodeAt(pt);
+            if (DestinationNode != null)
+            {
+                ContableAccount parent = null;
+
+                if (DestinationNode is ContableAccountTreenode)
+                    parent = ((ContableAccountTreenode)DestinationNode).ContableAccount;
+
+                if (e.Data.GetDataPresent("Facturanet.WinformsClient.Controls.ContableAccountTreenode", false))
+                {
+                    //todo: revisar aca y en el drag enter que no haya recursividad
+                    ContableAccountTreenode contableAccountTreenode = (ContableAccountTreenode)e.Data.GetData("Facturanet.WinformsClient.Controls.ContableAccountTreenode");
+                    contableAccountTreenode.Remove();
+                    contableAccountTreenode.ContableAccount.ParentAccountId = parent == null
+                        ? null
+                        : (Guid?)parent.Id;
+                    DestinationNode.Nodes.Add(contableAccountTreenode);
+
+                    /*
+                    if (DestinationNode.TreeView != NewNode.TreeView)
+                    {
+                        DestinationNode.Nodes.Add((TreeNode)NewNode.Clone());
+                        DestinationNode.Expand();
+                        //Remove Original Node
+                        NewNode.Remove();
+                    }
+                     * */
+                }
+            }
         }
     }
 }

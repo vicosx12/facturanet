@@ -121,6 +121,12 @@ namespace Facturanet.UI
         /// </remarks>
         void DiscardChanges();
 
+
+        /// <summary>
+        /// Reverts the value of a property
+        /// </summary>
+        void RevertPropertyValue(string property);
+
         /// <summary>
         /// Gets the changes respect the original version.
         /// </summary>
