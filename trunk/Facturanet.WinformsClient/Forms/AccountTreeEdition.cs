@@ -126,6 +126,7 @@ namespace Facturanet.WinformsClient.Forms
                     var account = new ContableAccount();
                     var node = new ContableAccountTreenode(account);
 
+                    //TODO: Esto tal vez podría ser código del ContableAccountTreenode junto con el que pone el padre con el dragandrop
                     var parent = parentNode.AsociatedObject as ContableAccount;
                     account.ParentAccountId = parent == null
                         ? null
