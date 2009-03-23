@@ -32,11 +32,11 @@
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.btnNewBrother = new System.Windows.Forms.Button();
             this.btnNewChild = new System.Windows.Forms.Button();
             this.btnBeginEdit = new System.Windows.Forms.Button();
             this.btnCancelEdit = new System.Windows.Forms.Button();
             this.btnEndEdit = new System.Windows.Forms.Button();
-            this.btnNewBrother = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.accountTreeListItemEditor1 = new Facturanet.WinformsClient.Controls.AccountTreeListItemEditor();
@@ -62,15 +62,17 @@
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.treeView1.HideSelection = false;
-            this.treeView1.HotTracking = true;
             this.treeView1.Location = new System.Drawing.Point(12, 42);
             this.treeView1.Name = "treeView1";
             this.treeView1.ShowNodeToolTips = true;
             this.treeView1.ShowRootLines = false;
             this.treeView1.Size = new System.Drawing.Size(567, 176);
             this.treeView1.TabIndex = 1;
+            this.treeView1.DragDrop += new System.Windows.Forms.DragEventHandler(this.treeView1_DragDrop);
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
+            this.treeView1.DragEnter += new System.Windows.Forms.DragEventHandler(this.treeView1_DragEnter);
             this.treeView1.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.treeView1_BeforeSelect);
+            this.treeView1.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.treeView1_ItemDrag);
             // 
             // panel1
             // 
@@ -96,6 +98,16 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(75, 115);
             this.panel2.TabIndex = 5;
+            // 
+            // btnNewBrother
+            // 
+            this.btnNewBrother.Location = new System.Drawing.Point(37, 0);
+            this.btnNewBrother.Name = "btnNewBrother";
+            this.btnNewBrother.Size = new System.Drawing.Size(37, 23);
+            this.btnNewBrother.TabIndex = 6;
+            this.btnNewBrother.Text = "Bro";
+            this.btnNewBrother.UseVisualStyleBackColor = true;
+            this.btnNewBrother.Click += new System.EventHandler(this.btnNewBrother_Click);
             // 
             // btnNewChild
             // 
@@ -137,16 +149,6 @@
             this.btnEndEdit.UseVisualStyleBackColor = true;
             this.btnEndEdit.Click += new System.EventHandler(this.btnEndEdit_Click);
             // 
-            // btnNewBrother
-            // 
-            this.btnNewBrother.Location = new System.Drawing.Point(37, 0);
-            this.btnNewBrother.Name = "btnNewBrother";
-            this.btnNewBrother.Size = new System.Drawing.Size(37, 23);
-            this.btnNewBrother.TabIndex = 6;
-            this.btnNewBrother.Text = "Bro";
-            this.btnNewBrother.UseVisualStyleBackColor = true;
-            this.btnNewBrother.Click += new System.EventHandler(this.btnNewBrother_Click);
-            // 
             // btnSave
             // 
             this.btnSave.Location = new System.Drawing.Point(222, 354);
@@ -175,7 +177,6 @@
             this.accountTreeListItemEditor1.Name = "accountTreeListItemEditor1";
             this.accountTreeListItemEditor1.Size = new System.Drawing.Size(491, 115);
             this.accountTreeListItemEditor1.TabIndex = 0;
-            this.accountTreeListItemEditor1.TypedEditableObject = null;
             this.accountTreeListItemEditor1.Visible = false;
             // 
             // contableAccountEditor1
@@ -186,7 +187,6 @@
             this.contableAccountEditor1.Name = "contableAccountEditor1";
             this.contableAccountEditor1.Size = new System.Drawing.Size(566, 115);
             this.contableAccountEditor1.TabIndex = 4;
-            this.contableAccountEditor1.TypedEditableObject = null;
             this.contableAccountEditor1.Visible = false;
             // 
             // AccountTreeEdition

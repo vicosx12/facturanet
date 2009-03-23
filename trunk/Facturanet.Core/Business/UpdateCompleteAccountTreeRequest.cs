@@ -17,9 +17,6 @@ namespace Facturanet.Business
         [DataMember]
         public Guid AccountTreeId { get; set; }
 
-        /// <summary>
-        /// Set this property only if AccountTreeHeader has changes.
-        /// </summary>
         [DataMember]
         public UI.AccountTreeListItem AccountTreeHeader { get; set; }
 
@@ -28,11 +25,6 @@ namespace Facturanet.Business
 
         [DataMember]
         public UI.ContableAccount[] CreatedAccounts { get; set; }
-
-        /*
-        [DataMember]
-        public UI.TreeOrderPair[] ReorderData { get; set; }
-        */
 
         public UpdateCompleteAccountTreeRequest(
             Guid accountTreeId)
@@ -47,8 +39,7 @@ namespace Facturanet.Business
             if (
                 AccountTreeHeader == null
                 && UpdatedAccounts.Length == 0
-                && CreatedAccounts.Length == 0
-                /*&& ReorderData.Length == 0*/)
+                && CreatedAccounts.Length == 0)
             {
                 result.Add(exceptionOverLevel, "{GENERAL}", Validation.Level.Info, "NOACTION", "This request will not do any action");
             }

@@ -61,8 +61,8 @@
       <DependentUpon>ContableAccountEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\ContableAccountTreenode.cs" />
-    <Compile Include="Util\FacturanetGenericTreenode.cs" />
-    <Compile Include="Util\FacturanetBaseTreenode.cs">
+    <Compile Include="Util\TreeNodeCollectionExtensions.cs" />
+    <Compile Include="Util\FacturanetTreenode.cs">
     </Compile>
     <Compile Include="Util\BindingSourceExtensions.cs" />
     <Compile Include="Controls\AccountTreeListItemEditor.cs">
@@ -71,7 +71,7 @@
     <Compile Include="Controls\AccountTreeListItemEditor.Designer.cs">
       <DependentUpon>AccountTreeListItemEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Util\FacturanetBaseEditorControl.cs">
+    <Compile Include="Util\FacturanetEditorControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Util\FacturanetBindingNavigator.cs">

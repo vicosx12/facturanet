@@ -206,6 +206,30 @@ namespace Facturanet.UI
         }
 
         /// <summary>
+        /// Reverts the value of a property
+        /// </summary>
+        public void RevertPropertyValue(string property)
+        {
+            if (!DiscartableChangesControl)
+                throw new ApplicationException("Discartable Changes Control is not active.");
+            else if (!this.IsDirty())
+                throw new ApplicationException("The data is not dirty.");
+            else
+            {
+                ValueChangedDescriptorCollection diferences = GetChanges();
+                if (!diferences.Contains(property))
+                    throw new ApplicationException("The property is not changed.");
+                else
+                {
+                    object originalValue = diferences[property].OriginalValue;
+                    SetData(property, originalValue);
+                    if (diferences.Count == 1)
+                        backupDiscardChanges = null;
+                }
+            }
+        }
+
+        /// <summary>
         /// Accepts the changes.
         /// </summary>
         /// <remarks>

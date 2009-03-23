@@ -151,6 +151,11 @@ namespace Facturanet.UI
             EditableData.DiscardChanges();
         }
 
+        public void RevertPropertyValue(string property)
+        {
+            EditableData.RevertPropertyValue(property);
+        }
+
         public void AcceptChanges()
         {
             EditableData.AcceptChanges();

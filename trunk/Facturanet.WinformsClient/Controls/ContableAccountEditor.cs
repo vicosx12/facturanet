@@ -17,7 +17,11 @@ namespace Facturanet.WinformsClient.Controls
         }
     }
 
-    public class ContableAccountEditorBase : Util.FacturanetBaseEditorControl<UI.ContableAccount>
+    public class ContableAccountEditorBase : Util.FacturanetEditorControl
     {
+        public ContableAccountEditorBase()
+            : base(typeof(UI.ContableAccount))
+        {
+        }
     }
 }

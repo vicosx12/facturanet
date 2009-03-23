@@ -18,8 +18,12 @@ namespace Facturanet.WinformsClient.Controls
         }
     }
 
-    public class AccountTreeListItemEditorBase : Util.FacturanetBaseEditorControl<UI.AccountTreeListItem>
+    public class AccountTreeListItemEditorBase : Util.FacturanetEditorControl
     {
+        public AccountTreeListItemEditorBase()
+            : base(typeof(UI.AccountTreeListItem))
+        {
+        }
     }
 
 }
