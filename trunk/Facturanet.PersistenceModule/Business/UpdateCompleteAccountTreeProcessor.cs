@@ -31,7 +31,7 @@ namespace Facturanet.Business
 
             context.Session.Flush(); //por los uniques
 
-            foreach (UI.AccountTreeListItem ui in request.UpdatedTrees)
+            foreach (UI.AccountTreeListItem ui in request.CreatedTrees)
             {
                 AccountTree entity = new AccountTree(ui.Id);
                 ui.CopyTo(entity);

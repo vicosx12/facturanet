@@ -67,7 +67,8 @@
       <DependentUpon>ContableAccountEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\ContableAccountTreenode.cs" />
-    <Compile Include="Util\TreeNodeCollectionExtensions.cs" />
+    <Compile Include="Util\DataObjectExtensions.cs" />
+    <Compile Include="Util\TreeNodeExtensions.cs" />
     <Compile Include="Util\FacturanetTreenode.cs">
     </Compile>
     <Compile Include="Util\BindingSourceExtensions.cs" />
