@@ -11,9 +11,9 @@ using Facturanet.UI;
 
 namespace Facturanet.WinformsClient.Controls
 {
-    public class ContableAccountTreenode : Util.FacturanetTreenode
+    public class ContableAccountTreeNode : Util.FacturanetTreeNode
     {
-        public ContableAccountTreenode(ContableAccount data)
+        public ContableAccountTreeNode(ContableAccount data)
             : base(data)
         {
         }

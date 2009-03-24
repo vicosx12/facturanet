@@ -48,6 +48,7 @@ namespace Facturanet.UI
             ParentAccountId = entity.ParentAccount == null
                             ? null
                             : (Guid?)entity.ParentAccount.Id;
+            AccountTreeId = entity.AccountTree.Id;
         }
 
         /// <summary>
@@ -69,6 +70,12 @@ namespace Facturanet.UI
         //public virtual Guid? ParentAccountId { get; set; }
         
         #region Editable properties
+
+        public virtual Guid AccountTreeId
+        {
+            get { return EditableData.GetData<Guid>("AccountTreeId"); }
+            set { EditableData.SetData("AccountTreeId", value); }
+        }
 
         public virtual Guid? ParentAccountId
         {

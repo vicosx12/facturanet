@@ -29,18 +29,18 @@
         private void InitializeComponent()
         {
             this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.treeView1 = new System.Windows.Forms.TreeView();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.accountTreeListItemEditor1 = new Facturanet.WinformsClient.Controls.AccountTreeListItemEditor();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnNewBrother = new System.Windows.Forms.Button();
             this.btnNewChild = new System.Windows.Forms.Button();
             this.btnBeginEdit = new System.Windows.Forms.Button();
             this.btnCancelEdit = new System.Windows.Forms.Button();
             this.btnEndEdit = new System.Windows.Forms.Button();
+            this.contableAccountEditor1 = new Facturanet.WinformsClient.Controls.ContableAccountEditor();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnRefresh = new System.Windows.Forms.Button();
-            this.accountTreeListItemEditor1 = new Facturanet.WinformsClient.Controls.AccountTreeListItemEditor();
-            this.contableAccountEditor1 = new Facturanet.WinformsClient.Controls.ContableAccountEditor();
+            this.accountTreesTreeView1 = new Facturanet.WinformsClient.Controls.AccountTreesTreeView();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -55,25 +55,6 @@
             this.checkBox1.Text = "showInactiveItems";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
-            // treeView1
-            // 
-            this.treeView1.AllowDrop = true;
-            this.treeView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.treeView1.HideSelection = false;
-            this.treeView1.Location = new System.Drawing.Point(12, 42);
-            this.treeView1.Name = "treeView1";
-            this.treeView1.ShowNodeToolTips = true;
-            this.treeView1.ShowRootLines = false;
-            this.treeView1.Size = new System.Drawing.Size(567, 176);
-            this.treeView1.TabIndex = 1;
-            this.treeView1.DragDrop += new System.Windows.Forms.DragEventHandler(this.treeView1_DragDrop);
-            this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
-            this.treeView1.DragEnter += new System.Windows.Forms.DragEventHandler(this.treeView1_DragEnter);
-            this.treeView1.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.treeView1_BeforeSelect);
-            this.treeView1.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.treeView1_ItemDrag);
-            // 
             // panel1
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
@@ -85,6 +66,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(566, 115);
             this.panel1.TabIndex = 4;
+            // 
+            // accountTreeListItemEditor1
+            // 
+            this.accountTreeListItemEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.accountTreeListItemEditor1.EditableObject = null;
+            this.accountTreeListItemEditor1.Location = new System.Drawing.Point(0, 0);
+            this.accountTreeListItemEditor1.Name = "accountTreeListItemEditor1";
+            this.accountTreeListItemEditor1.Size = new System.Drawing.Size(491, 115);
+            this.accountTreeListItemEditor1.TabIndex = 0;
+            this.accountTreeListItemEditor1.Visible = false;
             // 
             // panel2
             // 
@@ -149,6 +140,16 @@
             this.btnEndEdit.UseVisualStyleBackColor = true;
             this.btnEndEdit.Click += new System.EventHandler(this.btnEndEdit_Click);
             // 
+            // contableAccountEditor1
+            // 
+            this.contableAccountEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.contableAccountEditor1.EditableObject = null;
+            this.contableAccountEditor1.Location = new System.Drawing.Point(0, 0);
+            this.contableAccountEditor1.Name = "contableAccountEditor1";
+            this.contableAccountEditor1.Size = new System.Drawing.Size(566, 115);
+            this.contableAccountEditor1.TabIndex = 4;
+            this.contableAccountEditor1.Visible = false;
+            // 
             // btnSave
             // 
             this.btnSave.Location = new System.Drawing.Point(222, 354);
@@ -169,35 +170,26 @@
             this.btnRefresh.UseVisualStyleBackColor = true;
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
-            // accountTreeListItemEditor1
+            // accountTreesTreeView1
             // 
-            this.accountTreeListItemEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.accountTreeListItemEditor1.EditableObject = null;
-            this.accountTreeListItemEditor1.Location = new System.Drawing.Point(0, 0);
-            this.accountTreeListItemEditor1.Name = "accountTreeListItemEditor1";
-            this.accountTreeListItemEditor1.Size = new System.Drawing.Size(491, 115);
-            this.accountTreeListItemEditor1.TabIndex = 0;
-            this.accountTreeListItemEditor1.Visible = false;
-            // 
-            // contableAccountEditor1
-            // 
-            this.contableAccountEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.contableAccountEditor1.EditableObject = null;
-            this.contableAccountEditor1.Location = new System.Drawing.Point(0, 0);
-            this.contableAccountEditor1.Name = "contableAccountEditor1";
-            this.contableAccountEditor1.Size = new System.Drawing.Size(566, 115);
-            this.contableAccountEditor1.TabIndex = 4;
-            this.contableAccountEditor1.Visible = false;
+            this.accountTreesTreeView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.accountTreesTreeView1.Location = new System.Drawing.Point(12, 33);
+            this.accountTreesTreeView1.Name = "accountTreesTreeView1";
+            this.accountTreesTreeView1.Size = new System.Drawing.Size(567, 185);
+            this.accountTreesTreeView1.TabIndex = 7;
+            this.accountTreesTreeView1.CurrentChanged += new System.EventHandler(this.accountTreesTreeView1_CurrentChanged);
             // 
             // AccountTreeEdition
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(591, 379);
+            this.Controls.Add(this.accountTreesTreeView1);
             this.Controls.Add(this.btnRefresh);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.treeView1);
             this.Controls.Add(this.checkBox1);
             this.Name = "AccountTreeEdition";
             this.Text = "AccountTreeEdition";
@@ -211,7 +203,6 @@
         #endregion
 
         private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.Panel panel1;
         private Facturanet.WinformsClient.Controls.AccountTreeListItemEditor accountTreeListItemEditor1;
         private System.Windows.Forms.Button btnBeginEdit;
@@ -223,5 +214,6 @@
         private System.Windows.Forms.Button btnNewBrother;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnRefresh;
+        private Facturanet.WinformsClient.Controls.AccountTreesTreeView accountTreesTreeView1;
     }
 }

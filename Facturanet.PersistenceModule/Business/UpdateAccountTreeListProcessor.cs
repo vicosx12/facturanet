@@ -13,6 +13,7 @@ namespace Facturanet.Business
 {
     internal class UpdateAccountTreeListProcessor : PersistenceEmptyResponseProcessor<UpdateAccountTreeListRequest>
     {
+        //TODO: Elimianar esta Accion
         protected override void RunInContextEmptyResponse(UpdateAccountTreeListRequest request, PersistenceContext context)
         {
             foreach (Guid id in request.DeletedIds)

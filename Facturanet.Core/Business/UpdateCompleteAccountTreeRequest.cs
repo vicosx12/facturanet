@@ -15,10 +15,13 @@ namespace Facturanet.Business
     public class UpdateCompleteAccountTreeRequest : BaseRequest<EmptyResponse>
     {
         [DataMember]
-        public Guid AccountTreeId { get; set; }
+        public Guid[] DeletedTreesIds { get; set; }
 
         [DataMember]
-        public UI.AccountTreeListItem AccountTreeHeader { get; set; }
+        public UI.AccountTreeListItem[] UpdatedTrees { get; set; }
+
+        [DataMember]
+        public UI.AccountTreeListItem[] CreatedTrees { get; set; }
 
         [DataMember]
         public UI.ContableAccount[] UpdatedAccounts { get; set; }
@@ -26,18 +29,22 @@ namespace Facturanet.Business
         [DataMember]
         public UI.ContableAccount[] CreatedAccounts { get; set; }
 
-        public UpdateCompleteAccountTreeRequest(
-            Guid accountTreeId)
+        public UpdateCompleteAccountTreeRequest()
         {
-            AccountTreeId = accountTreeId;
+            DeletedTreesIds = new Guid[0];
+            UpdatedTrees = new UI.AccountTreeListItem[0];
+            CreatedTrees = new UI.AccountTreeListItem[0];
+            UpdatedAccounts = new UI.ContableAccount[0];
+            CreatedAccounts = new UI.ContableAccount[0];
         }
-        
+
         public override Facturanet.Validation.ValidationResult GetValidationResult(Facturanet.Validation.Level exceptionOverLevel)
         {
             var result = base.GetValidationResult(exceptionOverLevel);
 
             if (
-                AccountTreeHeader == null
+                UpdatedTrees.Length == 0
+                && CreatedTrees.Length == 0
                 && UpdatedAccounts.Length == 0
                 && CreatedAccounts.Length == 0)
             {
@@ -45,11 +52,11 @@ namespace Facturanet.Business
             }
             else
             {
-                if (AccountTreeId == null)
-                    result.Add(exceptionOverLevel, "AccountTreeId", Validation.Level.Error, "REQUIERED_VALUE", "AccountTreeId is requiered to do the action");
+                for (int i = 0; i < UpdatedTrees.Length; i++)
+                    result.Add(exceptionOverLevel, "UpdatedTrees", i, UpdatedTrees[i].GetValidationResult(exceptionOverLevel));
 
-                if (AccountTreeHeader != null)
-                    result.Add(exceptionOverLevel, "AccountTreeHeader", AccountTreeHeader.GetValidationResult(exceptionOverLevel));
+                for (int i = 0; i < UpdatedTrees.Length; i++)
+                    result.Add(exceptionOverLevel, "CreatedTrees", i, CreatedTrees[i].GetValidationResult(exceptionOverLevel));
 
                 for (int i = 0; i < UpdatedAccounts.Length; i++)
                     result.Add(exceptionOverLevel, "UpdatedAccounts", i, UpdatedAccounts[i].GetValidationResult(exceptionOverLevel));
