@@ -15,29 +15,45 @@ namespace Facturanet.Business
     {
         protected override void RunInContextEmptyResponse(UpdateCompleteAccountTreeRequest request, PersistenceContext context)
         {
-            AccountTree tree = context.Session.Load<AccountTree>(request.AccountTreeId);
-
-            if (request.AccountTreeHeader != null)
+            foreach (Guid id in request.DeletedTreesIds)
             {
-                request.AccountTreeHeader.CopyTo(tree);
+                AccountTree entity = context.Session.Load<AccountTree>(id);
+                entity.MarkAsDelete();
+            }
+
+            context.Session.Flush(); //por los uniques
+
+            foreach (UI.AccountTreeListItem ui in request.UpdatedTrees)
+            {
+                AccountTree entity = context.Session.Load<AccountTree>(ui.Id);
+                ui.CopyTo(entity);
+            }
+
+            context.Session.Flush(); //por los uniques
+
+            foreach (UI.AccountTreeListItem ui in request.UpdatedTrees)
+            {
+                AccountTree entity = new AccountTree(ui.Id);
+                ui.CopyTo(entity);
+                context.Session.Save(entity);
             }
 
             foreach (UI.ContableAccount ui in request.UpdatedAccounts)
             {
                 ContableAccount entity = context.Session.Load<ContableAccount>(ui.Id);
                 ui.CopyTo(entity); //las modificaciones sin cambio de padres
+                entity.AccountTree = context.Session.Load<AccountTree>(ui.AccountTreeId);
             }
 
             foreach (UI.ContableAccount ui in request.CreatedAccounts)
             {
                 ContableAccount entity = new ContableAccount(ui.Id);
                 ui.CopyTo(entity);
-                entity.AccountTree = tree;
+                entity.AccountTree = context.Session.Load<AccountTree>(ui.AccountTreeId);
                 context.Session.Save(entity); //los grabo sin padre
             }
 
             //para cada una de las modificadas o creadas les pongo el padre
-            //no se si anda bien por el tema de la bidireccionalidad
             foreach (UI.ContableAccount ui in request.UpdatedAccounts.Union(request.CreatedAccounts))
             {
                 ContableAccount entity = context.Session.Load<ContableAccount>(ui.Id);
@@ -46,24 +62,6 @@ namespace Facturanet.Business
                 else
                     entity.ParentAccount = null;
             }
-                
-/*
-            //TODO: No estoy seguro de que esto esté funcionando bien
-            foreach (UI.TreeOrderPair pair in request.ReorderData)
-            {
-                ContableAccount child = context.Session.Load<ContableAccount>(pair.ChildId);
-                if (pair.ParentId.HasValue)
-                {
-                    ContableAccount parent = context.Session.Load<ContableAccount>(pair.ParentId.Value);
-                    //parent.AddSubaccount(child);
-                    child.ParentAccount = parent;
-                }
-                else
-                {
-                    child.ParentAccount = null;
-                }
-            }
- */ 
         }
     }
 }

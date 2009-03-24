@@ -14,6 +14,7 @@ namespace Facturanet.Business
     [DataContract]
     public class UpdateAccountTreeListRequest : BaseRequest<EmptyResponse>
     {
+        //TODO: eliminar esta accion
         [DataMember]
         public Guid[] DeletedIds { get; set; }
 

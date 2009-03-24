@@ -10,7 +10,7 @@ using Facturanet.Util;
 
 namespace Facturanet.WinformsClient.Util
 {
-    public abstract class FacturanetTreenode : TreeNode
+    public abstract class FacturanetTreeNode : TreeNode
     {
         public Type DataType { get; private set; }
         protected bool TypeIsUIObject { get; private set; }
@@ -19,7 +19,7 @@ namespace Facturanet.WinformsClient.Util
 
         public object Data { get; private set; }
         
-        public FacturanetTreenode(object data)
+        public FacturanetTreeNode(object data)
             : base()
         {
             DataType = data.GetType();
