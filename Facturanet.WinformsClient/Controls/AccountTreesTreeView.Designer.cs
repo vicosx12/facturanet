@@ -33,6 +33,7 @@
             // 
             // treeView
             // 
+            this.treeView.AllowDrop = true;
             this.treeView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView.HideSelection = false;
             this.treeView.Location = new System.Drawing.Point(0, 0);
@@ -40,8 +41,11 @@
             this.treeView.ShowNodeToolTips = true;
             this.treeView.Size = new System.Drawing.Size(150, 150);
             this.treeView.TabIndex = 0;
+            this.treeView.DragDrop += new System.Windows.Forms.DragEventHandler(this.treeView_DragDrop);
             this.treeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView_AfterSelect);
             this.treeView.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.treeView_BeforeSelect);
+            this.treeView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.treeView_ItemDrag);
+            this.treeView.DragOver += new System.Windows.Forms.DragEventHandler(this.treeView_DragOver);
             // 
             // AccountTreesTreeView
             // 

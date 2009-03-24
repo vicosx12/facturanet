@@ -7,12 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Facturanet.UI;
+using Facturanet.Util;
 using Facturanet.WinformsClient.Util;
 
 namespace Facturanet.WinformsClient.Controls
 {
     public partial class AccountTreesTreeView : UserControl
     {
+        //TODO: se podría hacer una interface para cada item que diga cual es el id del arbol al que pertenece, cual es el id y el de padre
         public event EventHandler CurrentChanged;
 
         protected Dictionary<Guid, AccountTreeListItemTreeNode> RootNodesDictionary { get; private set; }
@@ -126,6 +128,26 @@ namespace Facturanet.WinformsClient.Controls
             return node;
         }
 
+        public void MoveNode(ContableAccountTreeNode node, FacturanetTreeNode parent)
+        {
+            node.Remove();
+
+            var parentAsAccountTreeListItem = parent.Data as AccountTreeListItem;
+            if (parentAsAccountTreeListItem != null)
+            {
+                node.ContableAccount.AccountTreeId = parentAsAccountTreeListItem.Id;
+                node.ContableAccount.ParentAccountId = null;
+            }
+            else
+            {
+                var parentAsContableAccount = parent.Data as ContableAccount;
+                node.ContableAccount.AccountTreeId = parentAsContableAccount.AccountTreeId;
+                node.ContableAccount.ParentAccountId = parentAsContableAccount.Id;
+            }
+                
+            parent.Nodes.Add(node);
+        }
+
         public ContableAccountTreeNode AddAccount(ContableAccount account)
         {
             var node = new ContableAccountTreeNode(account);
@@ -181,6 +203,65 @@ namespace Facturanet.WinformsClient.Controls
         private void treeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
             OnCurrentChanged();
+        }
+
+        private void treeView_ItemDrag(object sender, ItemDragEventArgs e)
+        {
+            //solo arastrar si es un ContableAccountTreeNode
+            ContableAccountTreeNode contableAccountTreenode = e.Item as ContableAccountTreeNode;
+            if (contableAccountTreenode != null)
+                treeView.DoDragDrop(contableAccountTreenode, DragDropEffects.Move);
+        }
+
+        private TreeNode DestinationNode(TreeView treeView, int X, int Y)
+        {
+            Point pt = treeView.PointToClient(new Point(X, Y));
+            TreeNode DestinationNode = treeView.GetNodeAt(pt);
+            return DestinationNode;
+        }
+
+        private bool AllowMove(FacturanetTreeNode node, FacturanetTreeNode destination)
+        {
+            if (destination != null
+                && node != null
+                && destination != node
+                && !node.IsAncestorOf(destination))
+            {
+                Guid destinationTreeId;
+                var destinationAsAccountTreeListItem = destination.Data as AccountTreeListItem;
+                if (destinationAsAccountTreeListItem != null)
+                    destinationTreeId = destinationAsAccountTreeListItem.Id;
+                else
+                    destinationTreeId = ((ContableAccount)destination.Data).AccountTreeId;
+                return destinationTreeId == ((ContableAccount)node.Data).AccountTreeId;
+            }
+            else
+                return false;
+        }
+
+        private void treeView_DragDrop(object sender, DragEventArgs e)
+        {
+            var destination = DestinationNode((TreeView)sender, e.X, e.Y) as FacturanetTreeNode;
+            var dragged = e.Data.GetTypedData<ContableAccountTreeNode>();
+
+            if (AllowMove(dragged, destination))
+            {
+                e.Effect = DragDropEffects.Move;
+                MoveNode(dragged, destination);
+            }
+            else
+                e.Effect = DragDropEffects.None;
+        }
+
+        private void treeView_DragOver(object sender, DragEventArgs e)
+        {
+            var destination = DestinationNode((TreeView)sender, e.X, e.Y) as FacturanetTreeNode;
+            var dragged = e.Data.GetTypedData<ContableAccountTreeNode>();
+
+            if (AllowMove(dragged, destination))
+                e.Effect = DragDropEffects.Move;
+            else
+                e.Effect = DragDropEffects.None;
         }
     }
 }

@@ -281,45 +281,6 @@ namespace Facturanet.WinformsClient.Forms
             
         }
 
-        /*
-        private void treeView1_ItemDrag(object sender, ItemDragEventArgs e)
-        {
-            ContableAccountTreeNode contableAccountTreenode = e.Item as ContableAccountTreeNode;
-            if (contableAccountTreenode != null)
-            {
-                treeView1.DoDragDrop(contableAccountTreenode, DragDropEffects.Move);
-            }
-        }
-
-        private void treeView1_DragEnter(object sender, DragEventArgs e)
-        {
-            e.Effect = DragDropEffects.Move;
-        }
-
-        private void treeView1_DragDrop(object sender, DragEventArgs e)
-        {
-            Point pt = ((TreeView)sender).PointToClient(new Point(e.X, e.Y));
-            TreeNode DestinationNode = ((TreeView)sender).GetNodeAt(pt);
-            if (DestinationNode != null)
-            {
-                ContableAccount parent = null;
-
-                if (DestinationNode is ContableAccountTreeNode)
-                    parent = ((ContableAccountTreeNode)DestinationNode).ContableAccount;
-
-                if (e.Data.GetDataPresent("Facturanet.WinformsClient.Controls.ContableAccountTreenode", false))
-                {
-                    //todo: revisar aca y en el drag enter que no haya recursividad
-                    ContableAccountTreeNode contableAccountTreenode = (ContableAccountTreeNode)e.Data.GetData("Facturanet.WinformsClient.Controls.ContableAccountTreenode");
-                    contableAccountTreenode.Remove();
-                    contableAccountTreenode.ContableAccount.ParentAccountId = parent == null
-                        ? null
-                        : (Guid?)parent.Id;
-                    DestinationNode.Nodes.Add(contableAccountTreenode);
-                }
-            }
-        }
-        */
         private void accountTreesTreeView1_CurrentChanged(object sender, EventArgs e)
         {
             accountTreeListItemEditor1.Visible = false;
